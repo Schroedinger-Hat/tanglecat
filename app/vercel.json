@@ -1,12 +1,5 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "env": {
-    "NEXT_PUBLIC_BASE_URL": "@next_public_base_url",
-    "NEXT_PUBLIC_SANITY_PROJECT_ID": "@next_public_sanity_project_id",
-    "NEXT_PUBLIC_SANITY_DATASET": "@next_public_sanity_dataset",
-    "SANITY_API_VERSION": "@sanity_api_version",
-    "SANITY_API_TOKEN": "@sanity_api_token"
-  }
+  "outputDirectory": ".next"
 } 
