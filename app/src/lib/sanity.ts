@@ -19,6 +19,7 @@ const prodClient = createClient({
   dataset,
   useCdn: true, // Enable CDN caching in production
   apiVersion,
+  token: process.env.SANITY_API_TOKEN
 })
 
 // Export the appropriate client based on environment
