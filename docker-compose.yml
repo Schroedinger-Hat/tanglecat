@@ -18,17 +18,3 @@ services:
       - SANITY_API_VERSION=${SANITY_API_VERSION:-2024-03-21}
       - WATCHPACK_POLLING=true
     restart: unless-stopped
-
-  sanity-studio:
-    build:
-      context: ./studio
-      dockerfile: ${NODE_ENV:-development}.Dockerfile
-    ports:
-      - "3333:3333"
-    volumes:
-      - ./studio:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=${NODE_ENV:-development}
-      - SANITY_STUDIO_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID:-n9u23251}
-      - SANITY_STUDIO_DATASET=${NEXT_PUBLIC_SANITY_DATASET:-production}

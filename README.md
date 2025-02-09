@@ -49,6 +49,8 @@ ENVIRONMENT=production docker compose up --build
 ENVIRONMENT=production docker compose up
 ```
 
+3. Access the local studio at `http://localhost:8080/studio`: you need to be logged in to the Sanity Studio to manage the content.
+
 This will start the Next.js application and the Sanity Studio CMS in production mode.
 
 ## Project Structure
@@ -63,15 +65,7 @@ The project is organized into the following directories:
 - `app/styles`: Global CSS styles
 - `app/types`: TypeScript type definitions
 - `app/utils`: Utility functions
-
-
-License
-
-This project is licensed under the AGPLv3 License. See the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-For any questions or feedback, please contact us at [events@schroedinger-hat.org](mailto:events@schroedinger-hat.org)
+- `app/sanity`: Sanity Studio configuration and schemas
 
 ## Deployment
 
@@ -96,3 +90,12 @@ The app will be automatically deployed on every push to the main branch.
 ### Production URLs
 - Next.js app: `https://your-project.vercel.app`
 - Sanity Studio: Deploy separately or access via your Sanity project dashboard
+
+
+## License
+
+This project is licensed under the AGPLv3 License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any questions or feedback, please contact us at [events@schroedinger-hat.org](mailto:events@schroedinger-hat.org)
