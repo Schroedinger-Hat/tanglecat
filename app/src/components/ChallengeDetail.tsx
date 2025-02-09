@@ -1,0 +1,230 @@
+'use client'
+
+import { useState, useEffect, useCallback } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Challenge } from '@/types'
+import { QRCodeSVG } from 'qrcode.react'
+import { X } from 'lucide-react'
+import confetti from 'canvas-confetti'
+import Image from 'next/image'
+
+interface Props {
+  challenge: Challenge
+}
+
+export function ChallengeDetail({ challenge }: Props) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const isCompleted = searchParams.get('completed') === 'true'
+  const [isRedeeming, setIsRedeeming] = useState(false)
+  const [showQR, setShowQR] = useState(false)
+  const [userEmail, setUserEmail] = useState<string>('')
+
+  useEffect(() => {
+    if (isCompleted) {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      })
+    }
+  }, [isCompleted])
+
+  useEffect(() => {
+    // Get user email from cookie
+    const token = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('user_token='))
+
+    if (token) {
+      const { email } = JSON.parse(decodeURIComponent(token.split('=')[1]))
+      setUserEmail(email)
+    }
+  }, [])
+
+  const checkChallengeStatus = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/challenges/${challenge._id}/status`)
+      const data = await response.json()
+
+      if (data.isCompleted) {
+        setShowQR(false)
+        router.push(`/challenge/${challenge._id}?completed=true`)
+        return true
+      }
+      return false
+    } catch (error) {
+      console.error('Error checking challenge status:', error)
+      return false
+    }
+  }, [challenge._id, router])
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null
+
+    if (showQR) {
+      intervalId = setInterval(async () => {
+        const isComplete = await checkChallengeStatus()
+        if (isComplete && intervalId) {
+          clearInterval(intervalId)
+          intervalId = null
+        }
+      }, 5000)
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId)
+        intervalId = null
+      }
+    }
+  }, [showQR, checkChallengeStatus])
+
+  const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/verify-challenge?challengeId=${challenge._id}&email=${userEmail}`
+
+  const handleRedeem = async () => {
+    if (challenge.isSupervised) {
+      setShowQR(true)
+      return
+    }
+
+    setIsRedeeming(true)
+    try {
+      const response = await fetch('/api/challenges/redeem', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ challengeId: challenge._id }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to redeem challenge')
+      }
+
+      router.push(`/challenge/${challenge._id}?completed=true`)
+    } catch (error) {
+      console.error('Error redeeming challenge:', error)
+    } finally {
+      setIsRedeeming(false)
+    }
+  }
+
+  if (isCompleted) {
+    return (
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-xl text-center">
+        <h2 className="text-2xl font-bold mb-2">Congratulations!</h2>
+        <h3 className="text-xl mb-6">CHALLENGE COMPLETE</h3>
+
+        <div className="mb-8">
+          <div className="w-24 h-24 mx-auto mb-4 relative">
+            <Image
+              src="/medal.svg"
+              alt="Achievement medal"
+              fill
+              className="object-contain"
+            />
+          </div>
+
+          <h4 className="text-lg font-semibold mb-2">
+            {challenge.name}
+          </h4>
+
+          <div className="flex items-center justify-center text-2xl font-bold text-yellow-500">
+            🏆 {challenge.points} Points
+          </div>
+        </div>
+
+        <button
+          onClick={() => router.push('/dashboard?view=leaderboard')}
+          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+        >
+          View Leaderboard
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+      <h1 className="text-2xl font-bold mb-4">{challenge.name}</h1>
+
+      <div className="mb-6">
+        <p className="text-gray-600 dark:text-gray-300">
+          {challenge.description}
+        </p>
+      </div>
+
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center">
+          <span className="text-yellow-500">🏆</span>
+          <span className="ml-2 font-semibold">
+            {challenge.points} Points
+          </span>
+        </div>
+        {challenge.playersLimit && (
+          <div className="text-sm text-gray-500">
+            Limited to {challenge.playersLimit} players
+          </div>
+        )}
+      </div>
+
+      {challenge?.pointsRequirement && challenge?.pointsRequirement > 0 && (
+        <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg mb-6">
+          <p className="text-sm text-yellow-800 dark:text-yellow-200">
+            ⚠️ You need {challenge.pointsRequirement} points to unlock this challenge
+          </p>
+        </div>
+      )}
+
+      {showQR && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full relative">
+            <button
+              onClick={() => setShowQR(false)}
+              className="absolute top-2 right-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <h3 className="text-lg font-semibold mb-4">
+              Show this QR code to a supervisor
+            </h3>
+
+            <div className="bg-white p-4 rounded-lg flex justify-center">
+              <QRCodeSVG
+                value={verificationUrl}
+                size={200}
+                level="H"
+                includeMargin
+              />
+            </div>
+
+            <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
+              A supervisor will scan this code to verify your challenge completion.
+            </p>
+          </div>
+        </div>
+      )}
+
+      <div className="space-y-4">
+        <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+          <h3 className="font-semibold mb-2">Instructions:</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            {challenge.isSupervised 
+              ? "To complete this challenge, click the button below to generate a QR code and show it to a supervisor."
+              : "To complete this challenge, click the button below once you've finished."}
+          </p>
+        </div>
+        
+        <button
+          onClick={handleRedeem}
+          disabled={isRedeeming}
+          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 
+            disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        >
+          {isRedeeming ? 'Redeeming...' : 
+            challenge.isSupervised ? 'Generate Verification QR' : 'Redeem Challenge'}
+        </button>
+      </div>
+    </div>
+  )
+} 
