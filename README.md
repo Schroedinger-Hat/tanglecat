@@ -72,3 +72,27 @@ This project is licensed under the AGPLv3 License. See the [LICENSE](LICENSE) fi
 ## Contact
 
 For any questions or feedback, please contact us at [events@schroedinger-hat.org](mailto:events@schroedinger-hat.org)
+
+## Deployment
+
+### Deploying to Vercel
+
+1. Fork or clone this repository to your GitHub account
+
+2. Create a new project on [Vercel](https://vercel.com)
+
+3. Import your repository
+
+4. Configure the following environment variables in Vercel's project settings:
+   - `NEXT_PUBLIC_SANITY_PROJECT_ID`: Your Sanity project ID
+   - `NEXT_PUBLIC_SANITY_DATASET`: Your Sanity dataset name (usually "production")
+   - `SANITY_API_VERSION`: Your Sanity API version (e.g., "2024-03-21")
+   - `SANITY_API_TOKEN`: Your Sanity API token with write access
+
+5. Deploy! Vercel will automatically build and deploy your app
+
+The app will be automatically deployed on every push to the main branch.
+
+### Production URLs
+- Next.js app: `https://your-project.vercel.app`
+- Sanity Studio: Deploy separately or access via your Sanity project dashboard
