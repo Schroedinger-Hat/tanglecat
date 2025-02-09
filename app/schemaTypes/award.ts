@@ -51,7 +51,6 @@ export default defineType({
       title: 'Webhook URL',
       type: 'url',
       description: 'URL for automatic verification (if not supervised)',
-      hidden: ({ document }) => document?.isSupervised
     }),
     defineField({
       name: 'points',
