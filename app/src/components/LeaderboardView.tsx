@@ -6,14 +6,17 @@ import { User } from '@/types'
 
 export function LeaderboardView() {
   const [users, setUsers] = useState<User[]>([])
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
-
+  
   useEffect(() => {
-    async function fetchLeaderboard() {
-      try {
+      async function fetchLeaderboard() {
+       try {
         const response = await fetch('/api/leaderboard')
         const data = await response.json()
         setUsers(data.users)
+        const { email: currentUserEmail } = JSON.parse(decodeURIComponent(document?.cookie.split('; ').find(row => row.startsWith('user_token='))?.split('=')[1] || ''));
+        setCurrentUser(data.users.find((user: User) => user.email === currentUserEmail))
       } catch (error) {
         console.error('Error fetching leaderboard:', error)
       } finally {
@@ -38,7 +41,11 @@ export function LeaderboardView() {
         {users.map((user, index) => (
           <div
             key={user._id}
-            className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg shadow"
+            className={`flex items-center justify-between p-4 rounded-lg shadow ${
+              user._id === currentUser?._id 
+                ? 'bg-blue-100 dark:bg-blue-900 border-2 border-blue-500'
+                : 'bg-white dark:bg-gray-800'
+            }`}
           >
             <div className="flex items-center gap-4">
               <span className="text-xl font-semibold text-gray-500 w-8">

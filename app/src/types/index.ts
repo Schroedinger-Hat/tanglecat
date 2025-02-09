@@ -47,4 +47,33 @@ export interface Challenge {
     _type: 'reference'
     _ref: string
   }
+}
+
+export interface Award {
+  _id: string
+  _type: 'award'
+  name: string
+  abstract: string
+  description: string
+  isSupervised: boolean
+  instructions?: string
+  webhook?: string
+  points: number
+  image: {
+    _type: 'image'
+    asset: {
+      _ref: string
+      _type: 'reference'
+    }
+    hotspot?: {
+      x: number
+      y: number
+      height: number
+      width: number
+    }
+  }
+  eventCode: {
+    _ref: string
+    _type: 'reference'
+  }
 } 

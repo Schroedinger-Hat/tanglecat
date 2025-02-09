@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       .patch(user._id)
       .setIfMissing({ completedChallenges: [] })
       .append('completedChallenges', [
-        { _type: 'reference', _ref: challengeId }
+        {_key: crypto.randomUUID(), _type: 'reference', _ref: challengeId }
       ])
       .commit()
 
