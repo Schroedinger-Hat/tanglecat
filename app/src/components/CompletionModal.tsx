@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Challenge } from '@/types'
 import confetti from 'canvas-confetti'
 import Image from 'next/image'
+import { Button } from './ui/button'
 
 interface Props {
   isOpen: boolean
@@ -66,12 +67,12 @@ export function CompletionModal({ isOpen, onClose, challenge }: Props) {
                 </div>
               </div>
 
-              <button
+              <Button
                 onClick={onClose}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+                variant="accent"
               >
                 View Leaderboard
-              </button>
+              </Button>
             </div>
           </motion.div>
         </div>

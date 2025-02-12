@@ -8,6 +8,8 @@ import { CheckCircle2, X } from 'lucide-react'
 import confetti from 'canvas-confetti'
 import Image from 'next/image'
 import { urlForImage } from '@/lib/sanity.image'
+import { Button } from './ui/button'
+import { Card, CardHeader, CardContent, CardFooter, CardSection } from './ui/Card'
 
 interface Props {
   award: Award
@@ -71,7 +73,7 @@ export function AwardDetail({ award }: Props) {
 
   if (isCompleted) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+      <Card variant="celebration">
         <div className="w-32 h-32 mx-auto relative mb-6">
           <Image
             src={urlForImage(award.image).url()}
@@ -82,22 +84,22 @@ export function AwardDetail({ award }: Props) {
         </div>
         <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
         <h1 className="text-2xl font-bold mb-2">Congratulations!</h1>
-        <p className="text-gray-600 dark:text-gray-300 mb-4">
+        <p className="text-neutral-600 dark:text-neutral-300 mb-4">
           You&apos;ve earned the {award.name} award and {award.points} points!
         </p>
-        <button
+        <Button
           onClick={() => router.push('/awards')}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+          variant="accent"
         >
           View All Awards
-        </button>
-      </div>
+        </Button>
+      </Card>
     )
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-      <div className="flex gap-6 mb-6">
+    <Card>
+      <CardHeader>
         <div className="w-32 h-32 relative flex-shrink-0">
           <Image
             src={urlForImage(award.image).url()}
@@ -108,16 +110,16 @@ export function AwardDetail({ award }: Props) {
         </div>
         <div>
           <h1 className="text-2xl font-bold mb-2">{award.name}</h1>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">
+          <p className="text-neutral-600 dark:text-neutral-300 mb-4">
             {award.abstract}
           </p>
           <span className="text-blue-600 font-bold">
             {award.points} pts
           </span>
         </div>
-      </div>
+      </CardHeader>
 
-      <div className="prose dark:prose-invert max-w-none mb-6">
+      <CardContent>
         <h2>Description</h2>
         <p>{award.description}</p>
         
@@ -127,7 +129,35 @@ export function AwardDetail({ award }: Props) {
             <p>{award.instructions}</p>
           </>
         )}
-      </div>
+      </CardContent>
+
+      <CardFooter>
+        {award.isSupervised ? (
+          <CardSection>
+            <h3 className="font-semibold mb-2">Verification Required</h3>
+            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              This award needs to be verified by a supervisor. Click the button below
+              to generate a QR code for verification.
+            </p>
+          </CardSection>
+        ) : (
+          <CardSection>
+            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+              Click the button below to claim this award.
+            </p>
+          </CardSection>
+        )}
+        
+        <Button
+          onClick={handleRedeem}
+          disabled={isRedeeming}
+          variant="accent"
+          className="w-full"
+        >
+          {isRedeeming ? 'Redeeming...' : 
+            award.isSupervised ? 'Generate Verification QR' : 'Claim Award'}
+        </Button>
+      </CardFooter>
 
       {showQR && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -158,34 +188,6 @@ export function AwardDetail({ award }: Props) {
           </div>
         </div>
       )}
-
-      <div className="space-y-4">
-        {award.isSupervised ? (
-          <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-            <h3 className="font-semibold mb-2">Verification Required</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              This award needs to be verified by a supervisor. Click the button below
-              to generate a QR code for verification.
-            </p>
-          </div>
-        ) : (
-          <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              Click the button below to claim this award.
-            </p>
-          </div>
-        )}
-        
-        <button
-          onClick={handleRedeem}
-          disabled={isRedeeming}
-          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 
-            disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          {isRedeeming ? 'Redeeming...' : 
-            award.isSupervised ? 'Generate Verification QR' : 'Claim Award'}
-        </button>
-      </div>
-    </div>
+    </Card>
   )
 } 

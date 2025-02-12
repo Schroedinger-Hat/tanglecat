@@ -1,9 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import { Challenge } from '@/types'
-import { CheckCircle2 } from 'lucide-react'
+import { ListItem } from './ui/listItem'
 
 export function ChallengesView() {
   const [challenges, setChallenges] = useState<Challenge[]>([])
@@ -40,35 +39,20 @@ export function ChallengesView() {
   return (
     <div className="max-w-2xl mx-auto p-4">
       <div className="grid gap-4">
-        {challenges.map((challenge) => {
-          const isCompleted = completedChallenges.includes(challenge._id)
-          
-          return (
-            <Link
-              key={challenge._id}
-              href={`/challenge/${challenge._id}?completed=${isCompleted}`}
-              className={`block p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow relative
-                ${isCompleted ? 'border-2 border-green-500' : ''}`}
-            >
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
-                    {challenge.name}
-                    {isCompleted && (
-                      <CheckCircle2 className="w-5 h-5 text-green-500" />
-                    )}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">
-                    {challenge.description}
-                  </p>
-                </div>
-                <span className="text-blue-600 font-bold">
-                  {challenge.points} pts
-                </span>
-              </div>
-            </Link>
-          )
-        })}
+      {challenges.map((challenge) => {
+        const isCompleted = completedChallenges.includes(challenge._id)
+        return (
+          <ListItem
+            key={challenge._id}
+            type="challenge"
+            href={`/challenge/${challenge._id}?completed=${isCompleted}`}
+            title={challenge.name}
+            description={challenge.description}
+            points={challenge.points}
+            isCompleted={isCompleted}
+          />
+        )
+      })}
       </div>
     </div>
   )

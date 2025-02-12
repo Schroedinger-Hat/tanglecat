@@ -5,6 +5,7 @@ import { QRCodeScanner } from '@/components/QRCodeScanner'
 import { Challenge } from '@/types'
 import { X } from 'lucide-react'
 import { toast } from 'sonner'
+import { Button } from './ui/button'
 
 interface Props {
   challenges: Challenge[]
@@ -57,12 +58,13 @@ export function SupervisorChallenges({ challenges }: Props) {
       {scanning && selectedChallenge && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-4 max-w-md w-full relative">
-            <button
+            <Button
               onClick={handleClose}
+              variant="default"
               className="absolute top-2 right-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
             >
               <X className="w-6 h-6" />
-            </button>
+            </Button>
 
             <h3 className="text-lg font-semibold mb-4 pr-8">
               Scan QR Code for: {selectedChallenge.name}
@@ -73,12 +75,13 @@ export function SupervisorChallenges({ challenges }: Props) {
               onClose={handleClose}
             />
 
-            <button
+            <Button
               onClick={handleClose}
-              className="mt-4 w-full bg-gray-200 dark:bg-gray-700 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              variant="default"
+              className="mt-4 w-full"
             >
               Cancel
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -87,7 +90,7 @@ export function SupervisorChallenges({ challenges }: Props) {
         {challenges.map((challenge) => (
           <div 
             key={challenge._id}
-            className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow"
+            className="bg-white dark:bg-gray-800 rounded-lg p-2 shadow"
           >
             <div className="flex justify-between items-start">
               <div>
@@ -100,15 +103,15 @@ export function SupervisorChallenges({ challenges }: Props) {
                 </span>
               </div>
               
-              <button
+              <Button
                 onClick={() => {
                   setSelectedChallenge(challenge)
                   setScanning(true)
                 }}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                variant="accent"
               >
                 Scan QR
-              </button>
+              </Button>
             </div>
           </div>
         ))}

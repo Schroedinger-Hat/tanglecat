@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { SignupPayload } from '@/types'
+import { Button } from './ui/button'
+import { Input } from './ui/input.generic'
 
 export function SignUpForm() {
   const router = useRouter()
@@ -63,45 +65,45 @@ export function SignUpForm() {
       
       <div>
         <label className="block text-sm font-medium mb-1">First Name</label>
-        <input
+        <Input
           type="text"
           required
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           value={formData.firstName}
-          onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, firstName: e.target.value})}
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium mb-1">Last Name</label>
-        <input
+        <Input
           type="text"
           required
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           value={formData.lastName}
-          onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, lastName: e.target.value})}
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium mb-1">Email</label>
-        <input
+        <Input
           type="email"
           required
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           value={formData.email}
-          onChange={(e) => setFormData({...formData, email: e.target.value})}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, email: e.target.value})}
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium mb-1">Event Code</label>
-        <input
+        <Input
           type="text"
           required
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           value={formData.eventCode}
-          onChange={(e) => setFormData({...formData, eventCode: e.target.value})}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, eventCode: e.target.value})}
         />
       </div>
 
@@ -112,7 +114,7 @@ export function SignUpForm() {
           id="terms"
           className="mr-2"
           checked={formData.termsAccepted}
-          onChange={(e) => setFormData({...formData, termsAccepted: e.target.checked})}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, termsAccepted: e.target.checked})}
         />
         <label htmlFor="terms" className="text-sm">
           I accept the{' '}
@@ -122,13 +124,14 @@ export function SignUpForm() {
         </label>
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={loading}
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+        variant="accent"
+        className="w-full"
       >
         {loading ? 'Signing up...' : 'Join Challenge'}
-      </button>
+      </Button>
     </form>
   )
 } 

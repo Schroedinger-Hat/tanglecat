@@ -29,7 +29,7 @@ export default async function AdminPage() {
   })
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="py-8">
       <div className="max-w-4xl mx-auto px-4">
         <div className="mb-8">
           <h1 className="text-2xl font-bold">Welcome, {supervisor.name}</h1>

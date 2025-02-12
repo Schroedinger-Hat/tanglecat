@@ -11,6 +11,9 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        red: {
+          500: '#FF4545', // Adjust this color to match your design
+        }
       },
     },
   },

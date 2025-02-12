@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import { User } from '@/types'
+import { ListItem } from './ui/listItem'
 
 export function LeaderboardView() {
   const [users, setUsers] = useState<User[]>([])
@@ -39,34 +39,16 @@ export function LeaderboardView() {
       
       <div className="space-y-4">
         {users.map((user, index) => (
-          <div
+          <ListItem
             key={user._id}
-            className={`flex items-center justify-between p-4 rounded-lg shadow ${
-              user._id === currentUser?._id 
-                ? 'bg-blue-100 dark:bg-blue-900 border-2 border-blue-500'
-                : 'bg-white dark:bg-gray-800'
-            }`}
-          >
-            <div className="flex items-center gap-4">
-              <span className="text-xl font-semibold text-gray-500 w-8">
-                {index + 1}
-              </span>
-              <div className="relative w-12 h-12">
-                <Image
-                  src={`https://api.dicebear.com/7.x/bottts-neutral/png?seed=${user.name}`}
-                  alt={user.name}
-                  className="rounded-full"
-                  fill
-                />
-              </div>
-              <span className="font-semibold">{user.name}</span>
-            </div>
-            <span className="text-blue-600 font-bold">
-              {user.totalPoints} pts
-            </span>
-          </div>
+            type="leaderboard"
+            position={index + 1}
+            name={user.name}
+            points={user.totalPoints}
+            isCurrentUser={user._id === currentUser?._id}
+          />
         ))}
       </div>
     </div>
   )
-} 
+}
