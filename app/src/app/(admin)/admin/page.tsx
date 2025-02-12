@@ -5,7 +5,6 @@ import { client } from '@/lib/sanity'
 
 export default async function AdminPage() {
   const tokenCookie = (await cookies()).get('supervisor_token')?.value
-  console.log(tokenCookie)
   if (!tokenCookie) {
     redirect('/')
   }
@@ -30,10 +29,10 @@ export default async function AdminPage() {
 
   return (
     <div className="py-8">
-      <div className="max-w-4xl mx-auto px-4">
+      <div className="max-w-4xl mx-auto px-2">
         <div className="mb-8">
           <h1 className="text-2xl font-bold">Welcome, {supervisor.name}</h1>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-600">
             Manage your assigned challenges below
           </p>
         </div>

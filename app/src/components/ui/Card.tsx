@@ -18,11 +18,6 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       shadow-[4px_4px_0px_0px_rgba(23,23,23)]
       transition-all
       duration-200
-      
-      dark:bg-neutral-900
-      dark:text-neutral-50
-      dark:border-neutral-800
-      dark:shadow-[4px_4px_0px_0px_rgba(230,230,230)]
     `
 
     const variantClasses = {
@@ -67,7 +62,7 @@ const CardContent = ({
   children: React.ReactNode
   className?: string
 }) => (
-  <div className={`prose dark:prose-invert max-w-none ${className}`}>
+  <div className={`prose max-w-none ${className}`}>
     {children}
   </div>
 )
@@ -91,7 +86,7 @@ const CardSection = ({
   children: React.ReactNode
   className?: string
 }) => (
-  <div className={`bg-neutral-100 dark:bg-neutral-800 p-4 rounded-lg ${className}`}>
+  <div className={`bg-neutral-100 p-4 rounded-lg ${className}`}>
     {children}
   </div>
 )

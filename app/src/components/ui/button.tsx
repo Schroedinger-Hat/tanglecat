@@ -2,7 +2,7 @@ import * as React from 'react'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'sm' | 'default' | 'lg'
-  variant?: 'default' | 'accent'
+  variant?: 'default' | 'accent' | 'danger'
   children: React.ReactNode
 }
 

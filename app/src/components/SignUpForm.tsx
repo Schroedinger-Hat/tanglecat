@@ -12,7 +12,7 @@ export function SignUpForm() {
     firstName: '',
     lastName: '',
     email: '',
-    eventCode: '',
+    eventCode: 'osday25',
     termsAccepted: false
   })
   const [error, setError] = useState('')
@@ -68,7 +68,7 @@ export function SignUpForm() {
         <Input
           type="text"
           required
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+          className="w-full p-2 border rounded"
           value={formData.firstName}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, firstName: e.target.value})}
         />
@@ -79,7 +79,7 @@ export function SignUpForm() {
         <Input
           type="text"
           required
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+          className="w-full p-2 border rounded"
           value={formData.lastName}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, lastName: e.target.value})}
         />
@@ -90,7 +90,7 @@ export function SignUpForm() {
         <Input
           type="email"
           required
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+          className="w-full p-2 border rounded"
           value={formData.email}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, email: e.target.value})}
         />
@@ -101,7 +101,8 @@ export function SignUpForm() {
         <Input
           type="text"
           required
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+          className="w-full p-2 border rounded"
+          readOnly
           value={formData.eventCode}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, eventCode: e.target.value})}
         />

@@ -5,7 +5,6 @@ import { client } from '@/lib/sanity'
 export async function GET() {
   try {
     const tokenCookie = (await cookies()).get('user_token')?.value
-    console.log(tokenCookie)
     
     if (!tokenCookie) {
       return NextResponse.json(

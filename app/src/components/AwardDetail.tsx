@@ -84,7 +84,7 @@ export function AwardDetail({ award }: Props) {
         </div>
         <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
         <h1 className="text-2xl font-bold mb-2">Congratulations!</h1>
-        <p className="text-neutral-600 dark:text-neutral-300 mb-4">
+        <p className="text-neutral-600 mb-4">
           You&apos;ve earned the {award.name} award and {award.points} points!
         </p>
         <Button
@@ -110,7 +110,7 @@ export function AwardDetail({ award }: Props) {
         </div>
         <div>
           <h1 className="text-2xl font-bold mb-2">{award.name}</h1>
-          <p className="text-neutral-600 dark:text-neutral-300 mb-4">
+          <p className="text-neutral-600 mb-4">
             {award.abstract}
           </p>
           <span className="text-blue-600 font-bold">
@@ -135,14 +135,14 @@ export function AwardDetail({ award }: Props) {
         {award.isSupervised ? (
           <CardSection>
             <h3 className="font-semibold mb-2">Verification Required</h3>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               This award needs to be verified by a supervisor. Click the button below
               to generate a QR code for verification.
             </p>
           </CardSection>
         ) : (
           <CardSection>
-            <p className="text-sm text-neutral-600 dark:text-neutral-300">
+            <p className="text-sm text-neutral-600">
               Click the button below to claim this award.
             </p>
           </CardSection>
@@ -161,10 +161,10 @@ export function AwardDetail({ award }: Props) {
 
       {showQR && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full relative">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full relative">
             <button
               onClick={() => setShowQR(false)}
-              className="absolute top-2 right-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
+              className="absolute top-2 right-2 p-2 hover:bg-gray-100 rounded-full"
             >
               <X className="w-6 h-6" />
             </button>
@@ -182,7 +182,7 @@ export function AwardDetail({ award }: Props) {
               />
             </div>
 
-            <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
+            <p className="mt-4 text-sm text-gray-600">
               A supervisor will scan this code to verify your award completion.
             </p>
           </div>

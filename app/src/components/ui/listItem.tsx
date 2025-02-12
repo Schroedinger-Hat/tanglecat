@@ -67,12 +67,6 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
       
       disabled:pointer-events-none
       disabled:opacity-50
-      
-      dark:bg-neutral-900
-      dark:text-neutral-50
-      dark:border-neutral-800
-      dark:shadow-[4px_4px_0px_0px_rgba(230,230,230)]
-      dark:hover:shadow-[2px_2px_0px_0px_rgba(230,230,230)]
     `
 
     if (props.type === 'challenge') {
@@ -84,7 +78,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
           ref={ref as React.Ref<HTMLAnchorElement>}
           className={`
             ${baseClasses}
-            ${isCompleted ? 'border-green-500 dark:border-green-500 bg-slate-200' : ''}
+            ${isCompleted ? 'border-green-500 bg-slate-200' : ''}
             ${className}
           `}
         >
@@ -92,21 +86,25 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
             <div className="flex-1">
               <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
                 {title}
+              </h3>
+            </div>
+            <div className="flex items-center justify-center flex-col gap-2">
+                <span className="text-center font-bold text-blue-600 shrink-0">
+                    {points} pts
+                </span>
                 {isCompleted && (
-                  <CheckCircle2 
+                    <CheckCircle2 
                     className="w-5 h-5 text-green-500 shrink-0" 
                     aria-label="Completed"
-                  />
+                    />
                 )}
-              </h3>
-              <p className="text-neutral-600 dark:text-neutral-300 text-sm">
-                {description}
-              </p>
             </div>
-            <span className="font-bold text-blue-600 dark:text-blue-400 shrink-0">
-              {points} pts
-            </span>
           </div>
+        <div className="flex-1 flex-row">
+            <p className="text-neutral-600 text-sm">
+            {description}
+            </p>
+        </div>
         </Link>
       )
     }
@@ -119,7 +117,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
           ref={ref as React.Ref<HTMLDivElement>}
           className={`
             ${baseClasses}
-            ${isCurrentUser ? 'border-blue-500 dark:border-blue-500 bg-blue-50 dark:bg-blue-900' : ''}
+            ${isCurrentUser ? '[&&]:bg-blue-100' : ''}
             ${className}
           `}
         >
@@ -138,7 +136,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
               </div>
               <span className="font-semibold">{name}</span>
             </div>
-            <span className="font-bold text-blue-600 dark:text-blue-400 shrink-0">
+            <span className="font-bold text-blue-600 shrink-0">
               {points} pts
             </span>
           </div>
@@ -154,7 +152,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
         ref={ref as React.Ref<HTMLAnchorElement>}
         className={`
           ${baseClasses}
-          ${isCompleted ? 'border-green-500 dark:border-green-500' : ''}
+          ${isCompleted ? 'border-green-500' : ''}
           ${className}
         `}
       >
@@ -178,15 +176,15 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
                   />
                 )}
               </h3>
-              <p className="text-neutral-600 dark:text-neutral-300 text-sm">
+              <p className="text-neutral-600 text-sm">
                 {description}
               </p>
               <div className="flex items-center gap-4">
-                <span className="font-bold text-blue-600 dark:text-blue-400">
+                <span className="font-bold text-blue-600">
                   {points} pts
                 </span>
                 {isSupervised && (
-                  <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
+                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
                     Requires Verification
                   </span>
                 )}

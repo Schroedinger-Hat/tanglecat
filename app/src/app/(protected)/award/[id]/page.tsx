@@ -12,7 +12,7 @@ export default async function AwardPage({ params }: Props) {
   const tokenCookie = (await cookies()).get('user_token')?.value
 
   if (!tokenCookie) {
-    redirect('/login')
+    redirect('/')
   }
 
   // Fetch award and completion status

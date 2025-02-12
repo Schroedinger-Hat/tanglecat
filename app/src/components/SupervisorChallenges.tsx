@@ -52,19 +52,18 @@ export function SupervisorChallenges({ challenges }: Props) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <h2 className="text-xl font-semibold">Your Assigned Challenges</h2>
 
       {scanning && selectedChallenge && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 max-w-md w-full relative">
-            <Button
+          <div className="bg-white rounded-lg p-4 max-w-md w-full relative">
+            <button
               onClick={handleClose}
-              variant="default"
-              className="absolute top-2 right-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
+              className="absolute top-2 right-2 p-2 hover:bg-gray-100 rounded-full"
             >
               <X className="w-6 h-6" />
-            </Button>
+            </button>
 
             <h3 className="text-lg font-semibold mb-4 pr-8">
               Scan QR Code for: {selectedChallenge.name}
@@ -77,7 +76,6 @@ export function SupervisorChallenges({ challenges }: Props) {
 
             <Button
               onClick={handleClose}
-              variant="default"
               className="mt-4 w-full"
             >
               Cancel
@@ -86,16 +84,31 @@ export function SupervisorChallenges({ challenges }: Props) {
         </div>
       )}
 
-      <div className="grid gap-4">
+      <div className="grid gap-2">
         {challenges.map((challenge) => (
           <div 
             key={challenge._id}
-            className="bg-white dark:bg-gray-800 rounded-lg p-2 shadow"
-          >
+            className="
+                block
+                w-full
+                p-4
+                bg-neutral-50
+                text-neutral-950
+                border-2
+                border-neutral-950
+                rounded-2xl
+                shadow-[4px_4px_0px_0px_rgba(23,23,23)]
+                transition-all
+                duration-200
+                
+                hover:shadow-[2px_2px_0px_0px_rgba(23,23,23)]
+                hover:translate-x-[2px]
+                hover:translate-y-[2px]"
+           >
             <div className="flex justify-between items-start">
               <div>
                 <h3 className="font-semibold">{challenge.name}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-sm text-gray-600">
                   {challenge.description}
                 </p>
                 <span className="text-sm text-blue-600 font-semibold">

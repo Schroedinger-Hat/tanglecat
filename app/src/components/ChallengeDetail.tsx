@@ -155,7 +155,7 @@ export function ChallengeDetail({ challenge }: Props) {
       </CardHeader>
 
       <CardContent>
-        <div className="text-neutral-600 dark:text-neutral-300 m-2">
+        <div className="text-neutral-600 m-2">
             {challenge.description}
         </div>
         <div className="flex items-center justify-between mb-6">
@@ -173,8 +173,8 @@ export function ChallengeDetail({ challenge }: Props) {
         </div>
 
         {challenge?.pointsRequirement && challenge?.pointsRequirement > 0 && (
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg">
-            <p className="text-sm text-yellow-800 dark:text-yellow-200">
+          <div className="bg-yellow-50 p-4 rounded-lg">
+            <p className="text-sm text-yellow-800">
               ⚠️ You need {challenge.pointsRequirement} points to unlock this challenge
             </p>
           </div>
@@ -184,7 +184,7 @@ export function ChallengeDetail({ challenge }: Props) {
       <CardFooter>
         <CardSection>
           <h3 className="font-semibold mb-2">Instructions:</h3>
-          <p className="text-sm text-neutral-600 dark:text-neutral-300">
+          <p className="text-sm text-neutral-600">
             {challenge.isSupervised 
               ? "To complete this challenge, click the button below to generate a QR code and show it to a supervisor."
               : "To complete this challenge, click the button below once you've finished."}
@@ -207,7 +207,7 @@ export function ChallengeDetail({ challenge }: Props) {
           <Card className="max-w-md w-full relative">
             <button
               onClick={() => setShowQR(false)}
-              className="absolute top-2 right-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
+              className="absolute top-2 right-2 p-2 hover:bg-gray-100 rounded-full"
             >
               <X className="w-6 h-6" />
             </button>
@@ -228,7 +228,7 @@ export function ChallengeDetail({ challenge }: Props) {
                 />
               </div>
 
-              <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
+              <p className="mt-4 text-sm text-gray-600">
                 A supervisor will scan this code to verify your challenge completion.
               </p>
             </CardContent>
