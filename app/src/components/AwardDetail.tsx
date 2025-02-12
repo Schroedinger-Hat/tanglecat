@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Award } from '@/types'
 import { QRCodeSVG } from 'qrcode.react'
@@ -43,6 +43,44 @@ export function AwardDetail({ award }: Props) {
     }
   }, [isCompleted])
 
+  const checkAwardStatus = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/awards/${award._id}`)
+      const data = await response.json()
+
+      if (data.isCompleted) {
+        setShowQR(false)
+        router.push(`/award/${award._id}?completed=true`)
+        return true
+      }
+      return false
+    } catch (error) {
+      console.error('Error checking challenge status:', error)
+      return false
+    }
+  }, [award._id, router])
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null
+
+    if (showQR) {
+      intervalId = setInterval(async () => {
+        const isComplete = await checkAwardStatus()
+        if (isComplete && intervalId) {
+          clearInterval(intervalId)
+          intervalId = null
+        }
+      }, 5000)
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId)
+        intervalId = null
+      }
+    }
+  }, [showQR, checkAwardStatus])
+
   const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/verify-award?awardId=${award._id}&email=${userEmail}`
 
   const handleRedeem = async () => {
@@ -53,7 +91,7 @@ export function AwardDetail({ award }: Props) {
 
     setIsRedeeming(true)
     try {
-      const response = await fetch('/api/awards/redeem', {
+      const response = await fetch(`/api/awards/${award._id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ awardId: award._id }),
@@ -88,7 +126,7 @@ export function AwardDetail({ award }: Props) {
           You&apos;ve earned the {award.name} award and {award.points} points!
         </p>
         <Button
-          onClick={() => router.push('/awards')}
+          onClick={() => window.location.href = '/dashboard?view=award'}
           variant="accent"
         >
           View All Awards
@@ -110,9 +148,6 @@ export function AwardDetail({ award }: Props) {
         </div>
         <div>
           <h1 className="text-2xl font-bold mb-2">{award.name}</h1>
-          <p className="text-neutral-600 mb-4">
-            {award.abstract}
-          </p>
           <span className="text-blue-600 font-bold">
             {award.points} pts
           </span>
@@ -120,7 +155,6 @@ export function AwardDetail({ award }: Props) {
       </CardHeader>
 
       <CardContent>
-        <h2>Description</h2>
         <p>{award.description}</p>
         
         {award.instructions && (

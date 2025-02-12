@@ -38,7 +38,7 @@ export function LeaderboardView() {
         CONGRATULATE THE MOST ACTIVE MEMBERS OF OUR EVENT
       </h1>
       
-      <div className="space-y-3 max-h-[500px] p-4 overflow-y-auto">
+      <div className="space-y-3 max-h-[70%] p-4 overflow-y-auto">
         {users.map((user, index) => (
           <ListItem
             key={user._id}

@@ -152,7 +152,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
         ref={ref as React.Ref<HTMLAnchorElement>}
         className={`
           ${baseClasses}
-          ${isCompleted ? 'border-green-500' : ''}
+          ${isCompleted ? 'border-green-500 bg-slate-200' : ''}
           ${className}
         `}
       >
@@ -183,7 +183,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
                 <span className="font-bold text-blue-600">
                   {points} pts
                 </span>
-                {isSupervised && (
+                {isSupervised && !isCompleted && (
                   <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
                     Requires Verification
                   </span>

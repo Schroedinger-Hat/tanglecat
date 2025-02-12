@@ -2,60 +2,66 @@
 
 import { useState } from 'react'
 import { QRCodeScanner } from '@/components/QRCodeScanner'
-import { Challenge } from '@/types'
+import { Challenge, Award } from '@/types'
 import { X } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from './ui/button'
 
 interface Props {
-  challenges: Challenge[]
+  challenges?: Challenge[]
+  awards?: Award[]
+  type: 'challenge' | 'award'
 }
 
-export function SupervisorChallenges({ challenges }: Props) {
-  const [selectedChallenge, setSelectedChallenge] = useState<Challenge | null>(null)
+export function SupervisorChallenges({ challenges = [], awards = [], type }: Props) {
+  const [selectedItem, setSelectedItem] = useState<Challenge | Award | null>(null)
   const [scanning, setScanning] = useState(false)
+
+  const items = type === 'challenge' ? challenges : awards
+  const apiPath = type === 'challenge' ? 'verify-challenge' : 'verify-award'
+  const itemIdParam = type === 'challenge' ? 'challengeId' : 'awardId'
 
   const handleScan = async (result: string) => {
     setScanning(false)
-    setSelectedChallenge(null)
+    setSelectedItem(null)
     
     try {
-      // Extract challengeId from QR code URL
       const url = new URL(result)
-      const challengeId = url.searchParams.get('challengeId')
+      const itemId = url.searchParams.get(itemIdParam)
       const playerEmail = url.searchParams.get('email')
       
-      if (!challengeId || !playerEmail) {
+      if (!itemId || !playerEmail) {
         toast.error('Invalid QR code')
         return
       }
 
-      const response = await fetch(`/api/admin/verify-challenge?challengeId=${challengeId}&email=${playerEmail}`)
+      const response = await fetch(`/api/admin/${apiPath}?${itemIdParam}=${itemId}&email=${playerEmail}`)
 
       const data = await response.json()
 
       if (!response.ok) {
-        toast.error(data.message || 'Failed to verify challenge')
+        toast.error(data.message || `Failed to verify ${type}`)
         return
       }
 
-      // Show success message and close scanner
-      toast.success('Challenge verified successfully!')
+      toast.success(`${type === 'challenge' ? 'Challenge' : 'Award'} verified successfully!`)
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to verify challenge')
+      toast.error(error instanceof Error ? error.message : `Failed to verify ${type}`)
     }
   }
 
   const handleClose = () => {
     setScanning(false)
-    setSelectedChallenge(null)
+    setSelectedItem(null)
   }
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Your Assigned Challenges</h2>
+      <h2 className="text-xl font-semibold">
+        Your Assigned {type === 'challenge' ? 'Challenges' : 'Awards'}
+      </h2>
 
-      {scanning && selectedChallenge && (
+      {scanning && selectedItem && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-4 max-w-md w-full relative">
             <button
@@ -66,7 +72,7 @@ export function SupervisorChallenges({ challenges }: Props) {
             </button>
 
             <h3 className="text-lg font-semibold mb-4 pr-8">
-              Scan QR Code for: {selectedChallenge.name}
+              Scan QR Code for: {selectedItem.name}
             </h3>
             
             <QRCodeScanner
@@ -85,9 +91,9 @@ export function SupervisorChallenges({ challenges }: Props) {
       )}
 
       <div className="grid gap-2">
-        {challenges.map((challenge) => (
+        {items.map((item) => (
           <div 
-            key={challenge._id}
+            key={item._id}
             className="
                 block
                 w-full
@@ -107,18 +113,20 @@ export function SupervisorChallenges({ challenges }: Props) {
            >
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-semibold">{challenge.name}</h3>
+                <h3 className="font-semibold">{item.name}</h3>
                 <p className="text-sm text-gray-600">
-                  {challenge.description}
+                  {item.description}
                 </p>
-                <span className="text-sm text-blue-600 font-semibold">
-                  {challenge.points} pts
-                </span>
+                {'points' in item && (
+                  <span className="text-sm text-blue-600 font-semibold">
+                    {item.points} pts
+                  </span>
+                )}
               </div>
               
               <Button
                 onClick={() => {
-                  setSelectedChallenge(challenge)
+                  setSelectedItem(item)
                   setScanning(true)
                 }}
                 variant="accent"
@@ -131,4 +139,4 @@ export function SupervisorChallenges({ challenges }: Props) {
       </div>
     </div>
   )
-} 
+}

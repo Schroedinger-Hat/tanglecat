@@ -21,6 +21,13 @@ export default async function AdminPage() {
         description,
         points,
         eventCode
+      },
+      "assignedAwards": assignedAwards[]-> {
+        _id,
+        name,
+        description,
+        points,
+        eventCode
       }
     }
   `, { 
@@ -36,9 +43,18 @@ export default async function AdminPage() {
             Manage your assigned challenges below
           </p>
         </div>
-        <SupervisorChallenges 
-          challenges={supervisor.assignedChallenges} 
-        />
+        {supervisor?.assignedChallenges?.length > 0 && (
+          <SupervisorChallenges 
+            challenges={supervisor.assignedChallenges} 
+            type="challenge"
+          />
+        )}
+        {supervisor?.assignedAwards?.length > 0 && (
+          <SupervisorChallenges 
+            awards={supervisor.assignedAwards} 
+            type="award"
+          />
+        )}
       </div>
     </div>
   )

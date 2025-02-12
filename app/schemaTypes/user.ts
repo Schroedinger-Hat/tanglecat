@@ -51,6 +51,20 @@ export default defineType({
       hidden: ({document}) => document?.role !== 'supervisor',
     }),
     defineField({
+        name: 'receivedAwards',
+        title: 'Received Awards',
+        type: 'array',
+        of: [{type: 'reference', to: [{type: 'award'}]}],
+        hidden: ({document}) => document?.role !== 'player',
+    }),
+    defineField({
+      name: 'assignedAwards',
+      title: 'Assigned Awards',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'award'}]}],
+      hidden: ({document}) => document?.role !== 'supervisor',
+    }),
+    defineField({
         name: 'eventCodes',
         title: 'Event Codes',
         type: 'array',

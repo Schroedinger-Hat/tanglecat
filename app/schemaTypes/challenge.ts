@@ -65,6 +65,7 @@ export default defineType({
       name: 'webhookUrl',
       title: 'Webhook URL',
       type: 'url',
+      description: 'URL to call after verification or redemption',
     }),
     defineField({
       name: 'eventCode',

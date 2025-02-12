@@ -50,7 +50,7 @@ export default defineType({
       name: 'webhook',
       title: 'Webhook URL',
       type: 'url',
-      description: 'URL for automatic verification (if not supervised)',
+      description: 'URL to call after verification or redemption',
     }),
     defineField({
       name: 'points',

@@ -47,12 +47,11 @@ export async function GET(
     }
 
     // Check if the award is completed by the current user
-    const { userId } = JSON.parse(tokenCookie)
+    const { user: { _id: userId } } = JSON.parse(tokenCookie)
     const completedAward = await client.fetch(`
-      *[_type == "award" && _id == $awardId && $userId in completedBy[]._ref][0]
-    `, {
-      awardId,
-      userId
+      *[_type == "user" && _id == $userId && $awardId in receivedAwards[]._ref][0]`, {
+      userId,
+      awardId
     })
 
     return NextResponse.json({
@@ -80,7 +79,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ awa
       )
     }
 
-    const { userId, eventId } = JSON.parse(tokenCookie)
+    const { user: { _id: userId }, eventId } = JSON.parse(tokenCookie)
     const { awardId } = await params
 
     // Check if award exists and is supervised
@@ -108,10 +107,9 @@ export async function POST(request: Request, { params }: { params: Promise<{ awa
 
     // Check if already completed
     const existingCompletion = await client.fetch(`
-      *[_type == "award" && _id == $awardId && $userId in completedBy[]._ref][0]
-    `, {
-      awardId,
-      userId
+      *[_type == "user" && _id == $userId && $awardId in receivedAwards[]._ref][0]`, {
+      userId,
+      awardId
     })
 
     if (existingCompletion) {

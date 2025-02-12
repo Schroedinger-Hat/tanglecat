@@ -35,7 +35,21 @@ export default function DashboardPage() {
                 </Button>
             </div>
 
-            {activeView === 'leaderboard' ? <LeaderboardView /> : activeView === 'challenges' ? <ChallengesView /> : <AwardsView />}
+            {(() => {
+                // Update URL when view changes
+                const url = new URL(window.location.href)
+                url.searchParams.set('view', activeView)
+                window.history.pushState({}, '', url)
+
+                switch (activeView) {
+                    case 'leaderboard':
+                        return <LeaderboardView />
+                    case 'challenges':
+                        return <ChallengesView />
+                    case 'award':
+                        return <AwardsView />
+                }
+            })()}
         </div>
     )
 } 
