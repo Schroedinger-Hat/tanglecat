@@ -25,6 +25,7 @@ export default function RootLayout({
         <head>
             <title>OSDay25 Tech Event Challenge</title>
             <meta name="description" content="Join the OSDay25 tech event challenge and compete with other attendees. Earn points by completing challenges and redeem them for awards." />
+            <meta property="og:image" content="/og-image.png" />
             <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
             <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
             <link rel="shortcut icon" href="/favicon.ico" />
