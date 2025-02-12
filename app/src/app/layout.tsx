@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { Toaster } from 'sonner'
 import WaveHeader from "@/components/ui/waveHeader"
+import { GoogleAnalytics } from "@next/third-parties/google"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,8 +11,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Tech Event Challenge",
-  description: "Join the tech event challenge and compete with other attendees",
+  title: "OSDay25 Tech Event Challenge",
+  description: "Join the OSDay25 tech event challenge and compete with other attendees",
 }
 
 export default function RootLayout({
@@ -21,12 +22,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+        <head>
+            <title>OSDay25 Tech Event Challenge</title>
+            <meta name="description" content="Join the OSDay25 tech event challenge and compete with other attendees. Earn points by completing challenges and redeem them for awards." />
+            <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+            <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+            <link rel="shortcut icon" href="/favicon.ico" />
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+            <meta name="apple-mobile-web-app-title" content="SH" />
+            <link rel="manifest" href="/site.webmanifest" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        </head>
       <body
         className={`${inter.variable} antialiased min-h-screen`}
       >
         <WaveHeader />
         {children}
         <Toaster />
+        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
       </body>
     </html>
   )

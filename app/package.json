@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/third-parties": "^15.1.7",
     "@sanity/client": "^6.0.0",
     "@sanity/vision": "^3.74.1",
     "canvas-confetti": "^1.9.3",

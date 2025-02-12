@@ -11,7 +11,7 @@ export default function DashboardPage() {
 
     return (
         <div className="max-w-2xl mx-auto pt-8">
-            <div className="flex justify-center gap-2 mb-8">
+            <div className="flex justify-center gap-2 mb-4">
                 <Button
                     size='sm'
                     variant={activeView === 'challenges' ? 'accent' : 'default'}
@@ -36,10 +36,12 @@ export default function DashboardPage() {
             </div>
 
             {(() => {
-                // Update URL when view changes
-                const url = new URL(window.location.href)
-                url.searchParams.set('view', activeView)
-                window.history.pushState({}, '', url)
+                if (typeof window !== 'undefined') {
+                    // Update URL when view changes
+                    const url = new URL(window.location.href)
+                    url.searchParams.set('view', activeView)
+                    window.history.pushState({}, '', url)
+                }
 
                 switch (activeView) {
                     case 'leaderboard':

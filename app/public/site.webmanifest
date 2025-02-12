@@ -1,0 +1,38 @@
+{
+    "name": "SH Tech Event Challenge",
+    "short_name": "SH Challenge",
+    "description": "Join the Shroedinger Hat Tech Event Challenge and compete with other attendees",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#fbbf24",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/web-app-manifest-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/web-app-manifest-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Dashboard",
+            "short_name": "Dashboard",
+            "description": "View your challenge progress",
+            "url": "/dashboard",
+            "icons": [
+                {
+                    "src": "/web-app-manifest-192x192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ]
+}

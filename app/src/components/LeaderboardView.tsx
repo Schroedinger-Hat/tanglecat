@@ -34,10 +34,6 @@ export function LeaderboardView() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold text-center mb-8">
-        CONGRATULATE THE MOST ACTIVE MEMBERS OF OUR EVENT
-      </h1>
-      
       <div className="space-y-3 max-h-[70%] p-4 overflow-y-auto">
         {users.map((user, index) => (
           <ListItem

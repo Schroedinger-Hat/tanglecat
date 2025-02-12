@@ -12,23 +12,19 @@ interface AwardWithCompletion extends Award {
 export function AwardsView() {
   const [awards, setAwards] = useState<AwardWithCompletion[]>([])
   const [availablePoints, setAvailablePoints] = useState(0)
-  // const [completedAwards, setCompletedAwards] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [awardsRes, completedRes] = await Promise.all([
+        const [awardsRes] = await Promise.all([
           fetch('/api/awards'),
-          // fetch('/api/awards/completed')
         ])
         
         const awardsData = await awardsRes.json()
-        // const completedData = await completedRes.json()
         
         setAwards(awardsData.awards)
         setAvailablePoints(awardsData.availablePoints)
-        // setCompletedAwards(completedData.completedAwards)
       } catch (error) {
         console.error('Error fetching data:', error)
       } finally {
@@ -46,8 +42,8 @@ export function AwardsView() {
   return (
     <div className="max-w-2xl mx-auto p-4">
       <div className="grid gap-4">
-        <div className="text-center text-2xl font-bold mb-4">
-            Total Points: {availablePoints}
+        <div className="text-center text-white text-2xl font-bold mb-4 filter drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+            Available Points: {availablePoints}
         </div>
         {awards.map((award) => (
           <ListItem
