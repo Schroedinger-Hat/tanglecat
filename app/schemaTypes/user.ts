@@ -44,6 +44,27 @@ export default defineType({
       hidden: ({document}) => document?.role !== 'player',
     }),
     defineField({
+      name: 'verificationChallengesData',
+      title: 'Verification Challenges Data',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          {
+            name: 'challenge',
+            title: 'Challenge',
+            type: 'reference',
+            to: [{ type: 'challenge' }]
+          },
+          {
+            name: 'verificationData',
+            title: 'Verification Data',
+            type: 'string',
+          }
+        ]
+      }]
+    }),
+    defineField({
       name: 'assignedChallenges',
       title: 'Assigned Challenges',
       type: 'array',

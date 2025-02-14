@@ -4,7 +4,6 @@ import { client } from '@/lib/sanity'
 const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN
 
 async function githubFetch(url: string, type: string) {
-  console.log(`https://api.github.com${url}`, GITHUB_TOKEN)
   const response = await fetch(`https://api.github.com${url}`, {
     headers: {
       'Authorization': `Bearer ${GITHUB_TOKEN}`,
@@ -63,23 +62,24 @@ export async function POST(request: Request) {
           return NextResponse.json({
             message: `User ${githubUsername} is not following ${organization}`,
             success: false
-          })
+          }, { status: 404 })
         }
       }
 
       if (type === 'repo_star') {
-        if (!repository || !repository.includes('/')) {
+        if (!repository) {
           throw new Error('Valid repository (owner/repo) is required for repo_star type')
         }
 
         // Check if user starred the repository
-        const starred = await githubFetch(`/user/${githubUsername}/starred/${repository}`, 'starred')
-
-        if (!starred) {
+        const stars = await githubFetch(`/users/${githubUsername.trim()}/starred?per_page=100`, 'starred')
+        // find the githubUsername in the stars array
+        const star = stars.find((star: { full_name: string }) => star.full_name.toLowerCase() === (organization.trim() + '/' + repository.trim()).toLowerCase())
+        if (!star) {
           return NextResponse.json({
             message: `User ${githubUsername} has not starred ${repository}`,
             success: false
-          })
+          }, { status: 404 })
         }
       }
     } catch (error) {
@@ -93,11 +93,21 @@ export async function POST(request: Request) {
     // All verifications passed, update player's completed challenges
     await client
       .patch(player._id)
-      .setIfMissing({ completedChallenges: [] })
+      .setIfMissing({ completedChallenges: [], verificationChallengesData: [] })
       .append('completedChallenges', [{
         _key: crypto.randomUUID(),
         _type: 'reference',
         _ref: challengeId
+      }])
+      .append('verificationChallengesData', [{
+        _key: crypto.randomUUID(),
+        _type: 'object',
+        challenge: {
+          _key: crypto.randomUUID(),
+          _type: 'reference',
+          _ref: challengeId
+        },
+        verificationData: JSON.stringify(verificationData)
       }])
       .commit()
 
