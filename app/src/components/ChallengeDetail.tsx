@@ -223,7 +223,9 @@ export function ChallengeDetail({ challenge }: Props) {
           <p className="text-sm text-neutral-600">
             {challenge.isSupervised
               ? "To complete this challenge, click the button below to generate a QR code and show it to a supervisor."
-              : "To complete this challenge, click the button below once you've finished."}
+              : challenge.isOnline
+                ? "The challenge is online, so there will be an auto-verification after you've done the challenge requirements. You might need to refresh the page to see the challenge as completed."
+                : "To complete this challenge, click the button below once you've finished."}
           </p>
 
         </CardSection>
@@ -238,15 +240,17 @@ export function ChallengeDetail({ challenge }: Props) {
           ))}
         </form>
 
-        <Button
-          onClick={handleRedeem}
-          disabled={isRedeeming}
-          variant="accent"
-          className="w-full"
+        {!challenge.isOnline && (
+          <Button
+            onClick={handleRedeem}
+            disabled={isRedeeming}
+            variant="accent"
+            className="w-full"
         >
           {isRedeeming ? 'Redeeming...' :
             challenge.isSupervised ? 'Generate Verification QR' : 'Redeem Challenge'}
         </Button>
+        )}
       </CardFooter>
 
       {showQR && (
