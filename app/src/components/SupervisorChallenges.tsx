@@ -115,7 +115,17 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
               <div>
                 <h3 className="font-semibold">{item.name}</h3>
                 <p className="text-sm text-gray-600">
-                  {item.description}
+                  {Array.isArray(item.description) ? item.description.map((block) => (
+                        <div key={block._key}>
+                        {block.children && block.children.map((child) => (
+                            <p key={child._key}>{child.text}</p>
+                        ))}
+                        {block.code && <div>
+                            <div dangerouslySetInnerHTML={{ __html: block.code }} />
+                        </div>
+                        }
+                        </div>
+                    )) : item.description}
                 </p>
                 {'points' in item && (
                   <span className="text-sm text-blue-600 font-semibold">

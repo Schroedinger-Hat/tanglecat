@@ -34,6 +34,7 @@ export interface Challenge {
   _id: string
   _type: 'challenge'
   name: string
+  abstract: string
   description: {
     _type: 'array'
     _key: string

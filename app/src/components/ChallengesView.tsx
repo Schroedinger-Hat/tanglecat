@@ -47,7 +47,7 @@ export function ChallengesView() {
             type="challenge"
             href={`/challenge/${challenge._id}?completed=${isCompleted}`}
             title={challenge.name}
-            description={challenge.description}
+            description={challenge.abstract}
             points={challenge.points}
             isCompleted={isCompleted}
           />
