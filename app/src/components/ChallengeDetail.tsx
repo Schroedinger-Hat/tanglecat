@@ -189,7 +189,17 @@ export function ChallengeDetail({ challenge }: Props) {
 
       <CardContent>
         <div className="text-neutral-600 m-2">
-          {challenge.description}
+          {challenge.description.map((block) => (
+            <div key={block._key}>
+              {block.children && block.children.map((child) => (
+                <p key={child._key}>{child.text}</p>
+              ))}
+              {block.code && <div>
+                  <div dangerouslySetInnerHTML={{ __html: block.code }} />
+              </div>
+              }
+            </div>
+          ))}
         </div>
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">

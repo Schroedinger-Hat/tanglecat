@@ -20,7 +20,47 @@ export default defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'code',
+      type: 'array',
+      of: [
+        {
+          type: "block",
+        },
+        {
+          type: "image",
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: "alt",
+              type: "string",
+              title: "Alternative Text",
+              description: "Important for SEO and accessibility.",
+            },
+            {
+              name: "caption",
+              type: "string",
+              title: "Caption",
+              description: "Optional caption for the image",
+            },
+          ],
+        },
+        {
+          type: "code",
+          options: {
+            language: "typescript",
+            languageAlternatives: [
+              { title: "TypeScript", value: "typescript" },
+              { title: "JavaScript", value: "javascript" },
+              { title: "HTML", value: "html" },
+              { title: "CSS", value: "css" },
+              { title: "JSON", value: "json" },
+              { title: "Bash", value: "bash" },
+              { title: "Markdown", value: "markdown" },
+            ],
+          },
+        },
+      ],
       validation: Rule => Rule.required()
     }),
     defineField({

@@ -34,7 +34,17 @@ export interface Challenge {
   _id: string
   _type: 'challenge'
   name: string
-  description: string
+  description: {
+    _type: 'array'
+    _key: string
+    code?: string
+    children: {
+      _key: string
+      _type: 'block'
+      text: string
+      marks?: string[]
+    }[]
+  }[]
   points: number
   isSupervised: boolean
   instructions: string
