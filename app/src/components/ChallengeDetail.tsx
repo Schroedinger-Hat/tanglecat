@@ -9,6 +9,8 @@ import confetti from 'canvas-confetti'
 import Image from 'next/image'
 import { Button } from './ui/button'
 import { Card, CardHeader, CardContent, CardFooter, CardSection } from './ui/Card'
+import { Input } from './ui/input.generic'
+import { toast } from 'sonner'
 
 interface Props {
   challenge: Challenge
@@ -91,22 +93,53 @@ export function ChallengeDetail({ challenge }: Props) {
     }
 
     setIsRedeeming(true)
-    try {
-      const response = await fetch('/api/challenges/redeem', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ challengeId: challenge._id }),
-      })
+    let challengeVerified = true
+    if (challenge.webhookUrl) {
+      try {
+        const formData = new FormData(document.querySelector('form') as HTMLFormElement)
+        const verificationData = Object.fromEntries(formData)
+        
+        if (Object.keys(verificationData).length === 0) {
+          throw new Error('No verification data provided')
+        }
 
-      if (!response.ok) {
-        throw new Error('Failed to redeem challenge')
+        const response = await fetch(challenge.webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ challengeId: challenge._id, verificationData, playerEmail: userEmail }),
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to verify the challenge. If the problem persists, please contact the staff.')
+        }
+      } catch (error) {
+        console.error('Error verifying challenge:', error)
+        toast.error(error instanceof Error ? error.message : 'An unknown error occurred')
+        challengeVerified = false
+      } finally {
+        setIsRedeeming(false)
       }
+    }
 
-      router.push(`/challenge/${challenge._id}?completed=true`)
-    } catch (error) {
-      console.error('Error redeeming challenge:', error)
-    } finally {
-      setIsRedeeming(false)
+    if (challengeVerified) {
+      try {
+        const response = await fetch('/api/challenges/redeem', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ challengeId: challenge._id }),
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to redeem challenge')
+        }
+
+        router.push(`/challenge/${challenge._id}?completed=true`)
+      } catch (error) {
+        console.error('Error redeeming challenge:', error)
+        toast.error(error instanceof Error ? error.message : 'An unknown error occurred')
+      } finally {
+        setIsRedeeming(false)
+      }
     }
   }
 
@@ -156,7 +189,7 @@ export function ChallengeDetail({ challenge }: Props) {
 
       <CardContent>
         <div className="text-neutral-600 m-2">
-            {challenge.description}
+          {challenge.description}
         </div>
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
@@ -185,19 +218,33 @@ export function ChallengeDetail({ challenge }: Props) {
         <CardSection>
           <h3 className="font-semibold mb-2">Instructions:</h3>
           <p className="text-sm text-neutral-600">
-            {challenge.isSupervised 
+            {challenge.instructions ? challenge.instructions : ''}
+          </p>
+          <p className="text-sm text-neutral-600">
+            {challenge.isSupervised
               ? "To complete this challenge, click the button below to generate a QR code and show it to a supervisor."
               : "To complete this challenge, click the button below once you've finished."}
           </p>
+
         </CardSection>
-        
+
+        <form>
+          {challenge.verificationConfigJSON && challenge.verificationConfigJSON.fields.map((field) => (
+            <div key={field.name}>
+              {field.type === 'hidden' ? null : <h3 className="font-semibold mb-2">{field.title}:</h3>}
+              {field.type === 'hidden' ? null : <label htmlFor={field.name} className="text-sm text-neutral-600 mb-2">{field.description}</label>}
+              <Input type={field.type} name={field.name} defaultValue={field?.value || ''} />
+            </div>
+          ))}
+        </form>
+
         <Button
           onClick={handleRedeem}
           disabled={isRedeeming}
           variant="accent"
           className="w-full"
         >
-          {isRedeeming ? 'Redeeming...' : 
+          {isRedeeming ? 'Redeeming...' :
             challenge.isSupervised ? 'Generate Verification QR' : 'Redeem Challenge'}
         </Button>
       </CardFooter>

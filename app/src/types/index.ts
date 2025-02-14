@@ -37,12 +37,23 @@ export interface Challenge {
   description: string
   points: number
   isSupervised: boolean
+  instructions: string
   isOnline: boolean
   startDate: string
   endDate: string
   playersLimit?: number
   pointsRequirement?: number
   webhookUrl?: string
+  verificationConfigJSON?: {
+    type: string
+    fields: {
+      type: string
+      title: string
+      name: string
+      description: string
+      value?: string
+    }[]
+  }
   event: {
     _type: 'reference'
     _ref: string

@@ -7,9 +7,20 @@ export async function getChallengeById(id: string): Promise<Challenge | null> {
       _id,
       name,
       description,
+      instructions,
       points,
       isSupervised,
       isOnline,
+      verificationConfigJSON {
+        type,
+        fields[] {
+          type,
+          title,
+          name,
+          description,
+          value
+        }
+      },
       startDate,
       endDate,
       playersLimit,

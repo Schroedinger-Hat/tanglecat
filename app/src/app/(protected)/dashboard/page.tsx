@@ -39,6 +39,10 @@ export default function DashboardPage() {
                 if (typeof window !== 'undefined') {
                     // Update URL when view changes
                     const url = new URL(window.location.href)
+                    if (!url.pathname.includes('/dashboard')) {
+                        url.pathname = '/dashboard'
+                        window.location.href = url.toString()
+                    }
                     url.searchParams.set('view', activeView)
                     window.history.pushState({}, '', url)
                 }

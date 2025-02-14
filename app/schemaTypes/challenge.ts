@@ -12,8 +12,20 @@ export default defineType({
       validation: Rule => Rule.required()
     }),
     defineField({
+      name: 'abstract',
+      title: 'Abstract',
+      type: 'text',
+      validation: Rule => Rule.required()
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
+      type: 'text',
+      validation: Rule => Rule.required()
+    }),
+    defineField({
+      name: 'instructions',
+      title: 'Instructions',
       type: 'text',
       validation: Rule => Rule.required()
     }),
@@ -60,6 +72,71 @@ export default defineType({
       type: 'boolean',
       initialValue: false,
       description: 'If true, the challenge will be online and no supervisor need to do any action to validate the challenge'
+    }),
+    defineField({
+      name: 'verificationConfigJSON',
+      title: 'Verification Config JSON',
+      type: 'object',
+      fields: [
+        {
+          name: 'type',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'Trust', value: 'trust' },
+              { title: 'Verification', value: 'verification' },
+            ],
+          },
+        },
+        {
+          name: 'fields',
+          type: 'array',
+          of: [{
+            type: 'object',
+            fields: [
+              {
+                name: 'type',
+                type: 'string',
+                options: {
+                  list: [
+                    { title: 'Text', value: 'text' },
+                    { title: 'Hidden Text', value: 'hidden' },
+                  ],
+                },
+              },
+              {
+                name: 'title',
+                type: 'string',
+              },
+              {
+                name: 'value',
+                type: 'string',
+                description: 'The pre-filled value for the field'
+              },
+              {
+                name: 'name',
+                type: 'string',
+              },
+              {
+                name: 'description',
+                type: 'string'
+              }
+            ]
+          }]
+        }
+      ],
+      description: 'JSON config data to verify the challenge completion',
+      initialValue: () => ({
+        type: 'trust',
+        fields: [
+          {
+            type: 'text',
+            title: 'Social Media Post URL',
+            name: 'socialUrl',
+            description: 'URL to the social media post to verify the challenge completion'
+          }
+        ]
+      }),
     }),
     defineField({
       name: 'webhookUrl',
