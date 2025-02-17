@@ -44,7 +44,8 @@ export async function GET() {
         startDate,
         endDate,
         playersLimit,
-        pointsRequirement
+        pointsRequirement,
+        callToAction
       }
     `, { eventId })
 

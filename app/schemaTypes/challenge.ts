@@ -15,59 +15,20 @@ export default defineType({
       name: 'abstract',
       title: 'Abstract',
       type: 'text',
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
+      description: 'The abstract of the challenge, displayed in the leaderboard'
     }),
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'array',
-      of: [
-        {
-          type: "block",
-        },
-        {
-          type: "image",
-          options: {
-            hotspot: true,
-          },
-          fields: [
-            {
-              name: "alt",
-              type: "string",
-              title: "Alternative Text",
-              description: "Important for SEO and accessibility.",
-            },
-            {
-              name: "caption",
-              type: "string",
-              title: "Caption",
-              description: "Optional caption for the image",
-            },
-          ],
-        },
-        {
-          type: "code",
-          options: {
-            language: "typescript",
-            languageAlternatives: [
-              { title: "TypeScript", value: "typescript" },
-              { title: "JavaScript", value: "javascript" },
-              { title: "HTML", value: "html" },
-              { title: "CSS", value: "css" },
-              { title: "JSON", value: "json" },
-              { title: "Bash", value: "bash" },
-              { title: "Markdown", value: "markdown" },
-            ],
-          },
-        },
-      ],
+      type: 'text',
       validation: Rule => Rule.required()
     }),
     defineField({
       name: 'instructions',
       title: 'Instructions',
       type: 'text',
-      validation: Rule => Rule.required()
+      description: 'The instructions for the challenge, displayed in the challenge detail page. If not provided, we will use the default instructions.'
     }),
     defineField({
       name: 'points',
@@ -78,6 +39,7 @@ export default defineType({
     defineField({
       name: 'playersLimit',
       title: 'Players Limit',
+      description: '(not enabled) The maximum number of players that can complete the challenge',
       type: 'number',
       validation: Rule => Rule.min(0)
     }),
@@ -85,6 +47,7 @@ export default defineType({
       name: 'pointsRequirement',
       title: 'Points Required to Unlock',
       type: 'number',
+      description: '(not enabled) The minimum number of points a player need to have to unlock the challenge',
       validation: Rule => Rule.min(0)
     }),
     defineField({
@@ -111,7 +74,25 @@ export default defineType({
       title: 'Is Online Challenge',
       type: 'boolean',
       initialValue: false,
-      description: 'If true, the challenge will be online and no supervisor need to do any action to validate the challenge'
+      description: 'If true, the challenge will be validated via a webhook / integration e.g. github stars, google form'
+    }),
+    defineField({
+        name: 'callToAction',
+        title: 'Call to Action',
+        type: 'object',
+        fields: [
+            {
+                name: 'text',
+                title: 'Button Text',
+                type: 'string',
+            },
+            {
+                name: 'url',
+                title: 'URL to redirect to',
+                type: 'url',
+            }
+        ],
+        description: 'The text and url to display as a call to action for the challenge'
     }),
     defineField({
       name: 'verificationConfigJSON',
@@ -166,17 +147,6 @@ export default defineType({
         }
       ],
       description: 'JSON config data to verify the challenge completion',
-      initialValue: () => ({
-        type: 'trust',
-        fields: [
-          {
-            type: 'text',
-            title: 'Social Media Post URL',
-            name: 'socialUrl',
-            description: 'URL to the social media post to verify the challenge completion'
-          }
-        ]
-      }),
     }),
     defineField({
       name: 'webhookUrl',

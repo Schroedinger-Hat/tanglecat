@@ -1,61 +1,63 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense } from 'react'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { LeaderboardView } from '@/components/LeaderboardView'
 import { ChallengesView } from '@/components/ChallengesView'
 import { AwardsView } from '@/components/AwardsView'
 import { Button } from '@/components/ui/button'
 
-export default function DashboardPage() {
-    const [activeView, setActiveView] = useState<'challenges' | 'leaderboard' | 'award'>('leaderboard')
+type ViewType = 'challenges' | 'leaderboard' | 'award'
+
+function DashboardNav() {
+    const searchParams = useSearchParams()
+    const router = useRouter()
+    const pathname = usePathname()
+    const view = (searchParams.get('view') as ViewType) || 'leaderboard'
+
+    const setView = (newView: ViewType) => {
+        const params = new URLSearchParams(searchParams)
+        params.set('view', newView)
+        router.push(`${pathname}?${params.toString()}`)
+    }
 
     return (
-        <div className="max-w-2xl mx-auto pt-8">
+        <div className="max-w-2xl mx-auto pt-4">
             <div className="flex justify-center gap-2 mb-4">
                 <Button
                     size='sm'
-                    variant={activeView === 'challenges' ? 'accent' : 'default'}
-                    onClick={() => setActiveView('challenges')}
+                    variant={view === 'challenges' ? 'accent' : 'default'}
+                    onClick={() => setView('challenges')}
                 >
                     Challenges
                 </Button>
                 <Button
                     size='sm'
-                    variant={activeView === 'leaderboard' ? 'accent' : 'default'}
-                    onClick={() => setActiveView('leaderboard')}
+                    variant={view === 'leaderboard' ? 'accent' : 'default'}
+                    onClick={() => setView('leaderboard')}
                 >
                     Leaderboard
                 </Button>
                 <Button
                     size='sm'
-                    variant={activeView === 'award' ? 'accent' : 'default'}
-                    onClick={() => setActiveView('award')}
+                    variant={view === 'award' ? 'accent' : 'default'}
+                    onClick={() => setView('award')}
                 >
                     Awards
                 </Button>
             </div>
 
-            {(() => {
-                if (typeof window !== 'undefined') {
-                    // Update URL when view changes
-                    const url = new URL(window.location.href)
-                    if (!url.pathname.includes('/dashboard')) {
-                        url.pathname = '/dashboard'
-                        window.location.href = url.toString()
-                    }
-                    url.searchParams.set('view', activeView)
-                    window.history.pushState({}, '', url)
-                }
-
-                switch (activeView) {
-                    case 'leaderboard':
-                        return <LeaderboardView />
-                    case 'challenges':
-                        return <ChallengesView />
-                    case 'award':
-                        return <AwardsView />
-                }
-            })()}
+            {view === 'leaderboard' && <LeaderboardView />}
+            {view === 'challenges' && <ChallengesView />}
+            {view === 'award' && <AwardsView />}
         </div>
     )
-} 
+}
+
+export default function DashboardPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <DashboardNav />
+        </Suspense>
+    )
+}

@@ -21,6 +21,10 @@ export async function getChallengeById(id: string): Promise<Challenge | null> {
           value
         }
       },
+      callToAction {
+        text,
+        url
+      },
       startDate,
       endDate,
       playersLimit,

@@ -53,7 +53,7 @@ export function ChallengeDetail({ challenge }: Props) {
 
       if (data.isCompleted) {
         setShowQR(false)
-        router.push(`/challenge/${challenge._id}?completed=true`)
+        router.replace(`/challenge/${challenge._id}?completed=true`)
         return true
       }
       return false
@@ -133,7 +133,7 @@ export function ChallengeDetail({ challenge }: Props) {
           throw new Error('Failed to redeem challenge')
         }
 
-        router.push(`/challenge/${challenge._id}?completed=true`)
+        router.replace(`/challenge/${challenge._id}?completed=true`)
       } catch (error) {
         console.error('Error redeeming challenge:', error)
         toast.error(error instanceof Error ? error.message : 'An unknown error occurred')
@@ -189,17 +189,7 @@ export function ChallengeDetail({ challenge }: Props) {
 
       <CardContent>
         <div className="text-neutral-600 m-2">
-          {challenge.description.map((block) => (
-            <div key={block._key}>
-              {block.children && block.children.map((child) => (
-                <p key={child._key}>{child.text}</p>
-              ))}
-              {block.code && <div>
-                  <div dangerouslySetInnerHTML={{ __html: block.code }} />
-              </div>
-              }
-            </div>
-          ))}
+          {challenge.description}
         </div>
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
@@ -235,11 +225,22 @@ export function ChallengeDetail({ challenge }: Props) {
               ? "To complete this challenge, click the button below to generate a QR code and show it to a supervisor."
               : challenge.isOnline
                 ? "The challenge is online, so there will be an auto-verification after you've done the challenge requirements. You might need to refresh the page to see the challenge as completed."
-                : "To complete this challenge, click the button below once you've finished."}
+                : "To complete this challenge, click the button below once you've finished. Note that an administrator will later verify the challenge completion."}
           </p>
 
         </CardSection>
 
+        {challenge.callToAction && (
+          <div className="my-2 flex justify-center">
+            <Button
+              onClick={() => window.open(challenge.callToAction?.url, '_blank')}
+              variant="accent"
+              className="w-full"
+            >
+              {challenge.callToAction?.text}
+            </Button>
+          </div>
+        )}
         <form>
           {challenge.verificationConfigJSON && challenge.verificationConfigJSON.fields.map((field) => (
             <div key={field.name}>

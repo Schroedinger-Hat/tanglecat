@@ -1,6 +1,6 @@
 const CurveIllustration = () => {
   return (
-    <div className="-mb-6 w-full overflow-hidden leading-none">
+    <div className="-mb-7 w-full overflow-hidden leading-none">
       <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           strokeWidth="4"

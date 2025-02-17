@@ -35,17 +35,7 @@ export interface Challenge {
   _type: 'challenge'
   name: string
   abstract: string
-  description: {
-    _type: 'array'
-    _key: string
-    code?: string
-    children: {
-      _key: string
-      _type: 'block'
-      text: string
-      marks?: string[]
-    }[]
-  }[]
+  description: string
   points: number
   isSupervised: boolean
   instructions: string
@@ -55,6 +45,10 @@ export interface Challenge {
   playersLimit?: number
   pointsRequirement?: number
   webhookUrl?: string
+  callToAction?: {
+    text: string
+    url: string
+  }
   verificationConfigJSON?: {
     type: string
     fields: {
