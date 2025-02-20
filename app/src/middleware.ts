@@ -12,23 +12,24 @@ export function middleware(request: NextRequest) {
   // Check if the current path should be protected
   const isProtectedPath = protectedPaths.some(prefix => path.startsWith(prefix))
   const isAdminPath = adminPaths.some(prefix => path.startsWith(prefix))
-  if (isProtectedPath) {
-    // Check for the user_token cookie
-    const userToken = request.cookies.get('user_token')
+  const isHomePath = path === '/'
+  // Check for the user_token cookie
+  const userToken = request.cookies.get('user_token')
+  const supervisorToken = request.cookies.get('supervisor_token')
 
-    // If there's no token, redirect to the homepage
-    if (!userToken) {
-      const redirectUrl = new URL('/', request.url)
-      return NextResponse.redirect(redirectUrl)
-    }
+  if (isProtectedPath && !userToken) {
+    const redirectUrl = new URL('/', request.url)
+    return NextResponse.redirect(redirectUrl)
   }
   
-  if (isAdminPath) {
-    const supervisorToken = request.cookies.get('supervisor_token')
-    if (!supervisorToken) {
-      const redirectUrl = new URL('/', request.url)
-      return NextResponse.redirect(redirectUrl)
-    }
+  if (isAdminPath && !supervisorToken) {
+    const redirectUrl = new URL('/', request.url)
+    return NextResponse.redirect(redirectUrl)
+  }
+
+  if (isHomePath && userToken) {
+    const redirectUrl = new URL('/dashboard', request.url)
+    return NextResponse.redirect(redirectUrl)
   }
 
   return NextResponse.next()
