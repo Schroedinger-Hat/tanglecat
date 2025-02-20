@@ -38,6 +38,7 @@ export async function GET() {
         _id,
         name,
         description,
+        abstract,
         points,
         isSupervised,
         isOnline,

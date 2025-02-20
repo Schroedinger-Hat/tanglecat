@@ -13,10 +13,23 @@ export async function POST(request: Request) {
       )
     }
 
-    // Check if there are any validation fields
-    if (Object.keys(verificationData).length === 0) {
+    // Check if there are any validation fields and that they have valid values
+    if (!verificationData || Object.keys(verificationData).length === 0) {
       return NextResponse.json(
         { message: 'No validation data provided' },
+        { status: 400 }
+      )
+    }
+
+    // Verify each field has a non-empty value
+    const hasEmptyValues = Object.entries(verificationData).some(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ([_, value]) => value === null || value === undefined || value === ''
+    )
+
+    if (hasEmptyValues) {
+      return NextResponse.json(
+        { message: 'All validation fields must have non-empty values' },
         { status: 400 }
       )
     }

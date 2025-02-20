@@ -110,7 +110,8 @@ export function ChallengeDetail({ challenge }: Props) {
         })
 
         if (!response.ok) {
-          throw new Error('Failed to verify the challenge. If the problem persists, please contact the staff.')
+          const errorData = await response.json()
+          throw new Error(`Failed to verify the challenge: ${errorData.message}. If the problem persists, please contact the staff.`)
         }
       } catch (error) {
         console.error('Error verifying challenge:', error)
@@ -122,6 +123,7 @@ export function ChallengeDetail({ challenge }: Props) {
     }
 
     if (challengeVerified) {
+      setIsRedeeming(true)
       try {
         const response = await fetch('/api/challenges/redeem', {
           method: 'POST',
