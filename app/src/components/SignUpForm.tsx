@@ -119,7 +119,7 @@ export function SignUpForm() {
         />
         <label htmlFor="terms" className="text-sm">
           I accept the{' '}
-          <a href="https://schroedinger-hat.org/page/privacy" target="_blank" className="text-blue-600 hover:underline">
+          <a href="https://osday.dev/page/privacy" target="_blank" className="text-blue-600 hover:underline">
             terms and conditions
           </a>
         </label>

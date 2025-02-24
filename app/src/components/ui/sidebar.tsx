@@ -68,11 +68,11 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               Dashboard
             </Link>
             <Link 
-              href="https://osday.dev"
+              href="https://osday.dev/schedule"
               className="block px-4 py-2  text-slate-950 font-bold uppercase hover:bg-gray-100 rounded-lg"
               onClick={onClose}
             >
-              Go to OSDay
+              OSDay Schedule
             </Link>
             <Button
               size="sm"
