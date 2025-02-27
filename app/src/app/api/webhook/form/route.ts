@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-import { client } from '@/lib/sanity'
 import { findPlayerAndChallenge, findChallenge, completeChallenge } from '@/lib/sanity.queries'
 
 export async function POST(request: Request) {
