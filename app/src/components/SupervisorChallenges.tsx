@@ -57,7 +57,7 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold">
+      <h2 className="text-xl font-semibold mt-4">
         Your Assigned {type === 'challenge' ? 'Challenges' : 'Awards'}
       </h2>
 

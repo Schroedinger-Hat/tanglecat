@@ -186,6 +186,15 @@ export function ChallengeDetail({ challenge }: Props) {
   }
 
   return (
+    <>
+      <Button
+        onClick={() => router.push('/dashboard?view=challenges')}
+        variant="default"
+        size="sm"
+        className="mb-4"
+      >
+        ← Back to Challenges
+    </Button>
     <Card>
       <CardHeader>
         <h1 className="text-2xl font-bold">{challenge.name}</h1>
@@ -302,5 +311,6 @@ export function ChallengeDetail({ challenge }: Props) {
         </div>
       )}
     </Card>
+    </>
   )
 }

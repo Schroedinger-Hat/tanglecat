@@ -84,6 +84,7 @@ export function AwardDetail({ award }: Props) {
   }, [showQR, checkAwardStatus])
 
   const verificationUrl = `${baseUrl}/api/admin/verify-award?awardId=${award._id}&email=${userEmail}`
+  console.log(verificationUrl)
 
   const handleRedeem = async () => {
     if (award.isSupervised) {
