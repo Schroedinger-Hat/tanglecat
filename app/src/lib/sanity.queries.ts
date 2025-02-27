@@ -50,4 +50,35 @@ export async function findPlayerAndChallenge(playerEmail: string, challengeId: s
 
 export async function findChallenge(challengeId: string) {
   return client.fetch(queries.findChallenge, { challengeId })
+}
+
+export async function completeChallenge(
+  playerId: string, 
+  challengeId: string,
+  verificationData?: Record<string, unknown>
+) {
+  const patch = client
+    .patch(playerId)
+    .setIfMissing({ completedChallenges: [], verificationChallengesData: [] })
+    .append('completedChallenges', [{
+      _key: crypto.randomUUID(),
+      _type: 'reference',
+      _ref: challengeId
+    }])
+
+  // If verification data is provided, append it
+  if (verificationData) {
+    patch.append('verificationChallengesData', [{
+      _key: crypto.randomUUID(),
+      _type: 'object',
+      challenge: {
+        _key: crypto.randomUUID(),
+        _type: 'reference',
+        _ref: challengeId
+      },
+      verificationData: JSON.stringify(verificationData)
+    }])
+  }
+
+  return patch.commit()
 } 

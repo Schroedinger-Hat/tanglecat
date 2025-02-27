@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { client } from '@/lib/sanity'
+import { completeChallenge, findChallenge } from '@/lib/sanity.queries'
 
 export async function GET(request: Request) {
   try {
@@ -14,6 +15,13 @@ export async function GET(request: Request) {
       return NextResponse.json(
         { message: 'Unauthorized' },
         { status: 401 }
+      )
+    }
+
+    if (!challengeId || !playerEmail) {
+      return NextResponse.json(
+        { message: 'Missing required parameters' },
+        { status: 400 }
       )
     }
 
@@ -52,7 +60,7 @@ export async function GET(request: Request) {
         role == "player" && 
         $eventId in eventCodes[]._ref && 
         email == $playerEmail &&
-        !($challengeId in completedChallenges[]._ref)
+        (!defined(completedChallenges) || !($challengeId in completedChallenges[]._ref))
       ][0]
     `, { eventId, playerEmail, challengeId });
 
@@ -63,16 +71,16 @@ export async function GET(request: Request) {
       )
     }
 
-    // Update player's completed challenges
-    await client
-      .patch(player._id)
-      .setIfMissing({ completedChallenges: [] })
-      .append('completedChallenges', [{
-        _key: crypto.randomUUID(),
-        _type: 'reference',
-        _ref: challengeId
-      }])
-      .commit()
+    const challenge = await findChallenge(challengeId)
+
+    if (!challenge) {
+      return NextResponse.json(
+        { message: 'Challenge not found' },
+        { status: 404 }
+      )
+    }
+
+    await completeChallenge(player._id, challengeId, challenge.verificationConfigJSON)
 
     return NextResponse.json({ 
       message: 'Challenge verified successfully' 

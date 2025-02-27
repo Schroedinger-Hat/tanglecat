@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { client } from '@/lib/sanity'
-import { findPlayerAndChallenge, findChallenge } from '@/lib/sanity.queries'
+import { findPlayerAndChallenge, findChallenge, completeChallenge } from '@/lib/sanity.queries'
 
 export async function POST(request: Request) {
   try {
@@ -35,16 +35,7 @@ export async function POST(request: Request) {
       )
     }
 
-    // Update player's completed challenges
-    await client
-      .patch(player._id)
-      .setIfMissing({ completedChallenges: [] })
-      .append('completedChallenges', [{
-        _key: crypto.randomUUID(),
-        _type: 'reference',
-        _ref: challengeId
-      }])
-      .commit()
+    await completeChallenge(player._id, challengeId)
 
     return NextResponse.json({ 
       message: 'Challenge completed successfully',
