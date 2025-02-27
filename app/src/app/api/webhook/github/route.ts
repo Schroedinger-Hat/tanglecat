@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { client } from '@/lib/sanity'
+import { findPlayerAndChallenge } from '@/lib/sanity.queries'
 
 const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN
 
@@ -30,14 +31,7 @@ export async function POST(request: Request) {
       )
     }
 
-    // Fetch player from Sanity
-    const player = await client.fetch(`
-      *[_type == "user" && 
-        role == "player" && 
-        email == $playerEmail &&
-        !($challengeId in completedChallenges[]._ref)
-      ][0]
-    `, { playerEmail, challengeId })
+    const player = await findPlayerAndChallenge(playerEmail, challengeId)
 
     if (!player) {
       return NextResponse.json(

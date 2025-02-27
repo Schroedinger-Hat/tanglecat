@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server'
 import { client } from '@/lib/sanity'
+import { findPlayerAndChallenge, findChallenge } from '@/lib/sanity.queries'
 
 export async function POST(request: Request) {
   try {
-    const { challengeId, playerEmail, verificationData } = await request.json()
+    const { challengeId, userEmail, verificationData } = await request.json()
 
     // Check for required fields
-    if (!challengeId || !playerEmail) {
+    if (!challengeId || !userEmail) {
       return NextResponse.json(
-        { message: 'Missing required fields: challengeId and playerEmail' },
+        { message: 'Missing required fields: challengeId and userEmail' },
         { status: 400 }
       )
     }
@@ -35,9 +36,7 @@ export async function POST(request: Request) {
     }
 
     // Verify if the challenge exists
-    const challenge = await client.fetch(`
-      *[_type == "challenge" && _id == $challengeId][0]
-    `, { challengeId })
+    const challenge = await findChallenge(challengeId)
 
     if (!challenge) {
       return NextResponse.json(
@@ -47,13 +46,7 @@ export async function POST(request: Request) {
     }
 
     // Find the user and check if they haven't completed this challenge yet
-    const player = await client.fetch(`
-      *[_type == "user" && 
-        role == "player" && 
-        email == $playerEmail &&
-        !($challengeId in completedChallenges[]._ref)
-      ][0]
-    `, { playerEmail, challengeId })
+    const player = await findPlayerAndChallenge(userEmail, challengeId)
 
     if (!player) {
       return NextResponse.json(

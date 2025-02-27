@@ -32,4 +32,22 @@ export async function getChallengeById(id: string): Promise<Challenge | null> {
       webhookUrl
     }
   `, { id })
+}
+
+export const queries = {
+  findPlayerAndChallenge: `*[_type == "user" && 
+    role == "player" && 
+    email == $playerEmail &&
+    (!defined(completedChallenges) || !($challengeId in completedChallenges[]._ref))
+  ][0]`,
+
+  findChallenge: `*[_type == "challenge" && _id == $challengeId][0]`,
+}
+
+export async function findPlayerAndChallenge(playerEmail: string, challengeId: string) {
+  return client.fetch(queries.findPlayerAndChallenge, { playerEmail, challengeId })
+}
+
+export async function findChallenge(challengeId: string) {
+  return client.fetch(queries.findChallenge, { challengeId })
 } 

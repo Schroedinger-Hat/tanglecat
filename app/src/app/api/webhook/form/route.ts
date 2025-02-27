@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { client } from '@/lib/sanity'
+import { findPlayerAndChallenge, findChallenge } from '@/lib/sanity.queries'
 
 export async function POST(request: Request) {
   try {
@@ -13,9 +14,7 @@ export async function POST(request: Request) {
     }
 
     // Verify if the challenge exists
-    const challenge = await client.fetch(`
-      *[_type == "challenge" && _id == $challengeId][0]
-    `, { challengeId })
+    const challenge = await findChallenge(challengeId)
 
     if (!challenge) {
       return NextResponse.json(
@@ -25,13 +24,9 @@ export async function POST(request: Request) {
     }
 
     // Find the user and check if they haven't completed this challenge yet
-    const player = await client.fetch(`
-      *[_type == "user" && 
-        role == "player" && 
-        email == $userEmail &&
-        !($challengeId in completedChallenges[]._ref)
-      ][0]
-    `, { userEmail, challengeId })
+    const player = await findPlayerAndChallenge(userEmail, challengeId)
+
+    console.log(userEmail, challengeId)
 
     if (!player) {
       return NextResponse.json(
