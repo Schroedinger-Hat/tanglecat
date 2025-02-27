@@ -10,6 +10,7 @@ import Image from 'next/image'
 import { urlForImage } from '@/lib/sanity.image'
 import { Button } from './ui/button'
 import { Card, CardHeader, CardContent, CardFooter, CardSection } from './ui/Card'
+import { getBasePublicUrl } from '@/lib/utils/getBasePublicUrl'
 
 interface Props {
   award: Award
@@ -22,6 +23,7 @@ export function AwardDetail({ award }: Props) {
   const [isRedeeming, setIsRedeeming] = useState(false)
   const [showQR, setShowQR] = useState(false)
   const [userEmail, setUserEmail] = useState<string>('')
+  const baseUrl = getBasePublicUrl()
 
   useEffect(() => {
     if (isCompleted) {
@@ -81,7 +83,7 @@ export function AwardDetail({ award }: Props) {
     }
   }, [showQR, checkAwardStatus])
 
-  const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/verify-award?awardId=${award._id}&email=${userEmail}`
+  const verificationUrl = `${baseUrl}/api/admin/verify-award?awardId=${award._id}&email=${userEmail}`
 
   const handleRedeem = async () => {
     if (award.isSupervised) {

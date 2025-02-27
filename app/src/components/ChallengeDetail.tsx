@@ -11,6 +11,7 @@ import { Button } from './ui/button'
 import { Card, CardHeader, CardContent, CardFooter, CardSection } from './ui/Card'
 import { Input } from './ui/input.generic'
 import { toast } from 'sonner'
+import { getBasePublicUrl } from '@/lib/utils/getBasePublicUrl'
 
 interface Props {
   challenge: Challenge
@@ -23,6 +24,7 @@ export function ChallengeDetail({ challenge }: Props) {
   const [isRedeeming, setIsRedeeming] = useState(false)
   const [showQR, setShowQR] = useState(false)
   const [userEmail, setUserEmail] = useState<string>('')
+  const baseUrl = getBasePublicUrl()
 
   useEffect(() => {
     if (isCompleted) {
@@ -84,7 +86,7 @@ export function ChallengeDetail({ challenge }: Props) {
     }
   }, [showQR, checkChallengeStatus])
 
-  const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/verify-challenge?challengeId=${challenge._id}&email=${userEmail}`
+  const verificationUrl = `${baseUrl}/api/admin/verify-challenge?challengeId=${challenge._id}&email=${userEmail}`
 
   const handleRedeem = async () => {
     if (challenge.isSupervised) {

@@ -14,6 +14,9 @@ interface ChallengeListItemProps extends BaseListItemProps {
   description: string
   points: number
   isCompleted?: boolean
+  isSupervised?: boolean
+  isOnline?: boolean
+  webhook?: string
 }
 
 interface LeaderboardListItemProps extends BaseListItemProps {
@@ -85,6 +88,12 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
           <div className="flex justify-between items-start gap-4">
             <div className="flex-1">
               <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                <Image 
+                  src={`https://api.dicebear.com/9.x/glass/png?seed=${props.isSupervised ? 'supervised' : props.isOnline ? 'online' : props.webhook ? 'webhook' : 'self-check'}`}
+                  alt="Challenge type"
+                  width={24}
+                  height={24}
+                />
                 {title}
               </h3>
             </div>

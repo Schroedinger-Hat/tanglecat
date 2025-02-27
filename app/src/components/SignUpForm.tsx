@@ -19,6 +19,7 @@ export function SignUpForm() {
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
+    if (loading) return
     e.preventDefault()
     setError('')
     setLoading(true)
@@ -46,7 +47,7 @@ export function SignUpForm() {
       if (data.role === 'supervisor' || data.role === 'admin') {
         router.push('/admin')
       } else {
-        router.push('/dashboard')
+        router.push('/dashboard?view=challenges')
       }
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Something went wrong')
@@ -97,9 +98,9 @@ export function SignUpForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Event Code</label>
+        <label className="block text-sm font-medium mb-1 hidden">Event Code</label>
         <Input
-          type="text"
+          type="hidden"
           required
           className="w-full p-2 border rounded"
           readOnly

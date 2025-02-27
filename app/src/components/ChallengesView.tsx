@@ -50,6 +50,9 @@ export function ChallengesView() {
             description={challenge.abstract}
             points={challenge.points}
             isCompleted={isCompleted}
+            isSupervised={challenge.isSupervised}
+            isOnline={challenge.isOnline}
+            webhook={challenge.webhookUrl}
           />
         )
       })}

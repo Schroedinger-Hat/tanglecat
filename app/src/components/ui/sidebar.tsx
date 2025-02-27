@@ -68,7 +68,29 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               Dashboard
             </Link>
             <Link 
+              href="/dashboard?view=leaderboard"
+              className="block px-4 py-2  text-slate-950 font-bold uppercase hover:bg-gray-100 rounded-lg"
+              onClick={onClose}
+            >
+              Leaderboard
+            </Link>
+            <Link 
+              href="/dashboard?view=challenges"
+              className="block px-4 py-2  text-slate-950 font-bold uppercase hover:bg-gray-100 rounded-lg"
+              onClick={onClose}
+            >
+              Challenges
+            </Link>
+            <Link 
+              href="/dashboard?view=award"
+              className="block px-4 py-2  text-slate-950 font-bold uppercase hover:bg-gray-100 rounded-lg"
+              onClick={onClose}
+            >
+              Awards
+            </Link>
+            <Link 
               href="https://osday.dev/schedule"
+              target="_blank"
               className="block px-4 py-2  text-slate-950 font-bold uppercase hover:bg-gray-100 rounded-lg"
               onClick={onClose}
             >

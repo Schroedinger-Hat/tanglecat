@@ -34,7 +34,7 @@ export function LeaderboardView() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="space-y-3 max-h-[70%] p-4 overflow-y-auto">
+      <div className="sticky top-0 space-y-3 max-h-[70vh] p-4 overflow-y-auto">
         {users.map((user, index) => (
           <ListItem
             key={user._id}
