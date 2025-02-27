@@ -26,8 +26,6 @@ export async function POST(request: Request) {
     // Find the user and check if they haven't completed this challenge yet
     const player = await findPlayerAndChallenge(userEmail, challengeId)
 
-    console.log(userEmail, challengeId)
-
     if (!player) {
       return NextResponse.json(
         { message: 'Player not found or challenge already completed' },
