@@ -4,12 +4,12 @@ import { findPlayerAndChallenge, findChallenge } from '@/lib/sanity.queries'
 
 export async function POST(request: Request) {
   try {
-    const { challengeId, userEmail, verificationData } = await request.json()
+    const { challengeId, playerEmail, verificationData } = await request.json()
 
     // Check for required fields
-    if (!challengeId || !userEmail) {
+    if (!challengeId || !playerEmail) {
       return NextResponse.json(
-        { message: 'Missing required fields: challengeId and userEmail' },
+        { message: 'Missing required fields: challengeId and playerEmail' },
         { status: 400 }
       )
     }
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     }
 
     // Find the user and check if they haven't completed this challenge yet
-    const player = await findPlayerAndChallenge(userEmail, challengeId)
+    const player = await findPlayerAndChallenge(playerEmail, challengeId)
 
     if (!player) {
       return NextResponse.json(
