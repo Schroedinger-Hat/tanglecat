@@ -12,7 +12,8 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         'primary-red': {
-          DEFAULT: '#D1001F',
+          DEFAULT: '#C22933',
+          original: '#D1001F',
           dark: '#BA0019',
         },
         'dark-gray': '#2B2B2B',
