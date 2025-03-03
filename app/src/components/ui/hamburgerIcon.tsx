@@ -1,10 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface HamburgerIconProps {
   stroke?: string;
 }
 
-const HamburgerIcon: React.FC<HamburgerIconProps> = ({ stroke = 'currentColor' }) => {
+const HamburgerIcon: React.FC<HamburgerIconProps> = ({
+  stroke = "currentColor",
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

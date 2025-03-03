@@ -1,8 +1,8 @@
 import WaveHeader from "@/components/ui/waveHeader";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Toaster } from "sonner";
+import {GoogleAnalytics} from "@next/third-parties/google";
+import type {Metadata} from "next";
+import {Inter} from "next/font/google";
+import {Toaster} from "sonner";
 import "./globals.css";
 
 const inter = Inter({
