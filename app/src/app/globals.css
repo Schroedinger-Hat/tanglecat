@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+[data-theme="default"] {
+  --background: #f472b6;
+  --foreground: #171717;
+  --button: var(--background);
+}
+
+/* Tema OSDay */
+[data-theme="osday"] {
+  --background: #C0392B; /* Fiery red */
+  --foreground: #1E293B;
+  --primary: #C0392B;
+  --secondary: #12142D;
+  --accent: #4263AA;
+  --button: #EDCFB7;
+}
+
 body {
-  font-family: "Inter", Helvetica, sans-serif;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Inter', Helvetica, sans-serif;
 }

@@ -11,26 +11,10 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        'primary-red': {
-          DEFAULT: '#C22933',
-          original: '#D1001F',
-          dark: '#BA0019',
-        },
-        'dark-gray': '#2B2B2B',
-        // 'button-color': '#34374B', // Grey version
-        // 'button-color': '#15172E', // Blue version
-        primary: {
-          DEFAULT: '#C0392B' // Fiery red
-        },
-        secondary: {
-          DEFAULT: '#12142D' // Dark navy
-        },
-        button: {
-          DEFAULT: '#EDCFB7' // Creamy sand
-        },
-        extra: {
-          DEFAULT: '#4263AA', // Almosto ultramarine
-        },
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        accent: "var(--accent)",
+        button: "var(--button)",
         red: {
           500: '#FF4545', // Adjust this color to match your design
         }
