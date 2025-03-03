@@ -11,7 +11,7 @@ const WaveHeader = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
     return (
-        <div className="relative w-full bg-secondary">
+        <div className="relative w-full bg-secondary text-primary">
             <div className="py-4">
                 <div className="relative flex justify-between items-center mx-4">
                     <button

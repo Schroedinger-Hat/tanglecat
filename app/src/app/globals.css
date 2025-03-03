@@ -3,23 +3,27 @@
 @tailwind utilities;
 
 [data-theme="default"] {
-  --background: #f472b6;
+  --background: yellow; /* #f472b6; */
   --foreground: #171717;
   --button: var(--background);
+  --text: var(--foreground);
 }
 
 /* Tema OSDay */
 [data-theme="osday"] {
-  --background: #C0392B; /* Fiery red */
-  --foreground: #1E293B;
-  --primary: #C0392B;
-  --secondary: #12142D;
-  --accent: #4263AA;
-  --button: #EDCFB7;
+  --background: #c0392b; /* Fiery red */
+  --foreground: #1e293b;
+  --primary: #c0392b;
+  --secondary: #12142d; /* Dark navy blue */
+  --accent: #4263aa; /* Almost ultramarin */
+  --button: #edcfb7; /* Creamy sand */
+  --text: #ffdbaf;
+  --onlight: black;
+  --ondark: var(--text);
 }
 
 body {
-  color: var(--foreground);
+  color: var(--text);
   background: var(--background);
-  font-family: 'Inter', Helvetica, sans-serif;
+  font-family: "Inter", Helvetica, sans-serif;
 }

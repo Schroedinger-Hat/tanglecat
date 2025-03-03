@@ -17,7 +17,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const variantClasses = {
       default: `
         bg-button/80
-        text-neutral-9color50
+        text-secondary
         border-2
         border-neutral-950
         shadow-[4px_4px_0px_0px_rgba(23,23,23)]
@@ -30,7 +30,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       `,
       accent: `
         bg-button
-        text-black
+        text-secondary
         border-2
         border-neutral-950
         shadow-[4px_4px_0px_0px_rgba(23,23,23)]

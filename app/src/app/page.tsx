@@ -5,17 +5,20 @@ import { useEffect, useState } from "react";
 
 export default function HomePage() {
   const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") return null;
     return localStorage.getItem("theme") || "osday";
   });
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
+    if (typeof window === "undefined") return undefined;
+
+    document.documentElement.setAttribute("data-theme", theme!);
+    localStorage.setItem("theme", theme!);
   }, [theme]);
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center background bg-primary-red">
+      <div className="flex flex-col items-center justify-center background">
         <div className="w-full max-w-md px-4 py-8">
           <h1 className="text-3xl font-bold text-center mb-4 filter">
             Welcome to OSDay25
@@ -24,13 +27,14 @@ export default function HomePage() {
             <Logo width={100} height={100} />
           </div>
 
-          <p className="text-center mb-8 filter">
+          <p className="text-center mb-8 filter text-lg font-bold">
             Join the OSDay25 challenge and collect points through exciting
             activities! Unlock exclusive rewards with your earned points!
           </p>
 
           <div
             className="
+                text-onlight
                 w-full
                 p-6
                 space-y-4
