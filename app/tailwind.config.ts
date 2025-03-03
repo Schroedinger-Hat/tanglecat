@@ -11,9 +11,16 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        accent: "var(--accent)",
+        button: "var(--button)",
+        text: "var(--text)",
+        ondark: "var(--ondark)",
+        onlight: "var(--onlight)",
         red: {
-          500: '#FF4545', // Adjust this color to match your design
-        }
+          500: "#FF4545", // Adjust this color to match your design
+        },
       },
     },
   },

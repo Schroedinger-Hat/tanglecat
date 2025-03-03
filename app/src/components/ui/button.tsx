@@ -10,14 +10,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className = '', size = 'default', variant = 'default', children, ...props }, ref) => {
     const sizeClasses = {
       sm: 'h-10 px-6 text-sm',
-      default: 'h-14 px-8 text-base', 
+      default: 'h-14 px-8 text-base',
       lg: 'h-16 px-10 text-lg'
     }
 
     const variantClasses = {
       default: `
-        bg-neutral-50
-        text-neutral-950
+        bg-button/80
+        text-secondary
         border-2
         border-neutral-950
         shadow-[4px_4px_0px_0px_rgba(23,23,23)]
@@ -29,12 +29,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         active:translate-y-[4px]
       `,
       accent: `
-        bg-blue-600
-        text-white
+        bg-button
+        text-secondary
         border-2
         border-neutral-950
         shadow-[4px_4px_0px_0px_rgba(23,23,23)]
-        hover:bg-blue-700
+        hover:bg-button
         hover:shadow-[2px_2px_0px_0px_rgba(23,23,23)]
         hover:translate-x-[2px]
         hover:translate-y-[2px]
@@ -44,7 +44,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       `,
       danger: `
         bg-red-500
-        text-white
+        text-black
         border-2
         border-neutral-950
         shadow-[4px_4px_0px_0px_rgba(23,23,23)]
@@ -69,18 +69,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           font-medium
           transition-all
           duration-200
-          
+
           ${sizeClasses[size]}
           ${variantClasses[variant]}
-          
+
           focus:outline-none
           focus-visible:ring-2
           focus-visible:ring-neutral-950
           focus-visible:ring-offset-2
-          
+
           disabled:pointer-events-none
           disabled:opacity-50
-          
+
           ${className}
         `}
         {...props}

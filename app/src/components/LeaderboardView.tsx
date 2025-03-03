@@ -1,25 +1,32 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
-import { User } from '@/types'
-import { ListItem } from './ui/listItem'
-import CurveIllustration from './ui/curveIllustration'
+import { useEffect, useState } from "react"
+import { User } from "@/types"
+import { ListItem } from "./ui/listItem"
+import CurveIllustration from "./ui/curveIllustration"
 
 export function LeaderboardView() {
   const [users, setUsers] = useState<User[]>([])
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
-  
+
   useEffect(() => {
-      async function fetchLeaderboard() {
-       try {
-        const response = await fetch('/api/leaderboard')
+    async function fetchLeaderboard() {
+      try {
+        const response = await fetch("/api/leaderboard")
         const data = await response.json()
         setUsers(data.users)
-        const { user } = JSON.parse(decodeURIComponent(document?.cookie.split('; ').find(row => row.startsWith('user_token='))?.split('=')[1] || ''));
+        const { user } = JSON.parse(
+          decodeURIComponent(
+            document?.cookie
+              .split("; ")
+              .find((row) => row.startsWith("user_token="))
+              ?.split("=")[1] || "",
+          ),
+        )
         setCurrentUser(data.users.find((u: User) => u._id === user._id) || null)
       } catch (error) {
-        console.error('Error fetching leaderboard:', error)
+        console.error("Error fetching leaderboard:", error)
       } finally {
         setLoading(false)
       }
@@ -54,7 +61,7 @@ export function LeaderboardView() {
           <div className="max-w-2xl mx-auto p-2">
             <ListItem
               type="leaderboard"
-              position={users.findIndex(u => u._id === currentUser._id) + 1}
+              position={users.findIndex((u) => u._id === currentUser._id) + 1}
               name={currentUser.name}
               points={currentUser.totalPoints}
               isCurrentUser={true}

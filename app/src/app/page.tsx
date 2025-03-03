@@ -1,19 +1,27 @@
-'use client'
-import { SignUpForm } from '@/components/SignUpForm'
+"use client";
+import { SignUpForm } from "@/components/SignUpForm";
+import Logo from "@/components/ui/logo";
 
 export default function HomePage() {
-    return (
-      <>
-        <div className="flex flex-col items-center justify-center">
+  return (
+    <>
+      <div className="flex flex-col items-center justify-center background">
         <div className="w-full max-w-md px-4 py-8">
-            <h1 className="text-3xl text-white font-bold text-center mb-8 filter drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">Welcome to OSDay25</h1>
-            
-            <p className="text-white text-center mb-8 filter drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-                Join the OSDay25 challenge and collect points through exciting activities!
-                Unlock exclusive rewards with your earned points!
-            </p>
+          <h1 className="text-3xl font-bold text-center mb-4 filter">
+            Welcome to OSDay25
+          </h1>
+          <div className="flex justify-center items-center mb-4">
+            <Logo width={100} height={100} />
+          </div>
 
-            <div className="
+          <p className="text-center mb-8 filter text-lg font-bold">
+            Join the OSDay25 challenge and collect points through exciting
+            activities! Unlock exclusive rewards with your earned points!
+          </p>
+
+          <div
+            className="
+                text-onlight
                 w-full
                 p-6
                 space-y-4
@@ -22,11 +30,12 @@ export default function HomePage() {
                 border-neutral-950
                 shadow-[4px_4px_0px_0px_rgba(23,23,23)]
                 rounded-lg
-            ">
-                <SignUpForm />
-            </div>
+            "
+          >
+            <SignUpForm />
+          </div>
         </div>
-        </div>
-      </>
-    )
+      </div>
+    </>
+  );
 }
