@@ -33,7 +33,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
       {/* Sidebar */}
       <div className="fixed bg-primary-red inset-y-0 left-0 w-64 z-50 border-r-2 border-b-2 border-black transform transition-transform duration-300 ease-in-out rounded-tr-2xl rounded-br-2xl">
-        <div className="bg-black w-full h-8 py-7 rounded-tr-2xl">
+        <div className="bg-secondary w-full h-8 py-7 rounded-tr-2xl">
           <div className="text-white mt-4"><CurveIllustration /></div>
         </div>
         <div className="p-5 space-y-4">
@@ -97,4 +97,4 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   )
 }
 
-export default Sidebar 
+export default Sidebar

@@ -17,6 +17,20 @@ export default {
           dark: '#BA0019',
         },
         'dark-gray': '#2B2B2B',
+        // 'button-color': '#34374B', // Grey version
+        // 'button-color': '#15172E', // Blue version
+        primary: {
+          DEFAULT: '#C0392B' // Fiery red
+        },
+        secondary: {
+          DEFAULT: '#12142D' // Dark navy
+        },
+        button: {
+          DEFAULT: '#EDCFB7' // Creamy sand
+        },
+        extra: {
+          DEFAULT: '#4263AA', // Almosto ultramarine
+        },
         red: {
           500: '#FF4545', // Adjust this color to match your design
         }
