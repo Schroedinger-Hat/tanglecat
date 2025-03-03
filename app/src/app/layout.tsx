@@ -1,25 +1,25 @@
-import WaveHeader from "@/components/ui/waveHeader";
-import {GoogleAnalytics} from "@next/third-parties/google";
-import type {Metadata} from "next";
-import {Inter} from "next/font/google";
-import {Toaster} from "sonner";
-import "./globals.css";
+import WaveHeader from "@/components/ui/waveHeader"
+import { GoogleAnalytics } from "@next/third-parties/google"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import { Toaster } from "sonner"
+import "./globals.css"
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-});
+})
 
 export const metadata: Metadata = {
   title: "OSDay25 Tech Event Challenge",
   description:
     "Join the OSDay25 tech event challenge and compete with other attendees",
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -66,5 +66,5 @@ export default function RootLayout({
         )}
       </body>
     </html>
-  );
+  )
 }

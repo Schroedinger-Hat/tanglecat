@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import { User } from "@/types";
-import { ListItem } from "./ui/listItem";
-import CurveIllustration from "./ui/curveIllustration";
+import { useEffect, useState } from "react"
+import { User } from "@/types"
+import { ListItem } from "./ui/listItem"
+import CurveIllustration from "./ui/curveIllustration"
 
 export function LeaderboardView() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState<User[]>([])
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchLeaderboard() {
       try {
-        const response = await fetch("/api/leaderboard");
-        const data = await response.json();
-        setUsers(data.users);
+        const response = await fetch("/api/leaderboard")
+        const data = await response.json()
+        setUsers(data.users)
         const { user } = JSON.parse(
           decodeURIComponent(
             document?.cookie
@@ -23,22 +23,20 @@ export function LeaderboardView() {
               .find((row) => row.startsWith("user_token="))
               ?.split("=")[1] || "",
           ),
-        );
-        setCurrentUser(
-          data.users.find((u: User) => u._id === user._id) || null,
-        );
+        )
+        setCurrentUser(data.users.find((u: User) => u._id === user._id) || null)
       } catch (error) {
-        console.error("Error fetching leaderboard:", error);
+        console.error("Error fetching leaderboard:", error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     }
 
-    fetchLeaderboard();
-  }, []);
+    fetchLeaderboard()
+  }, [])
 
   if (loading) {
-    return <div className="text-center py-8">Loading...</div>;
+    return <div className="text-center py-8">Loading...</div>
   }
 
   return (
@@ -72,5 +70,5 @@ export function LeaderboardView() {
         </div>
       )}
     </div>
-  );
+  )
 }

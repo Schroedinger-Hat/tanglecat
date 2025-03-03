@@ -1,28 +1,28 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { Button } from "./button";
-import CrossIcon from "./crossIcon";
-import CurveIllustration from "./curveIllustration";
+import Link from "next/link"
+import { Button } from "./button"
+import CrossIcon from "./crossIcon"
+import CurveIllustration from "./curveIllustration"
 
 interface SidebarProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen: boolean
+  onClose: () => void
 }
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
-  if (!isOpen) return null;
-  const isSupervisor = document.cookie.includes("supervisor_token");
+  if (!isOpen) return null
+  const isSupervisor = document.cookie.includes("supervisor_token")
 
   const signOut = () => {
     // unset the user cookie
     document.cookie =
-      "user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      "user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
     document.cookie =
-      "supervisor_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      "supervisor_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
     // redirect to the home page via window.location.href
-    window.location.href = "/";
-  };
+    window.location.href = "/"
+  }
 
   return (
     <>
@@ -97,7 +97,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar
