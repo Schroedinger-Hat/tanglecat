@@ -1,21 +1,8 @@
 "use client";
 import { SignUpForm } from "@/components/SignUpForm";
 import Logo from "@/components/ui/logo";
-import { useEffect, useState } from "react";
 
 export default function HomePage() {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window === "undefined") return null;
-    return localStorage.getItem("theme") || "osday";
-  });
-
-  useEffect(() => {
-    if (typeof window === "undefined") return undefined;
-
-    document.documentElement.setAttribute("data-theme", theme!);
-    localStorage.setItem("theme", theme!);
-  }, [theme]);
-
   return (
     <>
       <div className="flex flex-col items-center justify-center background">

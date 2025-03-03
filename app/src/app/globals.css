@@ -3,10 +3,15 @@
 @tailwind utilities;
 
 [data-theme="default"] {
-  --background: yellow; /* #f472b6; */
+  --background: #f472b6;
   --foreground: #171717;
+  --primary: var(--background);
+  --secondary: var(--foreground);
+  --accent: var(--foreground);
   --button: var(--background);
   --text: var(--foreground);
+  --onlight: black;
+  --ondark: white;
 }
 
 /* Tema OSDay */
