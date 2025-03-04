@@ -91,4 +91,4 @@ const CardSection = ({
   </div>
 )
 
-export { Card, CardHeader, CardContent, CardFooter, CardSection } 
+export { Card, CardHeader, CardContent, CardFooter, CardSection }

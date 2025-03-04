@@ -16,10 +16,10 @@ export function ChallengesView() {
           fetch('/api/challenges'),
           fetch('/api/challenges/completed')
         ])
-        
+
         const challengesData = await challengesRes.json()
         const completedData = await completedRes.json()
-        
+
         setChallenges(challengesData.challenges)
         setCompletedChallenges(completedData.completedChallenges)
       } catch (error) {
@@ -59,4 +59,4 @@ export function ChallengesView() {
       </div>
     </div>
   )
-} 
+}

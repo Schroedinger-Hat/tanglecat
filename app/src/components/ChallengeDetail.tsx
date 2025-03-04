@@ -100,7 +100,7 @@ export function ChallengeDetail({ challenge }: Props) {
       try {
         const formData = new FormData(document.querySelector('form') as HTMLFormElement)
         const verificationData = Object.fromEntries(formData)
-        
+
         if (Object.keys(verificationData).length === 0) {
           throw new Error('No verification data provided')
         }
@@ -189,7 +189,7 @@ export function ChallengeDetail({ challenge }: Props) {
     <>
       <Button
         onClick={() => router.push('/dashboard?view=challenges')}
-        variant="default"
+        variant="info"
         size="sm"
         className="mb-4"
       >

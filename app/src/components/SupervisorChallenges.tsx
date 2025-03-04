@@ -24,12 +24,12 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
   const handleScan = async (result: string) => {
     setScanning(false)
     setSelectedItem(null)
-    
+
     try {
       const url = new URL(result)
       const itemId = url.searchParams.get(itemIdParam)
       const playerEmail = url.searchParams.get('email')
-      
+
       if (!itemId || !playerEmail) {
         toast.error('Invalid QR code')
         return
@@ -74,7 +74,7 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
             <h3 className="text-lg font-semibold mb-4 pr-8">
               Scan QR Code for: {selectedItem.name}
             </h3>
-            
+
             <QRCodeScanner
               onScan={handleScan}
               onClose={handleClose}
@@ -92,7 +92,7 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
 
       <div className="grid gap-2">
         {items.map((item) => (
-          <div 
+          <div
             key={item._id}
             className="
                 block
@@ -106,7 +106,7 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
                 shadow-[4px_4px_0px_0px_rgba(23,23,23)]
                 transition-all
                 duration-200
-                
+
                 hover:shadow-[2px_2px_0px_0px_rgba(23,23,23)]
                 hover:translate-x-[2px]
                 hover:translate-y-[2px]"
@@ -123,7 +123,7 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
                   </span>
                 )}
               </div>
-              
+
               <Button
                 onClick={() => {
                   setSelectedItem(item)

@@ -54,27 +54,27 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
       shadow-[4px_4px_0px_0px_rgba(23,23,23)]
       transition-all
       duration-200
-      
+
       hover:shadow-[2px_2px_0px_0px_rgba(23,23,23)]
       hover:translate-x-[2px]
       hover:translate-y-[2px]
-      
+
       active:shadow-none
       active:translate-x-[4px]
       active:translate-y-[4px]
-      
+
       focus:outline-none
       focus-visible:ring-2
       focus-visible:ring-neutral-950
       focus-visible:ring-offset-2
-      
+
       disabled:pointer-events-none
       disabled:opacity-50
     `
 
     if (props.type === 'challenge') {
       const { href, title, description, points, isCompleted, className = '' } = props
-      
+
       return (
         <Link
           href={href}
@@ -88,7 +88,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
           <div className="flex justify-between items-start gap-4">
             <div className="flex-1">
               <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
-                <Image 
+                <Image
                   src={`https://api.dicebear.com/9.x/glass/png?seed=${props.isSupervised ? 'supervised' : props.isOnline ? 'online' : props.webhook ? 'webhook' : 'self-check'}`}
                   alt="Challenge type"
                   width={24}
@@ -102,8 +102,8 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
                     {points} pts
                 </span>
                 {isCompleted && (
-                    <CheckCircle2 
-                    className="w-5 h-5 text-green-500 shrink-0" 
+                    <CheckCircle2
+                    className="w-5 h-5 text-green-500 shrink-0"
                     aria-label="Completed"
                     />
                 )}
@@ -120,7 +120,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
 
     if (props.type === 'leaderboard') {
       const { position, name, points, isCurrentUser, className = '' } = props
-      
+
       return (
         <div
           ref={ref as React.Ref<HTMLDivElement>}
@@ -154,7 +154,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
     }
 
     const { href, title, description, points, imageUrl, isCompleted, isSupervised, className = '' } = props as AwardListItemProps
-    
+
     return (
       <Link
         href={href}
@@ -179,8 +179,8 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
               <h3 className="font-semibold text-lg flex items-center gap-2">
                 {title}
                 {isCompleted && (
-                  <CheckCircle2 
-                    className="w-5 h-5 text-green-500 flex-shrink-0" 
+                  <CheckCircle2
+                    className="w-5 h-5 text-green-500 flex-shrink-0"
                     aria-label="Completed"
                   />
                 )}
@@ -209,4 +209,4 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
 ListItem.displayName = 'ListItem'
 
 export { ListItem }
-export type { ListItemProps, ChallengeListItemProps, LeaderboardListItemProps, AwardListItemProps } 
+export type { ListItemProps, ChallengeListItemProps, LeaderboardListItemProps, AwardListItemProps }

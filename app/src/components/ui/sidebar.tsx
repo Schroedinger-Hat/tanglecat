@@ -85,6 +85,14 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             >
               OSDay Schedule
             </Link>
+            <Link
+              href="https://osday.dev/jobs"
+              target="_blank"
+              className="text-secondary block px-4 py-2 font-bold uppercase hover:bg-gray-100 rounded-lg"
+              onClick={onClose}
+            >
+              OSDay Jobs
+            </Link>
             <Button
               size="sm"
               variant="danger"

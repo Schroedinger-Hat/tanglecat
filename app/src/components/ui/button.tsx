@@ -2,7 +2,7 @@ import * as React from 'react'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'sm' | 'default' | 'lg'
-  variant?: 'default' | 'accent' | 'danger'
+  variant?: 'default' | 'accent' | 'danger' | 'info'
   children: React.ReactNode
 }
 
@@ -55,6 +55,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         active:shadow-none
         active:translate-x-[4px]
         active:translate-y-[4px]
+      `,
+      info: `
+        bg-white
+        text-secondary
+        border-2
+        border-neutral-950
       `,
     }
 

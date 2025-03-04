@@ -54,7 +54,7 @@ export function LeaderboardView() {
         ))}
       </div>
       {currentUser && (
-        <div className="fixed bg-yellow-400 bottom-0 left-0 right-0">
+        <div className="fixed bg-foreground bottom-0 left-0 right-0">
           <div className="rotate-180 -mt-2">
             <CurveIllustration />
           </div>

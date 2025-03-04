@@ -27,16 +27,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             rounded-lg
             text-base
             placeholder:text-neutral-400
-            
+
             transition-all
             duration-200
-            
+
             focus:outline-none
             focus:ring-1
-            
+
             disabled:opacity-50
             disabled:cursor-not-allowed
-            
+
             ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
             ${className}
           `}
@@ -54,4 +54,4 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
 Input.displayName = 'Input'
 
-export { Input } 
+export { Input }

@@ -20,9 +20,9 @@ export function AwardsView() {
         const [awardsRes] = await Promise.all([
           fetch('/api/awards'),
         ])
-        
+
         const awardsData = await awardsRes.json()
-        
+
         setAwards(awardsData.awards)
         setAvailablePoints(awardsData.availablePoints)
       } catch (error) {
@@ -61,4 +61,4 @@ export function AwardsView() {
       </div>
     </div>
   )
-} 
+}
