@@ -2,6 +2,8 @@
 
 A platform for managing tech events with QR code-based challenge verification.
 
+Hey, are you looking to implement this in your event? Contact us via events@schroedinger-hat.org we might help you!
+
 ## Getting Started
 
 ### Prerequisites
