@@ -101,3 +101,45 @@ This project is licensed under the AGPLv3 License. See the [LICENSE](LICENSE) fi
 ## Contact
 
 For any questions or feedback, please contact us at [events@schroedinger-hat.org](mailto:events@schroedinger-hat.org)
+
+## Maintainers 👨‍💻👩‍💻
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/TheJoin95">
+          <img src="https://github.com/TheJoin95.png" width="100px;" alt="Miki Lombardi"/>
+          <br />
+          <sub>
+            <b>Miki Lombardi</b>
+          </sub>
+        </a>
+        <br />
+        <span>💻 Maintainer</span>
+      </td>
+      <td align="center">
+        <a href="https://github.com/Readpato">
+          <img src="https://github.com/Readpato.png" width="100px;" alt="Patrick Raedler"/>
+          <br />
+          <sub>
+            <b>Patrick Raedler</b>
+          </sub>
+        </a>
+        <br />
+        <span>💻 Maintainer</span>
+      </td>
+      <td align="center">
+        <a href="https://github.com/BugliL">
+          <img src="https://github.com/BugliL.png" width="100px;" alt="Lorenzo Bugli"/>
+          <br />
+          <sub>
+            <b>Lorenzo Bugli</b>
+          </sub>
+        </a>
+        <br />
+        <span>💻 Maintainer</span>
+      </td>
+    </tr>
+  </table>
+</div>
