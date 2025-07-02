@@ -11,7 +11,7 @@ export default function HomePage() {
             Welcome to OSDay25
           </h1>
           <div className="flex justify-center items-center mb-4">
-            <Logo width={100} height={100} />
+            <Logo width={180} height={180} />
           </div>
 
           <p className="text-center mb-8 filter text-lg font-bold">
