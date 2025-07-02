@@ -1,3 +1,10 @@
+<!-- [![Schrödinger Hat - Tangle Cat Logo](/app/public/tanglecat-white.png)](https://schroedinger-hat.org) -->
+<div align="center">
+    <a href="https://schroedinger-hat.org">
+      <img src="/app/public/tanglecat-white.png" alt="Schrödinger Hat - Tangle Cat Logo" width="20%" align="center"/>
+    </a>
+</div>
+
 # Enterteinment App for attendees in tech events
 
 A platform for managing tech events with QR code-based challenge verification.

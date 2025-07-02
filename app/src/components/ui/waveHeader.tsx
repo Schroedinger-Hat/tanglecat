@@ -21,7 +21,7 @@ const WaveHeader = () => {
                     >
                         <HamburgerIcon />
                     </button>
-                    <Link href="/" className='invert'>
+                    <Link href="/">
                         <Logo />
                     </Link>
                 </div>
