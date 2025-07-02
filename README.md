@@ -1,7 +1,7 @@
 <!-- [![Schrödinger Hat - Tangle Cat Logo](/app/public/tanglecat-white.png)](https://schroedinger-hat.org) -->
 <div align="center">
     <a href="https://schroedinger-hat.org">
-      <img src="/app/public/tanglecat-white.png" alt="Schrödinger Hat - Tangle Cat Logo" width="20%" align="center"/>
+      <img src="/app/public/tanglecat-red.png" alt="Schrödinger Hat - Tangle Cat Logo" width="20%" align="center"/>
     </a>
 </div>
 
