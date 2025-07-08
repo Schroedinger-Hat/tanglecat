@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sanedev" : "sanity dev",
+    "sanebuild" : "sanity build",
+    "sanedeploy" : "sanity deploy"
   },
   "dependencies": {
     "@next/third-parties": "^15.1.7",
