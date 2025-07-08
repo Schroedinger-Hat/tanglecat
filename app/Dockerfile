@@ -14,4 +14,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Use dev command for development
-CMD ["npm", "run", "dev"] 
+# CMD ["npm", "run", "dev"] 

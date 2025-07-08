@@ -4,9 +4,32 @@ import { codeInput } from '@sanity/code-input'
 import { structureTool } from 'sanity/structure'
 import { schemaTypes } from './schemaTypes'
 
-export default defineConfig({
-  name: 'event-gamification',
-  title: 'Event Gamification',
+export default defineConfig(process.env.NODE_ENV === 'development' ? [
+  {
+  name: 'default',
+  title: 'DEV Event Gamification',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET_DEV!,
+  basePath: '/studio',
+  plugins: [
+    structureTool(),
+    visionTool(),
+    codeInput(),
+],
+  schema: {
+    types: schemaTypes,
+  },
+  cors: {
+    origin: ['http://localhost:8080', 'http://localhost:3333'],
+    credentials: true,
+  },
+},
+]
+:
+[
+  {
+  name: 'default',
+  title: 'PROD Event Gamification',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
   basePath: '/studio',
@@ -22,4 +45,25 @@ export default defineConfig({
     origin: ['http://localhost:8080', 'http://localhost:3333'],
     credentials: true,
   },
-}) 
+},
+{
+  name: 'dev-event-gamification',
+  title: 'DEV Event Gamification',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET_DEV!,
+  basePath: '/devstudio',
+  plugins: [
+    structureTool(),
+    visionTool(),
+    codeInput(),
+],
+  schema: {
+    types: schemaTypes,
+  },
+  cors: {
+    origin: ['http://localhost:8080', 'http://localhost:3333'],
+    credentials: true,
+  },
+},
+]
+) 
