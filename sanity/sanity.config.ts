@@ -4,13 +4,13 @@ import { codeInput } from '@sanity/code-input'
 import { structureTool } from 'sanity/structure'
 import { schemaTypes } from './schemaTypes'
 
-export default defineConfig(process.env.NODE_ENV === 'development' ? [
+export default defineConfig( process.env.SANITY_STUDIO_ENV === 'development' ? [
   {
   name: 'default',
   title: 'DEV Event Gamification',
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET_DEV!,
-  basePath: '/studio',
+  projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV!,
+  basePath: '/dev-studio',
   plugins: [
     structureTool(),
     visionTool(),
@@ -30,8 +30,8 @@ export default defineConfig(process.env.NODE_ENV === 'development' ? [
   {
   name: 'default',
   title: 'PROD Event Gamification',
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET!,
   basePath: '/studio',
   plugins: [
     structureTool(),
@@ -49,8 +49,8 @@ export default defineConfig(process.env.NODE_ENV === 'development' ? [
 {
   name: 'dev-event-gamification',
   title: 'DEV Event Gamification',
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET_DEV!,
+  projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV!,
   basePath: '/devstudio',
   plugins: [
     structureTool(),
