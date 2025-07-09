@@ -1,0 +1,45 @@
+---
+import '../styles/global.css'
+import Navbar from '../components/Navbar.astro'
+import Footer from '../components/Footer.astro'
+import Seo from '../components/Seo.astro'
+import GoogleAnalytics from '../components/GoogleAnalytics.astro'
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <Seo
+      title="About Us – TangleCat"
+      description="Learn about the story and mission behind TangleCat, the open, gamified collaboration platform."
+      url="https://tanglecat.com/about"
+    />
+  </head>
+  <body class="bg-white text-[#111] font-sans min-h-screen flex flex-col">
+    <Navbar />
+    <main class="flex-1">
+      <section class="w-full bg-[#fafbfa] py-20">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+          <h1 class="text-5xl md:text-6xl font-extrabold mb-6 text-[#111]">About Us</h1>
+          <p class="text-lg text-[#111] mb-10">The story behind Schrödinger Hat</p>
+        </div>
+        <div class="max-w-2xl mx-auto px-4 text-lg text-[#111] leading-relaxed">
+          <p class="mb-6">
+            Schrödinger Hat began as a playful experiment between friends who believed that work, learning, and collaboration could be more fun, transparent, and rewarding. Inspired by the famous quantum thought experiment, we set out to build a platform where possibilities are always open—where anyone can contribute, grow, and be recognized.
+          </p>
+          <p class="mb-6">
+            Our journey started in a small co-working space, fueled by late-night brainstorming sessions, too much coffee, and a shared passion for gamification. We wanted to create a digital playground for organizations: a place where challenges spark creativity, achievements are celebrated, and every member has a real stake in the outcome.
+          </p>
+          <p class="mb-6">
+            Today, Schrödinger Hat powers communities and teams around the world, helping them unlock new levels of engagement and collaboration. We believe in open collaboration, meritocracy, and the magic that happens when people are empowered to do their best work—together.
+          </p>
+          <p>
+            Whether you’re a startup founder, a community builder, or just curious about the future of work, we invite you to join us on this adventure. The box is open. The possibilities are endless.
+          </p>
+        </div>
+      </section>
+    </main>
+    <Footer />
+    <GoogleAnalytics />
+  </body>
+</html>

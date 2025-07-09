@@ -1,0 +1,78 @@
+---
+import '../styles/global.css'
+import Navbar from '../components/Navbar.astro'
+import Footer from '../components/Footer.astro'
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Pricing – TangleCat</title>
+    <meta name="description" content="TangleCat pricing: open source, transparent, and community-driven. See your options for using and supporting TangleCat." />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pricing – TangleCat" />
+    <meta property="og:description" content="TangleCat pricing: open source, transparent, and community-driven. See your options for using and supporting TangleCat." />
+    <meta property="og:url" content="https://tanglecat.com/pricing" />
+    <meta property="og:image" content="https://tanglecat.com/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pricing – TangleCat" />
+    <meta name="twitter:description" content="TangleCat pricing: open source, transparent, and community-driven. See your options for using and supporting TangleCat." />
+    <meta name="twitter:image" content="https://tanglecat.com/og-image.png" />
+    <meta name="twitter:site" content="@tanglecat" />
+  </head>
+  <body class="bg-white text-[#111] font-sans">
+    <Navbar />
+    <main>
+      <!-- Jumbotron: Open Source Highlight -->
+      <section class="w-full bg-primary/10 py-16 mb-10">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+          <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-primary">Tanglecat is Open Source</h1>
+          <p class="text-lg text-primary/90 mb-4">Built for transparency, collaboration, and community.</p>
+          <p class="text-base text-[#111] max-w-2xl mx-auto">Tanglecat is free and open source under the MIT license. You can self-host, contribute, and make it your own. For organizations and companies, we offer support and onboarding to help you get started quickly.</p>
+        </div>
+      </section>
+      <section class="w-full bg-[#fafbfa] py-20">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+          <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-[#111]">Pricing</h2>
+          <p class="text-lg text-[#111] mb-10">Choose the best way to use Tanglecat for your community or organization.</p>
+        </div>
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 px-4">
+          <!-- Community Edition -->
+          <div class="bg-white rounded-2xl shadow p-8 flex flex-col items-center text-center border border-primary/30">
+            <h3 class="text-2xl font-bold mb-2 text-[#111]">Community Edition</h3>
+            <p class="text-lg text-[#111] mb-6">Everything you need to run Tanglecat, 100% open source. Perfect for individuals, communities, and hackers who want to self-host and customize.</p>
+            <ul class="text-left text-base text-[#111] mb-8 list-disc pl-6">
+              <li>All features included</li>
+              <li>Unlimited users and teams</li>
+              <li>Open source license (MIT)</li>
+              <li>Community support via GitHub</li>
+            </ul>
+            <a href="mailto:hello@schroedinger-hat.org?subject=Community%20Edition%20-%20Tanglecat" class="px-8 py-3 rounded bg-foreground text-white font-semibold shadow hover:bg-foreground/80 transition text-lg">Get in touch</a>
+          </div>
+          <!-- Support Us -->
+          <div class="bg-white rounded-2xl shadow p-8 flex flex-col items-center text-center border border-primary/30">
+            <h3 class="text-2xl font-bold mb-2 text-[#111]">Support Us</h3>
+            <p class="text-lg text-[#111] mb-6">For organizations and companies who want expert support, onboarding, and a boost to get started with Tanglecat. We’ll help you set up, customize, and scale.</p>
+            <ul class="text-left text-base text-[#111] mb-8 list-disc pl-6">
+              <li>Everything in Community Edition</li>
+              <li>Priority email support</li>
+              <li>Onboarding and setup assistance</li>
+              <li>Custom integrations and advice</li>
+            </ul>
+            <a href="mailto:hello@schroedinger-hat.org?subject=Support%20Us%20-%20Tanglecat" class="px-8 py-3 rounded bg-foreground text-white font-semibold shadow hover:bg-foreground/80 transition text-lg">Contact us</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <Footer />
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script type="text/javascript">
+      window['dataLayer'] = window['dataLayer'] || [];
+      function gtag(){window['dataLayer'].push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+  </body>
+</html>

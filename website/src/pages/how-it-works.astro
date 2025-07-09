@@ -1,0 +1,66 @@
+---
+import '../styles/global.css'
+import Navbar from '../components/Navbar.astro'
+import Footer from '../components/Footer.astro'
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>How it works – TangleCat</title>
+    <meta name="description" content="How TangleCat works: the stack, the magic, and how to get started with open, gamified collaboration." />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="How it works – TangleCat" />
+    <meta property="og:description" content="How TangleCat works: the stack, the magic, and how to get started with open, gamified collaboration." />
+    <meta property="og:url" content="https://tanglecat.com/how-it-works" />
+    <meta property="og:image" content="https://tanglecat.com/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="How it works – TangleCat" />
+    <meta name="twitter:description" content="How TangleCat works: the stack, the magic, and how to get started with open, gamified collaboration." />
+    <meta name="twitter:image" content="https://tanglecat.com/og-image.png" />
+    <meta name="twitter:site" content="@tanglecat" />
+  </head>
+  <body class="bg-white text-[#111] font-sans">
+    <Navbar />
+    <main>
+      <section class="w-full bg-[#fafbfa] py-20">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+          <h1 class="text-5xl md:text-6xl font-extrabold mb-6 text-[#111]">How Tanglecat Works</h1>
+          <p class="text-lg text-[#111] mb-10">A look under the hood: the stack and the magic behind the project</p>
+        </div>
+        <div class="max-w-2xl mx-auto px-4 text-lg text-[#111] leading-relaxed">
+          <h2 class="text-2xl font-bold mb-4">Our Stack</h2>
+          <ul class="list-disc pl-6 mb-8">
+            <li><span class="font-semibold">Next.js 15</span> – Modern React framework for fast, scalable web apps</li>
+            <li><span class="font-semibold">React 19</span> – Latest React features for UI and performance</li>
+            <li><span class="font-semibold">TypeScript</span> – Type-safe, maintainable codebase</li>
+            <li><span class="font-semibold">Tailwind CSS</span> – Utility-first, responsive styling</li>
+            <li><span class="font-semibold">Shadcn UI & Radix UI</span> – Accessible, beautiful component libraries</li>
+            <li><span class="font-semibold">Vercel AI SDK</span> – AI-powered features and streaming UIs</li>
+            <li><span class="font-semibold">Astro</span> – Blazing fast static site generation for the marketing site</li>
+          </ul>
+          <h2 class="text-2xl font-bold mb-4">How It All Works</h2>
+          <p class="mb-6">
+            Tanglecat is designed to make gamification, collaboration, and recognition seamless for modern teams. The core app is built with Next.js and React, providing a robust, scalable foundation. TypeScript ensures reliability and maintainability, while Tailwind CSS and Shadcn UI deliver a beautiful, accessible user experience.
+          </p>
+          <p class="mb-6">
+            The backend leverages API routes for challenges, awards, authentication, and leaderboards. Admin tools allow for easy management and verification. Integrations with GitHub and webhooks enable automation and extensibility.
+          </p>
+          <p>
+            The marketing site (what you’re viewing now) is built with Astro for speed and SEO, sharing the same design system for a seamless brand experience. Everything is deployed on Vercel for world-class performance and reliability.
+          </p>
+        </div>
+      </section>
+    </main>
+    <Footer />
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script type="text/javascript">
+      window['dataLayer'] = window['dataLayer'] || [];
+      function gtag(){window['dataLayer'].push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+  </body>
+</html>

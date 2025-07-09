@@ -1,0 +1,38 @@
+
+<html>
+  <head></head>
+  <body>
+    <header id="navbar" class="w-full bg-transparent pt-8 sticky top-0 z-50 transition-all duration-300" role="banner">
+      <nav class="max-w-7xl mx-auto flex items-center justify-between px-6" aria-label="Main navigation">
+        <a href="/" class="flex items-center gap-2 font-bold text-2xl text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" aria-label="TangleCat homepage">
+          <img src="/tanglecat-logo.png" alt="TangleCat logo" class="w-10 h-10 rounded" />
+          <span class="font-extrabold text-2xl align-middle text-[#111]">TangleCat</span>
+        </a>
+        <ul class="flex gap-10 text-base font-medium items-center">
+          <li><a href="/how-it-works" class="text-[#111] hover:text-primary focus:underline focus:outline-none transition" aria-current="page">Why Tanglecat</a></li>
+          <li><a href="/features" class="text-[#111] hover:text-primary focus:underline focus:outline-none transition">Features</a></li>
+          <li><a href="/pricing" class="text-[#111] hover:text-primary focus:underline focus:outline-none transition">Pricing</a></li>
+          <li><a href="/about" class="text-[#111] hover:text-primary focus:underline focus:outline-none transition">About Us</a></li>
+          <li>
+            <a href="mailto:hello@schroedinger-hat.org?subject=Request%20early%20access"
+              class="ml-2 px-4 py-2 rounded bg-foreground text-white font-semibold shadow border-2 border-primary hover:bg-primary focus:bg-primary focus:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition"
+              style="border: 2px solid var(--primary)"
+              aria-label="Request early access via email">
+              Request early access
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <script is:inline>
+      window.addEventListener('scroll', () => {
+        const navbar = document.getElementById('navbar')
+        if (window.scrollY > 0) {
+          navbar.classList.add('backdrop-blur', 'bg-white/80', 'shadow')
+        } else {
+          navbar.classList.remove('backdrop-blur', 'bg-white/80', 'shadow')
+        }
+      })
+    </script>
+  </body>
+</html>
