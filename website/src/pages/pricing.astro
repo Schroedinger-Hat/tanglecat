@@ -29,7 +29,7 @@ import Footer from '../components/Footer.astro'
         <div class="max-w-3xl mx-auto px-4 text-center">
           <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-primary">Tanglecat is Open Source</h1>
           <p class="text-lg text-primary/90 mb-4">Built for transparency, collaboration, and community.</p>
-          <p class="text-base text-[#111] max-w-2xl mx-auto">Tanglecat is free and open source under the MIT license. You can self-host, contribute, and make it your own. For organizations and companies, we offer support and onboarding to help you get started quickly.</p>
+          <p class="text-base text-[#111] max-w-2xl mx-auto">Tanglecat is free and open source under the Gnu Affero General Public License v.3. You can self-host, contribute, and make it your own. For organizations and companies, we offer support and onboarding to help you get started quickly.</p>
         </div>
       </section>
       <section class="w-full bg-[#fafbfa] py-20">
@@ -45,8 +45,9 @@ import Footer from '../components/Footer.astro'
             <ul class="text-left text-base text-[#111] mb-8 list-disc pl-6">
               <li>All features included</li>
               <li>Unlimited users and teams</li>
-              <li>Open source license (MIT)</li>
+              <li>Open source license</li>
               <li>Community support via GitHub</li>
+              <li>You can start from cloning Github repository</li>
             </ul>
             <a href="mailto:hello@schroedinger-hat.org?subject=Community%20Edition%20-%20Tanglecat" class="px-8 py-3 rounded bg-foreground text-white font-semibold shadow hover:bg-foreground/80 transition text-lg">Get in touch</a>
           </div>
@@ -66,13 +67,5 @@ import Footer from '../components/Footer.astro'
       </section>
     </main>
     <Footer />
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script type="text/javascript">
-      window['dataLayer'] = window['dataLayer'] || [];
-      function gtag(){window['dataLayer'].push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
   </body>
 </html>
