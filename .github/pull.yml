@@ -1,5 +1,5 @@
 version: "1"
 rules:
   - base: main
-    upstream: Schroedinger-Hat/event-gamification:main
+    upstream: Schroedinger-Hat/tanglecat:main
     mergeMethod: hardreset
