@@ -22,8 +22,8 @@ Hey, are you looking to implement this in your event? Contact us via events@schr
 1. Clone the repository:
 
 ```bash
-git clone Schroedinger-Hat/event-gamification.git
-cd event-gamification
+git clone Schroedinger-Hat/tanglecat.git
+cd tanglecat
 ```
 
 2. Start the development environment:

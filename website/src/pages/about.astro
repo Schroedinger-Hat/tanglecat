@@ -1,0 +1,45 @@
+---
+import '../styles/global.css'
+import Navbar from '../components/Navbar.astro'
+import Footer from '../components/Footer.astro'
+import Seo from '../components/Seo.astro'
+import GoogleAnalytics from '../components/GoogleAnalytics.astro'
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <Seo
+      title="About Us – TangleCat"
+      description="Learn about the story and mission behind TangleCat, the open, gamified collaboration platform."
+      url="https://tanglecat.com/about"
+    />
+  </head>
+  <body class="bg-white text-[#111] font-sans min-h-screen flex flex-col">
+    <Navbar />
+    <main class="flex-1">
+      <section class="w-full bg-[#fafbfa] py-20">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+          <h1 class="text-5xl md:text-6xl font-extrabold mb-6 text-[#111]">About Us</h1>
+          <p class="text-lg text-[#111] mb-10">The story behind Schrödinger Hat</p>
+        </div>
+        <div class="max-w-2xl mx-auto px-4 text-lg text-[#111] leading-relaxed">
+          <p class="mb-6">
+            <strong>Schrödinger Hat</strong> is a passionate open source community founded in 2020, uniting developers and creators across Europe. We organize meetups, workshops, podcasts, and consulting to promote open source, learning, and collaboration.
+          </p>
+          <p class="mb-6">
+            Our group started as friends during the Covid-19 lockdown and has grown into a vibrant, ever-expanding community. Supported by major industry sponsors, we host events, share knowledge, and help companies with tech activities.
+          </p>
+          <p class="mb-6">
+            <strong>Anyone can join:</strong> Become a member for perks and early access, or join the team to help organize and run events. We’re committed to making open source accessible and fun for all.
+          </p>
+          <p>
+            Want to get involved? <a href="https://schroedinger-hat.org/association/about-us" class="text-primary underline hover:text-primary/80">Learn more and join us</a>.
+          </p>
+        </div>
+      </section>
+    </main>
+    <Footer />
+    <GoogleAnalytics />
+  </body>
+</html>

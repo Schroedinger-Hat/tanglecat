@@ -1,0 +1,10 @@
+---
+const { id = 'G-V538SKHV3E' } = Astro.props
+---
+<script async src={`https://www.googletagmanager.com/gtag/js?id=${id}`}></script>
+<script type="text/javascript">
+  window['dataLayer'] = window['dataLayer'] || [];
+  function gtag(){window['dataLayer'].push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{id}');
+</script>
