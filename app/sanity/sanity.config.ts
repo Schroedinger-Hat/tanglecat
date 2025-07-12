@@ -10,7 +10,7 @@ export default defineConfig( process.env.SANITY_STUDIO_ENV === 'development' ? [
   title: 'DEV Event Gamification',
   projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV!,
-  basePath: '/dev-studio',
+  basePath: '/studio',
   plugins: [
     structureTool(),
     visionTool(),
