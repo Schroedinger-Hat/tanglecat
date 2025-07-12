@@ -26,5 +26,3 @@ const prodClient = createClient({
 
 // Export the appropriate client based on environment
 export const client = process.env.NODE_ENV === 'development' ? devClient : prodClient 
-
-//? Should these be left alone? (Always reference prod db or testing?)

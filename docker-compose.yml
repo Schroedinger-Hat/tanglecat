@@ -38,3 +38,4 @@ services:
         # - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID:-G-V538SKHV3E}
         # - WATCHPACK_POLLING=true
       restart: unless-stopped
+      
