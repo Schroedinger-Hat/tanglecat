@@ -11,6 +11,4 @@ COPY . .
 # Build the Sanity Studio
 RUN  npm run build
 
-RUN npm run dev
-
 # CMD ["npm", "run", "dev"] 
