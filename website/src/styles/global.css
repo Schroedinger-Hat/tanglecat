@@ -12,6 +12,13 @@
   --ondark: #111;
 }
 
+/* Astro Docs Dark Theme Overrides*/
+:root[data-theme='dark'] {
+  --background:  #17181c;
+  --text: #c1c3c8;
+}
+
+
 body {
   color: var(--text);
   background: var(--background);
