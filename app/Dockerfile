@@ -3,6 +3,8 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY package*.json ./
+COPY ../sanity/schemaTypes ./schemaTypes
+COPY ../sanity/sanity.config.ts ./sanity.config.ts
 
 RUN npm install
 

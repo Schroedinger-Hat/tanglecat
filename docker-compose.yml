@@ -4,15 +4,14 @@ services:
   
   sanity:
     build:
-      context: ./sanity
+      context: ./app/sanity
       dockerfile: ${NODE_ENV:-development}.Dockerfile
     ports:
       - "${PORT:-3333}:3333"
-    network_mode: "host"
     volumes:
-      - ./sanity:/sanity
-      - /sanity/node_modules
-      - /sanity/.sanity
+      - ./app/sanity:/app/sanity
+      - /app/sanity/node_modules
+      - /app/sanity/.sanity
     environment:
       - SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID=${SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID:-r9iqr1x2}
       - SANITY_STUDIO_PUBLIC_SANITY_DATASET=${SANITY_STUDIO_PUBLIC_SANITY_DATASET:-production}
@@ -26,7 +25,6 @@ services:
         dockerfile: ${NODE_ENV:-development}.Dockerfile
       ports:
         - "${PORT:-8080}:3000"
-      network_mode: "host"
       volumes:
         - ./app:/app
         - /app/node_modules
