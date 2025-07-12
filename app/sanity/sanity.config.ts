@@ -6,24 +6,43 @@ import { schemaTypes } from './schemaTypes'
 
 export default defineConfig( process.env.SANITY_STUDIO_ENV === 'development' ? [
   {
-  name: 'default',
-  title: 'DEV Event Gamification',
-  projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV!,
-  basePath: '/studio',
-  plugins: [
-    structureTool(),
-    visionTool(),
-    codeInput(),
-],
-  schema: {
-    types: schemaTypes,
+    name: 'default',
+    title: 'DEV Event Gamification',
+    projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
+    dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV!,
+    basePath: '/dev-studio',
+    plugins: [
+      structureTool(),
+      visionTool(),
+      codeInput(),
+  ],
+    schema: {
+      types: schemaTypes,
+    },
+    cors: {
+      origin: ['http://localhost:8080', 'http://localhost:3333'],
+      credentials: true,
+    },
   },
-  cors: {
-    origin: ['http://localhost:8080', 'http://localhost:3333'],
-    credentials: true,
+  {
+    name: 'production',
+    title: 'PROD Event Gamification',
+    projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
+    dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET!,
+    basePath: '/prod-studio',
+    plugins: [
+      structureTool(),
+      visionTool(),
+      codeInput(),
+  ],
+    schema: {
+      types: schemaTypes,
+    },
+    cors: {
+      origin: ['http://localhost:8080', 'http://localhost:3333'],
+      credentials: true,
+    },
   },
-},
 ]
 :
 [
@@ -32,7 +51,7 @@ export default defineConfig( process.env.SANITY_STUDIO_ENV === 'development' ? [
   title: 'PROD Event Gamification',
   projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET!,
-  basePath: '/studio',
+  basePath: '/prod-studio',
   plugins: [
     structureTool(),
     visionTool(),
@@ -51,7 +70,7 @@ export default defineConfig( process.env.SANITY_STUDIO_ENV === 'development' ? [
   title: 'DEV Event Gamification',
   projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV!,
-  basePath: '/devstudio',
+  basePath: '/dev-studio',
   plugins: [
     structureTool(),
     visionTool(),

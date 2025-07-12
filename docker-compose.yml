@@ -1,23 +1,6 @@
 version: '3.8'
 
 services:
-  
-  sanity:
-    build:
-      context: ./app/sanity
-      dockerfile: ${NODE_ENV:-development}.Dockerfile
-    ports:
-      - "${PORT:-3333}:3333"
-    volumes:
-      - ./app/sanity:/app/sanity
-      - /app/sanity/node_modules
-      - /app/sanity/.sanity
-    environment:
-      - SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID=${SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID:-r9iqr1x2}
-      - SANITY_STUDIO_PUBLIC_SANITY_DATASET=${SANITY_STUDIO_PUBLIC_SANITY_DATASET:-production}
-      - SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV=${SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV:-testing}
-      - SANITY_API_VERSION=${SANITY_API_VERSION:-2024-03-21}
-    restart: unless-stopped
 
   web:
       build:
