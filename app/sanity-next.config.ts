@@ -45,5 +45,6 @@ export default defineConfig( process.env.NODE_ENV === 'development' ? [
     origin: ['http://localhost:8080', 'http://localhost:3333'],
     credentials: true,
   },
+},
 ]
 ) 
