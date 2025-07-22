@@ -1,5 +1,8 @@
 # Astro Starter Kit: Minimal
 
+![TangleCat Website Preview](/website/public/og-image.png)
+
+
 ```sh
 npm create astro@latest -- --template minimal
 ```
