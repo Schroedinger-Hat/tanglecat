@@ -19,6 +19,26 @@
 }
 
 
+/* Force lists to show bullets/numbers in Starlight */
+.sl-markdown-content ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+}
+
+.sl-markdown-content ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+}
+
+.sl-markdown-content ul ul {
+  list-style-type: circle !important;
+}
+
+.sl-markdown-content ol ol {
+  list-style-type: lower-alpha !important;
+}
+
+
 body {
   color: var(--text);
   background: var(--background);
