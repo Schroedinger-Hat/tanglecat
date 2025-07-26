@@ -106,12 +106,7 @@ This will start the Next.js application and the integrated Sanity Studio CMS.
 
 4. Accessing your locally hosted Sanity Studio:
    - `http://localhost:3333` - this should show you your live *development* database hosted on Sanity.io. You will find, however, that you can also navigate to and edit your *production* database from here.
-
-
-Additional benefit to seperate Sanity Studio instance:
-- If your Sanity Studio *development* database was empty when *docker compose* was first run, then it should now be populated with some demo data to play with.
-- Deploy
-
+   - If your Sanity Studio *development* database was empty when docker compose was first run, then it should now be populated with some demo data to play with.
 
 ### Production Environment
 
@@ -127,9 +122,10 @@ NODE_ENV=production docker compose up --build
 NODE_ENV=production docker compose up
 ```
 
-3. Access the local studio at `http://localhost:8080/studio`: you need to be logged in to the Sanity Studio to manage the content.
-
 This will start the Next.js application and the Sanity Studio CMS in production mode.
+   
+3.  Access the production site and studio at `http://localhost:8080` & `http://localhost:8080/studio`
+
 
 ## Project Structure
 

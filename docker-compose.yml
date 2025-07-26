@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
 
   web:
@@ -16,9 +14,9 @@ services:
         - NODE_ENV=${NODE_ENV:-development}
         - NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID:-r9iqr1x2}
         - NEXT_PUBLIC_SANITY_DATASET=${NEXT_PUBLIC_SANITY_DATASET:-production}
-        - NEXT_PUBLIC_SANITY_DATASET_DEV=${NEXT_PUBLIC_SANITY_DATASET_DEV:-testing}
+        - NEXT_PUBLIC_SANITY_DATASET_DEV=${NEXT_PUBLIC_SANITY_DATASET_DEV:-development}
         - SANITY_API_VERSION=${SANITY_API_VERSION:-2024-03-21}
-        # - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID:-G-V538SKHV3E}
-        # - WATCHPACK_POLLING=true
+        # - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID:<fallback ID>}
+        - WATCHPACK_POLLING=true
       restart: unless-stopped
       
