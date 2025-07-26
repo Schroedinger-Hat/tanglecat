@@ -12,7 +12,7 @@ export function SignUpForm() {
     firstName: '',
     lastName: '',
     email: '',
-    eventCode: 'osday25',
+    eventCode: '',
     termsAccepted: false
   })
   const [error, setError] = useState('')
@@ -98,12 +98,12 @@ export function SignUpForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1 hidden">Event Code</label>
+        <label className="block text-sm font-medium mb-1">Event Code</label>
         <Input
-          type="hidden"
+          type="visible"
           required
           className="w-full p-2 border rounded"
-          readOnly
+          // readOnly
           value={formData.eventCode}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, eventCode: e.target.value})}
         />
