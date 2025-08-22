@@ -7,14 +7,14 @@ import { schemaTypes } from './schemaTypes'
 export default defineConfig({
   name: 'event-gamification',
   title: 'Event Gamification',
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'local',
+  dataset: process.env.SANITY_STUDIO_DATASET || process.env.NEXT_PUBLIC_SANITY_DATASET || 'development',
   basePath: '/studio',
   plugins: [
     structureTool(),
     visionTool(),
     codeInput(),
-],
+  ],
   schema: {
     types: schemaTypes,
   },
@@ -22,4 +22,4 @@ export default defineConfig({
     origin: ['http://localhost:8080', 'http://localhost:3333'],
     credentials: true,
   },
-}) 
+})

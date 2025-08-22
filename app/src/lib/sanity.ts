@@ -23,4 +23,4 @@ const prodClient = createClient({
 })
 
 // Export the appropriate client based on environment
-export const client = process.env.NODE_ENV === 'development' ? devClient : prodClient 
+export const client = process.env.NODE_ENV === 'development' ? devClient : prodClient

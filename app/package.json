@@ -6,14 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sanity:dev": "sanity dev",
+    "sanity:start": "sanity start",
+    "sanity:build": "sanity build",
+    "sanity:deploy": "sanity deploy"
   },
   "dependencies": {
     "@next/third-parties": "^15.1.7",
-    "@sanity/client": "^6.0.0",
-    "@sanity/code-input": "^5.1.2",
-    "@sanity/vision": "^3.74.1",
+    "@sanity/client": "^6.29.1",
+    "@sanity/code-input": "^5.2.1",
+    "@sanity/vision": "^4.4.1",
     "canvas-confetti": "^1.9.3",
+    "dotenv": "^17.2.1",
     "framer-motion": "^11.18.2",
     "html5-qrcode": "^2.3.8",
     "lucide-react": "^0.475.0",
@@ -22,8 +27,9 @@
     "qrcode.react": "^4.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sanity": "^3.74.1",
+    "sanity": "^4.4.1",
     "sonner": "^1.7.4",
+    "styled-components": "^6.1.19",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
