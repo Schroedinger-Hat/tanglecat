@@ -5,7 +5,7 @@
     </a>
 </div>
 
-# Enterteinment App for attendees in tech events
+# Entertainment App for attendees in tech events
 
 A platform for managing tech events with QR code-based challenge verification.
 
@@ -13,54 +13,119 @@ Hey, are you looking to implement this in your event? Contact us via events@schr
 
 ## Getting Started
 
-### Prerequisites
+
+### Sanity Setup
+
+Even in local development, your TangleCat game data will be hosted in a Sanity Studio Data Lake.
+
+It is recommended that you complete the following steps before attempting to load Tanglecat, as a database connection is necessary for basic functionality.
+
+  1. Create a create a [Sanity.io](https://www.sanity.io/) account (if you do not already have one).
+  2. Navigate to your *Dashboard* and *Create a new project* (name and org should match your event)
+      - Below your Project Title, you should find a your **Project ID** - save this id for later.
+  3. Now, Navigate to the *Datasets* Tab
+     - Create a database named **production** and another named **development**
+  4.  From your new project dashboard, navigate to the *API* tab
+      - Under **CORS origins**, add the URL **http://localhost:8080** and any other desired host addresses (your future deployed site URL will go here too).
+      - Next, select **Add API token** - create a new token with **Editor** permissions - **save this token**; it will be used by your TangleCat app to access your project.
+
+
+Now, when you setup your project's `.env` file, you should have all the necessary environment variables.
+
+
+### Setting up your Development Environment
+
+#### Prerequisites:
+
+Ensure that the following are installed on your device:
 - Docker and Docker Compose
 - Node.js 20+ (for local development)
 
-### Development Environment
+#### Basic Setup Steps
 
-1. Clone the repository:
+1. Clone the TangleCat Git repository:
 
 ```bash
 git clone Schroedinger-Hat/tanglecat.git
 cd tanglecat
 ```
 
-2. Start the development environment:
+2. Create you nextJS app `.env` file under the `/app` directory as follows.
+   
+  ```bash
+NODE_ENV="development"
+NEXT_PUBLIC_SANITY_DATASET="production"
+NEXT_PUBLIC_SANITY_DATASET_DEV="development"
+NEXT_PUBLIC_SANITY_PROJECT_ID=<your_project_ID>
+NEXT_PUBLIC_BASE_URL="http://localhost:3000"
+SANITY_API_TOKEN=<your_api_token>
+SANITY_API_VERSION="2024-03-21"
+```
+(Dataset values may differ, but should match your Sanity testing and production db names)
+
+3. Start the development environment (from main project directory)
 
 ```bash
 docker compose up
 ```
 
-This will start the Next.js application and the Sanity Studio CMS.
-**NOTE**: The first time you start the environment, it will take a while to download the images and start the containers. You need to have a .env file in the root of the project. Check bitwarden or create one as follow:
+This will start the Next.js application and the integrated Sanity Studio CMS. 
+
+**NOTE:** The first time you start the environment, it will take a while to download the images and start the containers. If you encounter issues, confirm you have a correctly configured `.env` file in the root of the `/app` directory.
+
+4. Accessing your locally hosted application:
+   - `http://localhost:8080` - this should show you your local version on the NextJS app, with access to live *development* database data.
+    - `http://localhost:8080/studio` - this should show you your live *development* database hosted on Sanity.io. Use this Studio interface to create test content for your event app.
+
+#### Local Sanity Studio Setup (optional)
+
+The above instructions allow you to access and edit your *development* database locally (from within your app), but not access your *production* database locally. If you would like to make changes to the production database locally, deploy a remote sanity studio, or otherwise work with your Sanity data uncoupled from the frontend app, follow these instructions to run a separate Sanity Studio instance:
+
+1. Create you Sanity Studio `.env` file under `/app/sanity` as follows (see provided `.env.example` in same directory).
+   
+  ```bash
+SANITY_STUDIO_SANITY_DATASET="production"
+SANITY_STUDIO_SANITY_DATASET_DEV="development"
+SANITY_STUDIO_SANITY_PROJECT_ID=<your_project_ID>
+SANITY_API_TOKEN=<your_api_token>
+SANITY_API_VERSION="2024-03-21"
+```
+(These values should match your primary `.env` file, however the names will differ. You may also wish to use a separate API token with different permissions than app token).
+
+**NOTE**: additional `.env.development` & `.env.production` example files are provided - if you remove the `.sample` suffix from both, Sanity Studio will default to showing *production* database first in production environments & *development* database first in development environments (extra optional).
+
+2. Start the development environment (from main project directory)
 
 ```bash
-NODE_ENV=development
-NEXT_PUBLIC_SANITY_PROJECT_ID=your_sanity_project_id
-NEXT_PUBLIC_SANITY_DATASET=your_sanity_dataset
-SANITY_API_VERSION=your_sanity_api_version
+docker compose -f docker-compose.sanity.yml up
 ```
 
-3. Access the application at `http://localhost:8080`
+This will start the Next.js application and the integrated Sanity Studio CMS. 
+
+**NOTE:** The first time you start the environment, it will take a while to download the images and start the containers. If you encounter issues, confirm you have a correctly configured `.env` file in the root of the `/app/sanity` directory.
+
+4. Accessing your locally hosted Sanity Studio:
+   - `http://localhost:3333` - this should show you your live *development* database hosted on Sanity.io. You will find, however, that you can also navigate to and edit your *production* database from here.
+   - If your Sanity Studio *development* database was empty when docker compose was first run, then it should now be populated with some demo data to play with.
 
 ### Production Environment
 
 1. Build the production image:
 
 ```bash
-ENVIRONMENT=production docker compose up --build
+NODE_ENV=production docker compose up --build
 ```
 
 2. Start the production environment:
 
 ```bash
-ENVIRONMENT=production docker compose up
+NODE_ENV=production docker compose up
 ```
 
-3. Access the local studio at `http://localhost:8080/studio`: you need to be logged in to the Sanity Studio to manage the content.
-
 This will start the Next.js application and the Sanity Studio CMS in production mode.
+   
+3.  Access the production site and studio at `http://localhost:8080` & `http://localhost:8080/studio`
+
 
 ## Project Structure
 
