@@ -2,7 +2,7 @@ import { defineConfig } from 'sanity'
 import { visionTool } from '@sanity/vision'
 import { codeInput } from '@sanity/code-input'
 import { structureTool } from 'sanity/structure'
-import { schemaTypes } from './schemaTypes'
+import { schemaTypes } from './sanity/schemaTypes'
 
 export default defineConfig({
   name: 'event-gamification',

@@ -4,85 +4,22 @@ import { codeInput } from '@sanity/code-input'
 import { structureTool } from 'sanity/structure'
 import { schemaTypes } from './schemaTypes'
 
-export default defineConfig( process.env.SANITY_STUDIO_ENV === 'development' ? [
-  {
-    name: 'default',
-    title: 'DEV Event Gamification',
-    projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
-    dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV!,
-    basePath: '/dev-studio',
-    plugins: [
-      structureTool(),
-      visionTool(),
-      codeInput(),
-  ],
-    schema: {
-      types: schemaTypes,
-    },
-    cors: {
-      origin: ['http://localhost:8080', 'http://localhost:3333'],
-      credentials: true,
-    },
-  },
-  {
-    name: 'production',
-    title: 'PROD Event Gamification',
-    projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
-    dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET!,
-    basePath: '/prod-studio',
-    plugins: [
-      structureTool(),
-      visionTool(),
-      codeInput(),
-  ],
-    schema: {
-      types: schemaTypes,
-    },
-    cors: {
-      origin: ['http://localhost:8080', 'http://localhost:3333'],
-      credentials: true,
-    },
-  },
-]
-:
-[
-  {
-  name: 'default',
-  title: 'PROD Event Gamification',
-  projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET!,
-  basePath: '/prod-studio',
+export default defineConfig({
+  name: 'event-gamification',
+  title: 'Event Gamification',
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'local',
+  dataset: process.env.SANITY_STUDIO_DATASET || process.env.NEXT_PUBLIC_SANITY_DATASET || 'development',
+  basePath: '/studio',
   plugins: [
     structureTool(),
     visionTool(),
     codeInput(),
-],
+  ],
   schema: {
     types: schemaTypes,
   },
   cors: {
-    origin: ['http://localhost:8080', 'http://localhost:3333'],
+    origin: ['http://localhost:8080', 'http://localhost:3333', 'http://localhost:3000'],
     credentials: true,
   },
-},
-{
-  name: 'dev-event-gamification',
-  title: 'DEV Event Gamification',
-  projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV!,
-  basePath: '/dev-studio',
-  plugins: [
-    structureTool(),
-    visionTool(),
-    codeInput(),
-],
-  schema: {
-    types: schemaTypes,
-  },
-  cors: {
-    origin: ['http://localhost:8080', 'http://localhost:3333'],
-    credentials: true,
-  },
-},
-]
-) 
+})

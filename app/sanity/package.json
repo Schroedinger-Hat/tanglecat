@@ -16,13 +16,13 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/client": "^6.0.0",
-    "@sanity/code-input": "^5.1.3",
+    "@sanity/client": "^6.29.1",
+    "@sanity/code-input": "^5.2.1",
     "@sanity/ui": "^2.16.2",
-    "@sanity/vision": "^3.99.0",
+    "@sanity/vision": "^4.5.0",
     "react": "^19.1",
     "react-dom": "^19.1",
-    "sanity": "^3.99.0",
+    "sanity": "^4.5.0",
     "sanity-plugin-documents-pane": "^2.4.0",
     "styled-components": "^6.1.18"
   },

@@ -14,10 +14,10 @@
 
 import {defineCliConfig} from 'sanity/cli'
 
-export default defineCliConfig({ // Do we want the cli to reference the dev or prod dataset locally?
+export default defineCliConfig({
   api: {
-    projectId: process.env.SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID,
-    dataset: process.env.SANITY_STUDIO_ENV === 'development' ? process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV : process.env.SANITY_STUDIO_PUBLIC_SANITY_DATASET //: 'production'
+    projectId: process.env.SANITY_STUDIO_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'local',
+    dataset: process.env.SANITY_STUDIO_DATASET || process.env.NEXT_PUBLIC_SANITY_DATASET || 'development'
   },
   /**
    * Enable auto-updates for studios.
