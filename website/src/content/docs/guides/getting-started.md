@@ -1,124 +1,210 @@
 ---
 title: Getting Started with TangleCat
-description: Setting up a Tanglecat event page
+description: Setting up a Tanglecat event page locally
 sidebar:
   order: 1
   label: Getting Started
   hidden: false
 ---
 
-*This page is currently under development*
-
 ## Prerequisites
 
 Ensure that the following are installed on your device:
-- Docker and Docker Compose
-- Node.js 20+ (for local development)
+- **Docker and Docker Compose** (for containerized setup)
+- **Node.js 20+** (for local development)
+- **Git** (for cloning the repository)
 
-### Sanity Setup
+## Quick Start (Docker - Recommended)
 
-Even in local development, your TangleCat game data will be hosted in a Sanity Studio Data Lake.
+The fastest way to get started is using Docker Compose, which will set up both the Next.js frontend and Sanity Studio automatically.
 
-It is recommended that you complete the following steps before attempting to load Tanglecat, as a database connection is necessary for basic functionality.
-
-  1. Create a create a [Sanity.io](https://www.sanity.io/) account (if you do not already have one).
-  2. Navigate to your *Dashboard* and *Create a new project* (name and org should match your event)
-      - Below your Project Title, you should find a your **Project ID** - save this id for later.
-  3. Now, Navigate to the *Datasets* Tab
-     - Create a database named **production** and another named **development**
-  4.  From your new project dashboard, navigate to the *API* tab
-      - Under **CORS origins**, add the URL **http://localhost:8080** and any other desired host addresses (your future deployed site URL will go here too).
-      - Next, select **Add API token** - create a new token with **Editor** permissions - **save this token**; it will be used by your TangleCat app to access your project.
-
-
-Now, when you setup your project's `.env` file, you should have all the necessary environment variables.
-
-
-### Setting up your Development Environment
-
-1. Clone the TangleCat Git repository:
+### 1. Clone the Repository
 
 ```bash
-git clone Schroedinger-Hat/tanglecat.git
-cd tanglecat
-cd app
-```
-2. Create your `.env` file under the `/app` directory as follows
-  ```bash
-NODE_ENV="development"
-NEXT_PUBLIC_SANITY_DATASET="production" <!--change_if_needed-->
-NEXT_PUBLIC_SANITY_DATASET_DEV="development" <!--change_if_needed-->
-NEXT_PUBLIC_SANITY_PROJECT_ID=<your_project_ID>
-NEXT_PUBLIC_BASE_URL="http://localhost:3000"
-SANITY_API_TOKEN=<your_api_token>
-SANITY_API_VERSION="2024-03-21" <!--change_if_needed-->
-
+git clone <your-repository-url>
+cd leaderboard-challenges
 ```
 
-2. Start the development environment:
+### 2. Environment Setup
+
+Create a `.env` file in the root directory:
 
 ```bash
+# Environment
+NODE_ENV=development
+PORT=8080
+
+# Sanity Configuration
+NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_DATASET_DEV=development
+SANITY_API_VERSION=2024-03-21
+SANITY_API_TOKEN=your_api_token
+
+# Sanity Studio Environment Variables
+SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID=your_project_id
+SANITY_STUDIO_PUBLIC_SANITY_DATASET=production
+SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV=development
+```
+
+### 3. Start the Development Environment
+
+```bash
+# Start both frontend and Sanity Studio
 docker compose up
+
+# Or start them separately
+docker compose up web        # Frontend only
+docker compose up sanity     # Sanity Studio only
 ```
 
-This will start the Next.js application and the Sanity Studio CMS.
+### 4. Access Your Applications
 
-**NOTE**: The first time you start the environment, it will take a while to download the images and start the containers. 
+- **Frontend**: http://localhost:8080
+- **Sanity Studio**: http://localhost:3333
 
-Once Complete, you should be able to access the application at [http://localhost:8080](http://localhost:8080)
+## Manual Setup (Alternative)
 
-### Production Environment
+If you prefer to run the services directly on your machine without Docker:
 
-1. Build the production image:
+### Frontend Setup
 
 ```bash
-ENVIRONMENT=production docker compose up --build
+cd app
+npm install
+npm run dev
 ```
 
-2. Start the production environment:
+The frontend will be available at http://localhost:3000
+
+### Sanity Studio Setup
 
 ```bash
-ENVIRONMENT=production docker compose up
+cd app/sanity
+npm install
+npm run dev
 ```
 
-3. Access the local studio at `http://localhost:8080/studio`: you need to be logged in to the Sanity Studio to manage the content.
+The Sanity Studio will be available at http://localhost:3333
 
-This will start the Next.js application and the Sanity Studio CMS in production mode.
+## Sanity Configuration
+
+### Initial Setup
+
+1. Create a [Sanity.io](https://www.sanity.io/) account
+2. Create a new project (name and org should match your event)
+3. Note your **Project ID** from the dashboard
+4. Create two datasets: **production** and **development**
+5. Configure CORS origins:
+   - Add `http://localhost:8080` for Docker setup
+   - Add `http://localhost:3000` for manual setup
+   - Add `http://localhost:3333` for Sanity Studio
+6. Create an API token with **Editor** permissions
+
+### Environment Variables
+
+Ensure these are set in your `.env` file:
+
+```bash
+# Required for frontend
+NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_DATASET_DEV=development
+SANITY_API_VERSION=2024-03-21
+SANITY_API_TOKEN=your_api_token
+
+# Required for Sanity Studio
+SANITY_STUDIO_PUBLIC_SANITY_PROJECT_ID=your_project_id
+SANITY_STUDIO_PUBLIC_SANITY_DATASET=production
+SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV=development
+```
 
 ## Project Structure
 
-The project is organized into the following directories:
+```
+leaderboard-challenges/
+├── app/                    # Next.js frontend application
+│   ├── src/               # Source code
+│   ├── sanity/            # Sanity Studio configuration
+│   └── package.json       # Frontend dependencies
+├── website/               # Documentation site (this site)
+├── docker-compose.yml     # Frontend container configuration
+├── docker-compose.sanity.yml  # Sanity Studio container configuration
+└── .env                   # Environment variables
+```
 
-- `app`: Next.js application code
-- `app/components`: Reusable React components
-- `app/lib`: Utility functions
-- `app/api`: API routes
-- `app/public`: Static assets
-- `app/styles`: Global CSS styles
-- `app/types`: TypeScript type definitions
-- `app/utils`: Utility functions
-- `app/sanity`: Sanity Studio configuration and schemas
+## Development Workflow
 
-## Deployment
+### 1. Start Development Environment
 
-### Deploying to Vercel
+```bash
+# Using Docker (recommended)
+docker compose up
 
-1. Fork or clone this repository to your GitHub account
+# Or manually
+cd app && npm run dev
+cd app/sanity && npm run dev
+```
 
-2. Create a new project on [Vercel](https://vercel.com)
+### 2. Make Changes
 
-3. Import your repository
+- Frontend code changes will hot-reload automatically
+- Sanity Studio changes will hot-reload automatically
+- Schema changes require restarting Sanity Studio
 
-4. Configure the following environment variables in Vercel's project settings:
-   - `NEXT_PUBLIC_SANITY_PROJECT_ID`: Your Sanity project ID
-   - `NEXT_PUBLIC_SANITY_DATASET`: Your Sanity dataset name (usually "production")
-   - `SANITY_API_VERSION`: Your Sanity API version (e.g., "2024-03-21")
-   - `SANITY_API_TOKEN`: Your Sanity API token with write access
+### 3. Database Management
 
-5. Deploy! Vercel will automatically build and deploy your app
+- Access Sanity Studio at http://localhost:3333
+- Create and manage your content models
+- Import demo data if available
 
-The app will be automatically deployed on every push to the main branch.
+### 4. Testing
 
-### Production URLs
-- Next.js app: `https://your-project.vercel.app`
-- Sanity Studio: Deploy separately or access via your Sanity project dashboard
+- Frontend: http://localhost:8080 (Docker) or http://localhost:3000 (manual)
+- Test all features including authentication, challenges, and awards
+
+## Troubleshooting
+
+### Common Issues
+
+**Port Already in Use**
+```bash
+# Check what's using the port
+lsof -i :8080
+lsof -i :3333
+
+# Kill the process or change ports in docker-compose.yml
+```
+
+**Sanity Connection Issues**
+- Verify your `.env` file has correct values
+- Check CORS origins in Sanity dashboard
+- Ensure API token has correct permissions
+
+**Docker Issues**
+```bash
+# Rebuild containers
+docker compose down
+docker compose up --build
+
+# Clear Docker cache
+docker system prune -a
+```
+
+### Getting Help
+
+- Check the [Developer Guide](./dev-guide) for detailed setup instructions
+- Review [Sanity.io documentation](https://www.sanity.io/docs)
+- Check [Next.js documentation](https://nextjs.org/docs)
+
+## Next Steps
+
+Once your local environment is running:
+
+1. **Set up your content models** in Sanity Studio
+2. **Create demo data** for testing
+3. **Customize the frontend** for your event
+4. **Test the complete workflow** from user registration to award completion
+5. **Deploy to production** when ready
+
+For detailed customization and advanced setup, see the [Developer Guide](./dev-guide).
