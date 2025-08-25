@@ -12,7 +12,8 @@ ITEMS=$(sanity documents --dataset=${TEST_DATASET} --api-version="v2024-03-21" q
 echo "ITEMS = ${ITEMS}"
 if test "$ITEMS" -lt "$EMPTY_DATASET_SIZE"; then
 	echo "Populating (${TEST_DATASET}) dataset with dummy data"
-	sanity dataset import  demo_data/testing.ndjson ${TEST_DATASET} --replace
+	sanity dataset import demo_data/testing.ndjson ${TEST_DATASET} --replace
+	sanity dataset import demo_data/github_challenges.ndjson ${TEST_DATASET}
 else
 	echo "dataset not empty, clear dataset to load dummy data"
 fi
