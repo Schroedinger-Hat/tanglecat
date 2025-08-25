@@ -23,6 +23,10 @@ Here you will find documentation to assist developers, operators, & users of the
 - [Operator Guide](./operator-guide) - For event supervisors and staff
 - [User Guide](./user-guide) - For event participants
 
+### Integrations
+
+- [GitHub Integration](./github-integration) - Enhanced GitHub integration for challenge verification
+- [GitHub Integration Summary](./github-integration-summary) - Overview of GitHub integration features
 
 ### Additional Resources
 
