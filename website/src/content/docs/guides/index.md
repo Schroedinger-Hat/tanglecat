@@ -23,6 +23,10 @@ Here you will find documentation to assist developers, operators, & users of the
 - [Operator Guide](./operator-guide) - For event supervisors and staff
 - [User Guide](./user-guide) - For event participants
 
+### Features
+
+- [Subdomain Event Detection](./subdomain-event-detection) - Automatic event code detection from subdomains
+
 ### Integrations
 
 - [GitHub Integration](./github-integration) - Enhanced GitHub integration for challenge verification
