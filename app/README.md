@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TangleCat
 
-## Getting Started
+This is the Next.js application for the TangleCat system.
 
-First, run the development server:
+## Documentation
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+For comprehensive documentation, including guides and API references, please visit the [TangleCat Website Documentation](https://tanglecat.org/guides/).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## GitHub Integration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The enhanced GitHub integration documentation has been moved to the website:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **[GitHub Integration Guide](https://tanglecat.org/guides/github-integration/)** - Complete guide for using GitHub verification types
+- **[GitHub Integration Summary](https://tanglecat.org/guides/github-integration-summary/)** - Overview of features and improvements
 
-## Learn More
+## Quick Start
 
-To learn more about Next.js, take a look at the following resources:
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Set up environment variables:
+   ```bash
+   cp .env.example .env.local
+   # Edit .env.local with your configuration
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Available Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run sanity:dev` - Start Sanity Studio development server
+- `npm run sanity:start` - Start Sanity Studio production server
+- `npm run sanity:build` - Build Sanity Studio
+- `npm run sanity:deploy` - Deploy Sanity Studio
+
+## Project Structure
+
+- `src/app/` - Next.js App Router pages and API routes
+- `src/components/` - React components
+- `src/lib/` - Utility functions and configurations
+- `src/types/` - TypeScript type definitions
+- `sanity/` - Sanity CMS configuration and schema
+- `public/` - Static assets
+
+## Technologies Used
+
+- **Next.js 15** - React framework
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Sanity CMS** - Content management
+- **Framer Motion** - Animations
+- **Zustand** - State management
+
+## Contributing
+
+Please read the [Contributing Guide](https://tanglecat.org/guides/dev-guide/) for details on our code of conduct and the process for submitting pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
