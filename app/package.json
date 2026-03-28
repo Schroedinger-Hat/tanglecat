@@ -2,11 +2,15 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "typecheck": "tsc --noEmit",
     "sanity:dev": "sanity dev",
     "sanity:start": "sanity start",
     "sanity:build": "sanity build",
@@ -36,13 +40,13 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^10",
-    "eslint-config-next": "16.2.1",
+    "oxfmt": "^0.42.0",
+    "oxlint": "^1.57.0",
+    "oxlint-tsgolint": "^0.18.1",
     "postcss": "^8",
     "tailwindcss": "^4.2.2",
     "typescript": "^6"
