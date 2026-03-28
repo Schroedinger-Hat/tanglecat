@@ -1,34 +1,39 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-[data-theme="default"] {
-  --background: #f472b6;
-  --foreground: #171717;
-  --primary: var(--background);
-  --secondary: var(--foreground);
-  --accent: var(--foreground);
-  --button: var(--background);
-  --text: var(--foreground);
-  --onlight: black;
-  --ondark: white;
+@theme {
+  --color-background: #f472b6;
+  --color-foreground: #171717;
+  --color-primary: #f472b6;
+  --color-secondary: #171717;
+  --color-accent: #171717;
+  --color-button: #f472b6;
+  --color-text: #171717;
+  --color-onlight: black;
+  --color-ondark: white;
+  --color-red-500: #ff4545;
 }
 
-/* Tema OSDay */
 [data-theme="osday"] {
-  --background: #c0392b; /* Fiery red */
-  --foreground: #1e293b;
-  --primary: #c0392b;
-  --secondary: #12142d; /* Dark navy blue */
-  --accent: #4263aa; /* Almost ultramarin */
-  --button: #edcfb7; /* Creamy sand */
-  --text: #ffdbaf;
-  --onlight: black;
-  --ondark: var(--text);
+  --color-background: #c0392b;
+  --color-foreground: #1e293b;
+  --color-primary: #c0392b;
+  --color-secondary: #12142d;
+  --color-accent: #4263aa;
+  --color-button: #edcfb7;
+  --color-text: #ffdbaf;
+  --color-onlight: black;
+  --color-ondark: #ffdbaf;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 body {
-  color: var(--text);
-  background: var(--background);
+  color: var(--color-text);
+  background: var(--color-background);
   font-family: "Inter", Helvetica, sans-serif;
 }
