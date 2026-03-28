@@ -127,7 +127,7 @@ export function SignUpForm() {
         <Input
           type="text"
           required
-          className="w-full p-2 border rounded"
+          className="w-full"
           value={formData.firstName}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, firstName: e.target.value})}
         />
@@ -138,7 +138,7 @@ export function SignUpForm() {
         <Input
           type="text"
           required
-          className="w-full p-2 border rounded"
+          className="w-full"
           value={formData.lastName}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, lastName: e.target.value})}
         />
@@ -149,7 +149,7 @@ export function SignUpForm() {
         <Input
           type="email"
           required
-          className="w-full p-2 border rounded"
+          className="w-full"
           value={formData.email}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, email: e.target.value})}
         />
@@ -162,7 +162,7 @@ export function SignUpForm() {
           <Input
             type="text"
             required
-            className="w-full p-2 border rounded"
+            className="w-full"
             value={formData.eventCode}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, eventCode: e.target.value})}
             placeholder="Enter event code (e.g., osday25)"
@@ -177,7 +177,7 @@ export function SignUpForm() {
           <Input
             type="text"
             required
-            className="w-full p-2 border rounded bg-gray-50"
+            className="w-full bg-gray-50"
             value={formData.eventCode}
             readOnly={true}
             title={`Automatically detected from subdomain: ${formData.eventCode}`}
@@ -192,7 +192,7 @@ export function SignUpForm() {
           <Input
             type="text"
             required
-            className="w-full p-2 border rounded bg-red-50"
+            className="w-full bg-red-50"
             value={formData.eventCode}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, eventCode: e.target.value})}
             placeholder="Unable to detect event code"

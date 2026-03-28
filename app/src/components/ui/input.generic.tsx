@@ -31,7 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             transition-all
             duration-200
 
-            focus:outline-none
+            focus:outline-hidden
             focus:ring-1
 
             disabled:opacity-50

@@ -1,17 +1,26 @@
-import * as React from 'react'
+import * as React from "react"
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  size?: 'sm' | 'default' | 'lg'
-  variant?: 'default' | 'accent' | 'danger' | 'info'
+  size?: "sm" | "default" | "lg"
+  variant?: "default" | "accent" | "danger" | "info"
   children: React.ReactNode
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className = '', size = 'default', variant = 'default', children, ...props }, ref) => {
+  (
+    {
+      className = "",
+      size = "default",
+      variant = "default",
+      children,
+      ...props
+    },
+    ref,
+  ) => {
     const sizeClasses = {
-      sm: 'h-10 px-6 text-sm',
-      default: 'h-14 px-8 text-base',
-      lg: 'h-16 px-10 text-lg'
+      sm: "h-10 px-6 text-sm",
+      default: "h-14 px-8 text-base",
+      lg: "h-16 px-10 text-lg",
     }
 
     const variantClasses = {
@@ -79,10 +88,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           ${sizeClasses[size]}
           ${variantClasses[variant]}
 
-          focus:outline-none
+          focus:outline-hidden
           focus-visible:ring-2
           focus-visible:ring-neutral-950
-          focus-visible:ring-offset-2
 
           disabled:pointer-events-none
           disabled:opacity-50
@@ -94,9 +102,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </button>
     )
-  }
+  },
 )
 
-Button.displayName = 'Button'
+Button.displayName = "Button"
 
 export { Button }

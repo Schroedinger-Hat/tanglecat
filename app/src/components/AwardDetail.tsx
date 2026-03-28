@@ -140,7 +140,7 @@ export function AwardDetail({ award }: Props) {
   return (
     <Card>
       <CardHeader>
-        <div className="w-32 h-32 relative flex-shrink-0">
+        <div className="w-32 h-32 relative shrink-0">
           <Image
             src={urlForImage(award.image).url()}
             alt={award.name}

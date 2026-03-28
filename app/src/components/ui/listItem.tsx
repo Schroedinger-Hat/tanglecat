@@ -63,10 +63,9 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
       active:translate-x-[4px]
       active:translate-y-[4px]
 
-      focus:outline-none
+      focus:outline-hidden
       focus-visible:ring-2
       focus-visible:ring-neutral-950
-      focus-visible:ring-offset-2
 
       disabled:pointer-events-none
       disabled:opacity-50
@@ -166,7 +165,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
         `}
       >
         <div className="flex gap-4">
-          <div className="w-24 h-24 relative flex-shrink-0">
+          <div className="w-24 h-24 relative shrink-0">
             <Image
               src={imageUrl}
               alt={title}
@@ -180,7 +179,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
                 {title}
                 {isCompleted && (
                   <CheckCircle2
-                    className="w-5 h-5 text-green-500 flex-shrink-0"
+                    className="w-5 h-5 text-green-500 shrink-0"
                     aria-label="Completed"
                   />
                 )}
