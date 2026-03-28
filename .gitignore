@@ -11,11 +11,15 @@ node_modules/
 dist/
 build/
 
+# Sanity exports
+*.tar.gz
+
 # Logs
 *.log
 npm-debug.log*
 
 # IDE
 .vscode/
-.idea/ 
+.idea/
 .cursorrules
+.claude/
