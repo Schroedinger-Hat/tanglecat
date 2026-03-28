@@ -2,14 +2,16 @@
 import { SignUpForm } from "@/components/SignUpForm";
 import Logo from "@/components/ui/logo";
 import { useEffect, useState } from "react";
-import { getEventCodeFromSubdomain } from "@/lib/utils/getEventCodeFromSubdomain";
+import { getEventCodeFromSubdomain, isLocalhost } from "@/lib/utils/getEventCodeFromSubdomain";
 
 export default function HomePage() {
   const [eventCode, setEventCode] = useState<string | null>(null);
+  const [isLocal, setIsLocal] = useState(false);
 
   useEffect(() => {
     const detectedEventCode = getEventCodeFromSubdomain();
     setEventCode(detectedEventCode);
+    setIsLocal(isLocalhost());
   }, []);
 
   return (
@@ -23,7 +25,7 @@ export default function HomePage() {
             </div>
           )}
 
-          {!eventCode && typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && (
+          {!eventCode && isLocal && (
             <div className="bg-blue-50 text-blue-700 p-4 rounded-lg mb-6 text-center">
               <p className="font-medium">🔧 Development Mode</p>
               <p>Running locally. You can manually enter any event code in the form below.</p>
