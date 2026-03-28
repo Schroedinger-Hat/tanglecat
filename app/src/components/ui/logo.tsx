@@ -1,8 +1,8 @@
-import Image from 'next/image';
+import Image from "next/image"
 
 interface LogoProps {
-  width?: number;
-  height?: number;
+  width?: number
+  height?: number
 }
 
 const Logo: React.FC<LogoProps> = ({ width = 45, height = 45 }) => {

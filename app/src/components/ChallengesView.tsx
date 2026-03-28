@@ -1,20 +1,22 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
-import { Challenge } from '@/types'
-import { ListItem } from './ui/listItem'
+import { useEffect, useState } from "react"
+import { Challenge } from "@/types"
+import { ListItem } from "./ui/listItem"
 
 export function ChallengesView() {
   const [challenges, setChallenges] = useState<Challenge[]>([])
+
   const [completedChallenges, setCompletedChallenges] = useState<string[]>([])
+
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
       try {
         const [challengesRes, completedRes] = await Promise.all([
-          fetch('/api/challenges'),
-          fetch('/api/challenges/completed')
+          fetch("/api/challenges"),
+          fetch("/api/challenges/completed"),
         ])
 
         const challengesData = await challengesRes.json()
@@ -23,7 +25,7 @@ export function ChallengesView() {
         setChallenges(challengesData.challenges)
         setCompletedChallenges(completedData.completedChallenges)
       } catch (error) {
-        console.error('Error fetching data:', error)
+        console.error("Error fetching data:", error)
       } finally {
         setLoading(false)
       }
@@ -39,23 +41,23 @@ export function ChallengesView() {
   return (
     <div className="max-w-2xl mx-auto p-4">
       <div className="grid gap-4 h-[calc(100vh-8rem)] overflow-y-auto">
-      {challenges.map((challenge) => {
-        const isCompleted = completedChallenges.includes(challenge._id)
-        return (
-          <ListItem
-            key={challenge._id}
-            type="challenge"
-            href={`/challenge/${challenge._id}?completed=${isCompleted}`}
-            title={challenge.name}
-            description={challenge.abstract}
-            points={challenge.points}
-            isCompleted={isCompleted}
-            isSupervised={challenge.isSupervised}
-            isOnline={challenge.isOnline}
-            webhook={challenge.webhookUrl}
-          />
-        )
-      })}
+        {challenges.map((challenge) => {
+          const isCompleted = completedChallenges.includes(challenge._id)
+          return (
+            <ListItem
+              key={challenge._id}
+              type="challenge"
+              href={`/challenge/${challenge._id}?completed=${isCompleted}`}
+              title={challenge.name}
+              description={challenge.abstract}
+              points={challenge.points}
+              isCompleted={isCompleted}
+              isSupervised={challenge.isSupervised}
+              isOnline={challenge.isOnline}
+              webhook={challenge.webhookUrl}
+            />
+          )
+        })}
       </div>
     </div>
   )

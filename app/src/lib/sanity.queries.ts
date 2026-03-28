@@ -1,8 +1,9 @@
-import { client } from './sanity'
-import { Challenge } from '@/types'
+import { client } from "./sanity"
+import { Challenge } from "@/types"
 
 export async function getChallengeById(id: string): Promise<Challenge | null> {
-  return client.fetch(`
+  return client.fetch(
+    `
     *[_type == "challenge" && _id == $id][0] {
       _id,
       name,
@@ -31,7 +32,9 @@ export async function getChallengeById(id: string): Promise<Challenge | null> {
       pointsRequirement,
       webhookUrl
     }
-  `, { id })
+  `,
+    { id },
+  )
 }
 
 export const queries = {
@@ -45,7 +48,10 @@ export const queries = {
 }
 
 export async function findPlayerAndChallenge(playerEmail: string, challengeId: string) {
-  return client.fetch(queries.findPlayerAndChallenge, { playerEmail, challengeId })
+  return client.fetch(queries.findPlayerAndChallenge, {
+    playerEmail,
+    challengeId,
+  })
 }
 
 export async function findChallenge(challengeId: string) {
@@ -53,32 +59,36 @@ export async function findChallenge(challengeId: string) {
 }
 
 export async function completeChallenge(
-  playerId: string, 
+  playerId: string,
   challengeId: string,
-  verificationData?: Record<string, unknown>
+  verificationData?: Record<string, unknown>,
 ) {
   const patch = client
     .patch(playerId)
     .setIfMissing({ completedChallenges: [], verificationChallengesData: [] })
-    .append('completedChallenges', [{
-      _key: crypto.randomUUID(),
-      _type: 'reference',
-      _ref: challengeId
-    }])
+    .append("completedChallenges", [
+      {
+        _key: crypto.randomUUID(),
+        _type: "reference",
+        _ref: challengeId,
+      },
+    ])
 
   // If verification data is provided, append it
   if (verificationData) {
-    patch.append('verificationChallengesData', [{
-      _key: crypto.randomUUID(),
-      _type: 'object',
-      challenge: {
+    patch.append("verificationChallengesData", [
+      {
         _key: crypto.randomUUID(),
-        _type: 'reference',
-        _ref: challengeId
+        _type: "object",
+        challenge: {
+          _key: crypto.randomUUID(),
+          _type: "reference",
+          _ref: challengeId,
+        },
+        verificationData: JSON.stringify(verificationData),
       },
-      verificationData: JSON.stringify(verificationData)
-    }])
+    ])
   }
 
   return patch.commit()
-} 
+}

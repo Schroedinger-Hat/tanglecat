@@ -16,10 +16,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
   const signOut = () => {
     // unset the user cookie
-    document.cookie =
-      "user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
-    document.cookie =
-      "supervisor_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
+    document.cookie = "user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
+    document.cookie = "supervisor_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"
     // redirect to the home page via window.location.href
     window.location.href = "/"
   }
@@ -27,7 +25,9 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   return (
     <>
       {/* Overlay */}
-      <div
+      <button
+        type="button"
+        aria-label="Close sidebar"
         className="fixed inset-0 bg-black/50 z-40 transition-opacity"
         onClick={onClose}
       />
@@ -93,12 +93,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             >
               OSDay Jobs
             </Link>
-            <Button
-              size="sm"
-              variant="danger"
-              onClick={signOut}
-              className="w-full"
-            >
+            <Button size="sm" variant="danger" onClick={signOut} className="w-full">
               Sign Out
             </Button>
           </nav>

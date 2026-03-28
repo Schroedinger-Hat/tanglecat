@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
-import { Award } from '@/types'
-import { urlForImage } from '@/lib/sanity.image'
-import { ListItem } from '@/components/ui/listItem'
+import { useEffect, useState } from "react"
+import { Award } from "@/types"
+import { urlForImage } from "@/lib/sanity.image"
+import { ListItem } from "@/components/ui/listItem"
 
 interface AwardWithCompletion extends Award {
   isCompleted: boolean
@@ -17,16 +17,14 @@ export function AwardsView() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const [awardsRes] = await Promise.all([
-          fetch('/api/awards'),
-        ])
+        const [awardsRes] = await Promise.all([fetch("/api/awards")])
 
         const awardsData = await awardsRes.json()
 
         setAwards(awardsData.awards)
         setAvailablePoints(awardsData.availablePoints)
       } catch (error) {
-        console.error('Error fetching data:', error)
+        console.error("Error fetching data:", error)
       } finally {
         setLoading(false)
       }
@@ -43,7 +41,7 @@ export function AwardsView() {
     <div className="max-w-2xl mx-auto p-4">
       <div className="grid gap-4">
         <div className="text-center text-white text-2xl font-bold mb-4 filter drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-            Available Points: {availablePoints}
+          Available Points: {availablePoints}
         </div>
         {awards.map((award) => (
           <ListItem

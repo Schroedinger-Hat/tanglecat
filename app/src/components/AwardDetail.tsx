@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { useState, useEffect, useCallback } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { Award } from '@/types'
-import { QRCodeSVG } from 'qrcode.react'
-import { CheckCircle2, X } from 'lucide-react'
-import confetti from 'canvas-confetti'
-import Image from 'next/image'
-import { urlForImage } from '@/lib/sanity.image'
-import { Button } from './ui/button'
-import { Card, CardHeader, CardContent, CardFooter, CardSection } from './ui/Card'
-import { getBasePublicUrl } from '@/lib/utils/getBasePublicUrl'
+import { useState, useEffect, useCallback } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { Award } from "@/types"
+import { QRCodeSVG } from "qrcode.react"
+import { CheckCircle2, X } from "lucide-react"
+import confetti from "canvas-confetti"
+import Image from "next/image"
+import { urlForImage } from "@/lib/sanity.image"
+import { Button } from "./ui/button"
+import { Card, CardHeader, CardContent, CardFooter, CardSection } from "./ui/Card"
+import { getBasePublicUrl } from "@/lib/utils/getBasePublicUrl"
 
 interface Props {
   award: Award
@@ -19,10 +19,10 @@ interface Props {
 export function AwardDetail({ award }: Props) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const isCompleted = searchParams.get('completed') === 'true'
+  const isCompleted = searchParams.get("completed") === "true"
   const [isRedeeming, setIsRedeeming] = useState(false)
   const [showQR, setShowQR] = useState(false)
-  const [userEmail, setUserEmail] = useState<string>('')
+  const [userEmail, setUserEmail] = useState<string>("")
   const baseUrl = getBasePublicUrl()
 
   useEffect(() => {
@@ -30,17 +30,15 @@ export function AwardDetail({ award }: Props) {
       confetti({
         particleCount: 100,
         spread: 70,
-        origin: { y: 0.6 }
+        origin: { y: 0.6 },
       })
     }
 
     // Get user email from cookie
-    const token = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('user_token='))
-    
+    const token = document.cookie.split("; ").find((row) => row.startsWith("user_token="))
+
     if (token) {
-      const { email } = JSON.parse(decodeURIComponent(token.split('=')[1]))
+      const { email } = JSON.parse(decodeURIComponent(token.split("=")[1]))
       setUserEmail(email)
     }
   }, [isCompleted])
@@ -57,7 +55,7 @@ export function AwardDetail({ award }: Props) {
       }
       return false
     } catch (error) {
-      console.error('Error checking challenge status:', error)
+      console.error("Error checking challenge status:", error)
       return false
     }
   }, [award._id, router])
@@ -94,18 +92,18 @@ export function AwardDetail({ award }: Props) {
     setIsRedeeming(true)
     try {
       const response = await fetch(`/api/awards/${award._id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ awardId: award._id }),
       })
 
       if (!response.ok) {
-        throw new Error('Failed to redeem award')
+        throw new Error("Failed to redeem award")
       }
 
       router.push(`/award/${award._id}?completed=true`)
     } catch (error) {
-      console.error('Error redeeming award:', error)
+      console.error("Error redeeming award:", error)
     } finally {
       setIsRedeeming(false)
     }
@@ -127,10 +125,7 @@ export function AwardDetail({ award }: Props) {
         <p className="text-neutral-600 mb-4">
           You&apos;ve earned the {award.name} award and {award.points} points!
         </p>
-        <Button
-          onClick={() => window.location.href = '/dashboard?view=award'}
-          variant="accent"
-        >
+        <Button onClick={() => (window.location.href = "/dashboard?view=award")} variant="accent">
           View All Awards
         </Button>
       </Card>
@@ -150,15 +145,13 @@ export function AwardDetail({ award }: Props) {
         </div>
         <div>
           <h1 className="text-2xl font-bold mb-2">{award.name}</h1>
-          <span className="text-blue-600 font-bold">
-            {award.points} pts
-          </span>
+          <span className="text-blue-600 font-bold">{award.points} pts</span>
         </div>
       </CardHeader>
 
       <CardContent>
         <p>{award.description}</p>
-        
+
         {award.instructions && (
           <>
             <h2>Instructions</h2>
@@ -172,26 +165,22 @@ export function AwardDetail({ award }: Props) {
           <CardSection>
             <h3 className="font-semibold mb-2">Verification Required</h3>
             <p className="text-sm text-neutral-600">
-              This award needs to be verified by a supervisor. Click the button below
-              to generate a QR code for verification.
+              This award needs to be verified by a supervisor. Click the button below to generate a
+              QR code for verification.
             </p>
           </CardSection>
         ) : (
           <CardSection>
-            <p className="text-sm text-neutral-600">
-              Click the button below to claim this award.
-            </p>
+            <p className="text-sm text-neutral-600">Click the button below to claim this award.</p>
           </CardSection>
         )}
-        
-        <Button
-          onClick={handleRedeem}
-          disabled={isRedeeming}
-          variant="accent"
-          className="w-full"
-        >
-          {isRedeeming ? 'Redeeming...' : 
-            award.isSupervised ? 'Generate Verification QR' : 'Claim Award'}
+
+        <Button onClick={handleRedeem} disabled={isRedeeming} variant="accent" className="w-full">
+          {isRedeeming
+            ? "Redeeming..."
+            : award.isSupervised
+              ? "Generate Verification QR"
+              : "Claim Award"}
         </Button>
       </CardFooter>
 
@@ -205,17 +194,10 @@ export function AwardDetail({ award }: Props) {
               <X className="w-6 h-6" />
             </button>
 
-            <h3 className="text-lg font-semibold mb-4">
-              Show this QR code to a supervisor
-            </h3>
+            <h3 className="text-lg font-semibold mb-4">Show this QR code to a supervisor</h3>
 
             <div className="bg-white p-4 rounded-lg flex justify-center">
-              <QRCodeSVG
-                value={verificationUrl}
-                size={200}
-                level="H"
-                includeMargin
-              />
+              <QRCodeSVG value={verificationUrl} size={200} level="H" includeMargin />
             </div>
 
             <p className="mt-4 text-sm text-gray-600">
@@ -226,4 +208,4 @@ export function AwardDetail({ award }: Props) {
       )}
     </Card>
   )
-} 
+}

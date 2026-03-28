@@ -1,9 +1,9 @@
-import { redirect } from 'next/navigation'
-import { getChallengeById } from '@/lib/sanity.queries'
-import { ChallengeDetail } from '@/components/ChallengeDetail'
+import { redirect } from "next/navigation"
+import { getChallengeById } from "@/lib/sanity.queries"
+import { ChallengeDetail } from "@/components/ChallengeDetail"
 
 type Props = {
-    params: Promise<{ id: string }>
+  params: Promise<{ id: string }>
 }
 
 export default async function ChallengePage({ params }: Props) {
@@ -11,7 +11,7 @@ export default async function ChallengePage({ params }: Props) {
   const challenge = await getChallengeById(id)
 
   if (!challenge) {
-    redirect('/dashboard')
+    redirect("/dashboard")
   }
 
   return (
@@ -21,4 +21,4 @@ export default async function ChallengePage({ params }: Props) {
       </div>
     </div>
   )
-} 
+}

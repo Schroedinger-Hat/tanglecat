@@ -1,11 +1,11 @@
-import * as React from 'react'
+import * as React from "react"
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className = '', error, ...props }, ref) => {
+  ({ className = "", error, ...props }, ref) => {
     return (
       <div className="relative w-full">
         <input
@@ -37,21 +37,17 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             disabled:opacity-50
             disabled:cursor-not-allowed
 
-            ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
+            ${error ? "border-red-500 focus:border-red-500 focus:ring-red-500" : ""}
             ${className}
           `}
           {...props}
         />
-        {error && (
-          <span className="absolute -bottom-5 left-0 text-xs text-red-500">
-            {error}
-          </span>
-        )}
+        {error && <span className="absolute -bottom-5 left-0 text-xs text-red-500">{error}</span>}
       </div>
     )
-  }
+  },
 )
 
-Input.displayName = 'Input'
+Input.displayName = "Input"
 
 export { Input }

@@ -1,18 +1,18 @@
-"use client";
-import { SignUpForm } from "@/components/SignUpForm";
-import Logo from "@/components/ui/logo";
-import { useEffect, useState } from "react";
-import { getEventCodeFromSubdomain, isLocalhost } from "@/lib/utils/getEventCodeFromSubdomain";
+"use client"
+import { SignUpForm } from "@/components/SignUpForm"
+import Logo from "@/components/ui/logo"
+import { useEffect, useState } from "react"
+import { getEventCodeFromSubdomain, isLocalhost } from "@/lib/utils/getEventCodeFromSubdomain"
 
 export default function HomePage() {
-  const [eventCode, setEventCode] = useState<string | null>(null);
-  const [isLocal, setIsLocal] = useState(false);
+  const [eventCode, setEventCode] = useState<string | null>(null)
+  const [isLocal, setIsLocal] = useState(false)
 
   useEffect(() => {
-    const detectedEventCode = getEventCodeFromSubdomain();
-    setEventCode(detectedEventCode);
-    setIsLocal(isLocalhost());
-  }, []);
+    const detectedEventCode = getEventCodeFromSubdomain()
+    setEventCode(detectedEventCode)
+    setIsLocal(isLocalhost())
+  }, [])
 
   return (
     <>
@@ -21,7 +21,9 @@ export default function HomePage() {
           {eventCode && (
             <div className="bg-green-50 text-green-700 p-4 rounded-lg mb-6 text-center">
               <p className="font-medium">🎯 Event Detected</p>
-              <p>You&apos;re accessing the <strong>{eventCode.toUpperCase()}</strong> challenge</p>
+              <p>
+                You&apos;re accessing the <strong>{eventCode.toUpperCase()}</strong> challenge
+              </p>
             </div>
           )}
 
@@ -33,7 +35,7 @@ export default function HomePage() {
           )}
 
           <h1 className="text-3xl font-bold text-center mb-4 filter">
-            Welcome to {eventCode ? eventCode.toUpperCase() : 'OSDay25'}
+            Welcome to {eventCode ? eventCode.toUpperCase() : "OSDay25"}
           </h1>
           <div className="flex justify-center items-center mb-4">
             <Logo width={180} height={180} />
@@ -42,8 +44,7 @@ export default function HomePage() {
           <p className="text-center mb-8 filter text-lg font-bold">
             {eventCode
               ? `Join the ${eventCode.toUpperCase()} challenge and collect points through exciting activities! Unlock exclusive rewards with your earned points!`
-              : 'Join the OSDay25 challenge and collect points through exciting activities! Unlock exclusive rewards with your earned points!'
-            }
+              : "Join the OSDay25 challenge and collect points through exciting activities! Unlock exclusive rewards with your earned points!"}
           </p>
 
           <div
@@ -64,5 +65,5 @@ export default function HomePage() {
         </div>
       </div>
     </>
-  );
+  )
 }

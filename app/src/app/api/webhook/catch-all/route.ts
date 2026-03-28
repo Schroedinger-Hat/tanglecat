@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
-import { client } from '@/lib/sanity'
-import { findPlayerAndChallenge, findChallenge } from '@/lib/sanity.queries'
+import { NextResponse } from "next/server"
+import { client } from "@/lib/sanity"
+import { findPlayerAndChallenge, findChallenge } from "@/lib/sanity.queries"
 
 export async function POST(request: Request) {
   try {
@@ -9,29 +9,26 @@ export async function POST(request: Request) {
     // Check for required fields
     if (!challengeId || !playerEmail) {
       return NextResponse.json(
-        { message: 'Missing required fields: challengeId and playerEmail' },
-        { status: 400 }
+        { message: "Missing required fields: challengeId and playerEmail" },
+        { status: 400 },
       )
     }
 
     // Check if there are any validation fields and that they have valid values
     if (!verificationData || Object.keys(verificationData).length === 0) {
-      return NextResponse.json(
-        { message: 'No validation data provided' },
-        { status: 400 }
-      )
+      return NextResponse.json({ message: "No validation data provided" }, { status: 400 })
     }
 
     // Verify each field has a non-empty value
     const hasEmptyValues = Object.entries(verificationData).some(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      ([_, value]) => value === null || value === undefined || value === ''
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ([_, value]) => value === null || value === undefined || value === "",
     )
 
     if (hasEmptyValues) {
       return NextResponse.json(
-        { message: 'All validation fields must have non-empty values' },
-        { status: 400 }
+        { message: "All validation fields must have non-empty values" },
+        { status: 400 },
       )
     }
 
@@ -39,10 +36,7 @@ export async function POST(request: Request) {
     const challenge = await findChallenge(challengeId)
 
     if (!challenge) {
-      return NextResponse.json(
-        { message: 'Challenge not found' },
-        { status: 404 }
-      )
+      return NextResponse.json({ message: "Challenge not found" }, { status: 404 })
     }
 
     // Find the user and check if they haven't completed this challenge yet
@@ -50,45 +44,48 @@ export async function POST(request: Request) {
 
     if (!player) {
       return NextResponse.json(
-        { message: 'Player not found or challenge already completed' },
-        { status: 404 }
+        { message: "Player not found or challenge already completed" },
+        { status: 404 },
       )
     }
 
     // Update player's completed challenges and validation data
     await client
       .patch(player._id)
-      .setIfMissing({ 
-        completedChallenges: [], 
-        verificationChallengesData: [] 
+      .setIfMissing({
+        completedChallenges: [],
+        verificationChallengesData: [],
       })
-      .append('completedChallenges', [{
-        _key: crypto.randomUUID(),
-        _type: 'reference',
-        _ref: challengeId
-      }])
-      .append('verificationChallengesData', [{
-        _key: crypto.randomUUID(),
-        _type: 'object',
-        challenge: {
+      .append("completedChallenges", [
+        {
           _key: crypto.randomUUID(),
-          _type: 'reference',
-          _ref: challengeId
+          _type: "reference",
+          _ref: challengeId,
         },
-        verificationData: JSON.stringify(verificationData)
-      }])
+      ])
+      .append("verificationChallengesData", [
+        {
+          _key: crypto.randomUUID(),
+          _type: "object",
+          challenge: {
+            _key: crypto.randomUUID(),
+            _type: "reference",
+            _ref: challengeId,
+          },
+          verificationData: JSON.stringify(verificationData),
+        },
+      ])
       .commit()
 
-    return NextResponse.json({ 
-      message: 'Challenge completed and validation data saved successfully',
-      success: true
+    return NextResponse.json({
+      message: "Challenge completed and validation data saved successfully",
+      success: true,
     })
-
   } catch (error) {
-    console.error('Catch-all Webhook Error:', error)
+    console.error("Catch-all Webhook Error:", error)
     return NextResponse.json(
-      { message: 'Failed to process webhook', success: false },
-      { status: 500 }
+      { message: "Failed to process webhook", success: false },
+      { status: 500 },
     )
   }
-} 
+}
