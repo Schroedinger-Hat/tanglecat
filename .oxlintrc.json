@@ -1,0 +1,12 @@
+{
+  "plugins": ["react", "typescript", "import", "jsx-a11y", "nextjs"],
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "no-unused-vars": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off"
+  },
+  "ignorePatterns": [".next", "node_modules", ".sanity"]
+}
