@@ -10,8 +10,8 @@
     "moduleDetection": "force",
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
-    },
+    "incremental": true
+  },
   "include": ["**/*.ts", "**/*.tsx", ".sanity/**/*.ts", "sanity.config.ts"],
   "exclude": ["node_modules"]
 }

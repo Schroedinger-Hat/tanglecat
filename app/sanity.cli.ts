@@ -7,9 +7,7 @@ export default defineCliConfig({
       process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
       "n9u23251",
     dataset:
-      process.env.SANITY_STUDIO_DATASET ||
-      process.env.NEXT_PUBLIC_SANITY_DATASET ||
-      "production",
+      process.env.SANITY_STUDIO_DATASET || process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   },
   /**
    * Enable auto-updates for studios.
