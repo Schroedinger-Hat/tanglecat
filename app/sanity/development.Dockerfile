@@ -1,17 +1,19 @@
 FROM node:22-alpine
 
+RUN corepack enable
+
 WORKDIR /sanity
 
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
-RUN npm install
+RUN pnpm install
 
 COPY . .
 
 # Build the Sanity Studio
-RUN  npm run build
+RUN pnpm run build
 
 # Populate with demo data
-RUN npm run demo-data
+RUN pnpm run demo-data
 
-CMD ["npm", "run", "dev"] 
+CMD ["pnpm", "run", "dev"]

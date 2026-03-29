@@ -1,17 +1,19 @@
 FROM node:22-alpine
 
+RUN corepack enable
+
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
-RUN npm install
+RUN pnpm install
 
 COPY . .
 
 # Build the Next.js app
-RUN npm run build
+RUN pnpm run build
 
 EXPOSE 3000
 
 # Use dev command for development
-CMD ["npm", "run", "dev"] 
+CMD ["pnpm", "run", "dev"]
