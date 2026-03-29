@@ -10,9 +10,6 @@ RUN pnpm install
 
 COPY . .
 
-# Build the Next.js app
-RUN pnpm run build
-
 EXPOSE 3000
 
 # Use dev command for development
