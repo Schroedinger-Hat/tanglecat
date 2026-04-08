@@ -1,7 +1,7 @@
-import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
-import { client } from '@/lib/sanity'
-import { AwardDetail } from '@/components/AwardDetail'
+import { redirect } from "next/navigation"
+import { cookies } from "next/headers"
+import { client } from "@/lib/sanity"
+import { AwardDetail } from "@/components/AwardDetail"
 
 type Props = {
   params: Promise<{ id: string }>
@@ -9,14 +9,15 @@ type Props = {
 
 export default async function AwardPage({ params }: Props) {
   const { id } = await params
-  const tokenCookie = (await cookies()).get('user_token')?.value
+  const tokenCookie = (await cookies()).get("user_token")?.value
 
   if (!tokenCookie) {
-    redirect('/')
+    redirect("/")
   }
 
   // Fetch award and completion status
-  const award = await client.fetch(`
+  const award = await client.fetch(
+    `
     *[_type == "award" && _id == $awardId][0] {
       _id,
       name,
@@ -31,10 +32,12 @@ export default async function AwardPage({ params }: Props) {
         description
       }
     }
-  `, { awardId: id })
+  `,
+    { awardId: id },
+  )
 
   if (!award) {
-    redirect('/dashboard')
+    redirect("/dashboard")
   }
 
   return (

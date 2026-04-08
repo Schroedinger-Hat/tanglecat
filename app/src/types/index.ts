@@ -1,13 +1,13 @@
 export interface User {
   _id: string
-  _type: 'user'
+  _type: "user"
   name: string
   email: string
   totalPoints: number
   completedChallenges: string[]
   createdAt: string
   eventCode: {
-    _type: 'reference'
+    _type: "reference"
     _ref: string
   }
   eventId?: string
@@ -15,7 +15,7 @@ export interface User {
 
 export interface EventCode {
   _id: string
-  _type: 'eventCode'
+  _type: "eventCode"
   code: string
   description?: string
   validUntil?: string
@@ -32,7 +32,7 @@ export interface SignupPayload {
 
 export interface Challenge {
   _id: string
-  _type: 'challenge'
+  _type: "challenge"
   name: string
   abstract: string
   description: string
@@ -60,14 +60,14 @@ export interface Challenge {
     }[]
   }
   event: {
-    _type: 'reference'
+    _type: "reference"
     _ref: string
   }
 }
 
 export interface Award {
   _id: string
-  _type: 'award'
+  _type: "award"
   name: string
   abstract: string
   description: string
@@ -76,10 +76,10 @@ export interface Award {
   webhook?: string
   points: number
   image: {
-    _type: 'image'
+    _type: "image"
     asset: {
       _ref: string
-      _type: 'reference'
+      _type: "reference"
     }
     hotspot?: {
       x: number
@@ -90,6 +90,6 @@ export interface Award {
   }
   eventCode: {
     _ref: string
-    _type: 'reference'
+    _type: "reference"
   }
-} 
+}

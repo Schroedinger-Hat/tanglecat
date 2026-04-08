@@ -1,0 +1,12 @@
+{
+  "plugins": ["react", "typescript", "import"],
+  "jsPlugins": ["@sanity/eslint-plugin"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
+    "@sanity/groq-join-in-filter": "error",
+    "@sanity/groq-deep-pagination": "warn"
+  },
+  "ignorePatterns": ["node_modules", ".sanity", "dist"]
+}

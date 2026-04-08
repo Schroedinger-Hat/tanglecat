@@ -1,8 +1,10 @@
 interface CurveIllustrationProps {
-  className?: string;
+  className?: string
 }
 
-const CurveIllustration: React.FC<CurveIllustrationProps> = ({ className = "text-primary-red" }) => {
+const CurveIllustration: React.FC<CurveIllustrationProps> = ({
+  className = "text-primary-red",
+}) => {
   return (
     <div className={`-mb-7 w-full overflow-hidden leading-none ${className}`}>
       <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +20,7 @@ const CurveIllustration: React.FC<CurveIllustrationProps> = ({ className = "text
         />
       </svg>
     </div>
-  );
-};
+  )
+}
 
-export default CurveIllustration;
+export default CurveIllustration

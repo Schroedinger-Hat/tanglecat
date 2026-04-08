@@ -1,14 +1,14 @@
-FROM node:20-alpine
+FROM node:22-alpine
+
+RUN corepack enable
 
 WORKDIR /sanity
 
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
-RUN npm install
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
 # Build the Sanity Studio
-RUN  npm run build
-
-# CMD ["npm", "run", "dev"] 
+RUN pnpm run build

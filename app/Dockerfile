@@ -1,15 +1,17 @@
 FROM node:20-alpine
 
+RUN corepack enable
+
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
-RUN npm install
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
 # Build the Next.js app
-RUN npm run build
+RUN pnpm run build
 
 EXPOSE 3000
 

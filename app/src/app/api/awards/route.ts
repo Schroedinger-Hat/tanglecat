@@ -1,22 +1,23 @@
-import { NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
-import { client } from '@/lib/sanity'
-import { Award } from '@/types'
+import { NextResponse } from "next/server"
+import { cookies } from "next/headers"
+import { client } from "@/lib/sanity"
+import { Award } from "@/types"
 
 export async function GET() {
   try {
-    const tokenCookie = (await cookies()).get('user_token')?.value
-    
+    const tokenCookie = (await cookies()).get("user_token")?.value
+
     if (!tokenCookie) {
-      return NextResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
     }
 
-    const { eventId, user: { _id: userId } } = JSON.parse(tokenCookie)
+    const {
+      eventId,
+      user: { _id: userId },
+    } = JSON.parse(tokenCookie)
 
-    const awards = await client.fetch(`
+    const awards = await client.fetch(
+      `
       *[_type == "award"] | order(points desc) {
         _id,
         name,
@@ -26,10 +27,13 @@ export async function GET() {
         image,
         points
       }
-    `, { eventId })
+    `,
+      { eventId },
+    )
 
     // Get the user's received awards and total points
-    const userWithData = await client.fetch(`
+    const userWithData = await client.fetch(
+      `
       *[_type == "user" && _id == $userId][0] {
         receivedAwards[] -> {
           _id,
@@ -40,31 +44,38 @@ export async function GET() {
           points
         }
       }
-    `, { userId })
+    `,
+      { userId },
+    )
 
     // Calculate total points from received awards
-    const receivedAwardsPoints = userWithData?.receivedAwards?.reduce((total: number, award: { points: number }) => 
-      total + (award.points || 0), 0) || 0
+    const receivedAwardsPoints =
+      userWithData?.receivedAwards?.reduce(
+        (total: number, award: { points: number }) => total + (award.points || 0),
+        0,
+      ) || 0
 
     // Calculate available points
-    const availablePoints = (userWithData?.completedChallenges?.reduce((total: number, challenge: { points: number }) => 
-      total + (challenge.points || 0), 0) || 0) - receivedAwardsPoints
+    const availablePoints =
+      (userWithData?.completedChallenges?.reduce(
+        (total: number, challenge: { points: number }) => total + (challenge.points || 0),
+        0,
+      ) || 0) - receivedAwardsPoints
 
     // Add isCompleted flag to each award
     const awardsWithCompletion = awards.map((award: Award) => ({
       ...award,
-      isCompleted: userWithData?.receivedAwards?.some((received: { _id: string }) => received._id === award._id)
+      isCompleted: userWithData?.receivedAwards?.some(
+        (received: { _id: string }) => received._id === award._id,
+      ),
     }))
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       awards: awardsWithCompletion,
-      availablePoints
+      availablePoints,
     })
   } catch (error) {
-    console.error('Error fetching awards:', error)
-    return NextResponse.json(
-      { message: 'Failed to fetch awards' },
-      { status: 500 }
-    )
+    console.error("Error fetching awards:", error)
+    return NextResponse.json({ message: "Failed to fetch awards" }, { status: 500 })
   }
-} 
+}

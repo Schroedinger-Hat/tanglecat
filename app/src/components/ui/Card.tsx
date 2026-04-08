@@ -1,13 +1,13 @@
-import * as React from 'react'
+import * as React from "react"
 
 interface CardProps {
   children: React.ReactNode
   className?: string
-  variant?: 'default' | 'celebration'
+  variant?: "default" | "celebration"
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ children, className = '', variant = 'default' }, ref) => {
+  ({ children, className = "", variant = "default" }, ref) => {
     const baseClasses = `
       w-full
       bg-neutral-50
@@ -21,8 +21,8 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     `
 
     const variantClasses = {
-      default: 'p-6',
-      celebration: 'p-8 text-center'
+      default: "p-6",
+      celebration: "p-8 text-center",
     }
 
     return (
@@ -37,58 +37,42 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         {children}
       </div>
     )
-  }
+  },
 )
 
-Card.displayName = 'Card'
+Card.displayName = "Card"
 
 // Sub-components for better organization
 const CardHeader = ({
   children,
-  className = ''
+  className = "",
 }: {
   children: React.ReactNode
   className?: string
-}) => (
-  <div className={`flex gap-6 mb-6 ${className}`}>
-    {children}
-  </div>
-)
+}) => <div className={`flex gap-6 mb-6 ${className}`}>{children}</div>
 
 const CardContent = ({
   children,
-  className = ''
+  className = "",
 }: {
   children: React.ReactNode
   className?: string
-}) => (
-  <div className={`prose max-w-none ${className}`}>
-    {children}
-  </div>
-)
+}) => <div className={`prose max-w-none ${className}`}>{children}</div>
 
 const CardFooter = ({
   children,
-  className = ''
+  className = "",
 }: {
   children: React.ReactNode
   className?: string
-}) => (
-  <div className={`space-y-4 mt-6 ${className}`}>
-    {children}
-  </div>
-)
+}) => <div className={`space-y-4 mt-6 ${className}`}>{children}</div>
 
 const CardSection = ({
   children,
-  className = ''
+  className = "",
 }: {
   children: React.ReactNode
   className?: string
-}) => (
-  <div className={`bg-neutral-100 p-4 rounded-lg ${className}`}>
-    {children}
-  </div>
-)
+}) => <div className={`bg-neutral-100 p-4 rounded-lg ${className}`}>{children}</div>
 
 export { Card, CardHeader, CardContent, CardFooter, CardSection }

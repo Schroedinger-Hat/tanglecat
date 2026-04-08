@@ -1,25 +1,25 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { QRCodeScanner } from '@/components/QRCodeScanner'
-import { Challenge, Award } from '@/types'
-import { X } from 'lucide-react'
-import { toast } from 'sonner'
-import { Button } from './ui/button'
+import { useState } from "react"
+import { QRCodeScanner } from "@/components/QRCodeScanner"
+import { Challenge, Award } from "@/types"
+import { X } from "lucide-react"
+import { toast } from "sonner"
+import { Button } from "./ui/button"
 
 interface Props {
   challenges?: Challenge[]
   awards?: Award[]
-  type: 'challenge' | 'award'
+  type: "challenge" | "award"
 }
 
 export function SupervisorChallenges({ challenges = [], awards = [], type }: Props) {
   const [selectedItem, setSelectedItem] = useState<Challenge | Award | null>(null)
   const [scanning, setScanning] = useState(false)
 
-  const items = type === 'challenge' ? challenges : awards
-  const apiPath = type === 'challenge' ? 'verify-challenge' : 'verify-award'
-  const itemIdParam = type === 'challenge' ? 'challengeId' : 'awardId'
+  const items = type === "challenge" ? challenges : awards
+  const apiPath = type === "challenge" ? "verify-challenge" : "verify-award"
+  const itemIdParam = type === "challenge" ? "challengeId" : "awardId"
 
   const handleScan = async (result: string) => {
     setScanning(false)
@@ -28,14 +28,16 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
     try {
       const url = new URL(result)
       const itemId = url.searchParams.get(itemIdParam)
-      const playerEmail = url.searchParams.get('email')
+      const playerEmail = url.searchParams.get("email")
 
       if (!itemId || !playerEmail) {
-        toast.error('Invalid QR code')
+        toast.error("Invalid QR code")
         return
       }
 
-      const response = await fetch(`/api/admin/${apiPath}?${itemIdParam}=${itemId}&email=${playerEmail}`)
+      const response = await fetch(
+        `/api/admin/${apiPath}?${itemIdParam}=${itemId}&email=${playerEmail}`,
+      )
 
       const data = await response.json()
 
@@ -44,7 +46,7 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
         return
       }
 
-      toast.success(`${type === 'challenge' ? 'Challenge' : 'Award'} verified successfully!`)
+      toast.success(`${type === "challenge" ? "Challenge" : "Award"} verified successfully!`)
     } catch (error) {
       toast.error(error instanceof Error ? error.message : `Failed to verify ${type}`)
     }
@@ -58,7 +60,7 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold mt-4">
-        Your Assigned {type === 'challenge' ? 'Challenges' : 'Awards'}
+        Your Assigned {type === "challenge" ? "Challenges" : "Awards"}
       </h2>
 
       {scanning && selectedItem && (
@@ -75,15 +77,9 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
               Scan QR Code for: {selectedItem.name}
             </h3>
 
-            <QRCodeScanner
-              onScan={handleScan}
-              onClose={handleClose}
-            />
+            <QRCodeScanner onScan={handleScan} onClose={handleClose} />
 
-            <Button
-              onClick={handleClose}
-              className="mt-4 w-full"
-            >
+            <Button onClick={handleClose} className="mt-4 w-full">
               Cancel
             </Button>
           </div>
@@ -110,17 +106,13 @@ export function SupervisorChallenges({ challenges = [], awards = [], type }: Pro
                 hover:shadow-[2px_2px_0px_0px_rgba(23,23,23)]
                 hover:translate-x-[2px]
                 hover:translate-y-[2px]"
-           >
+          >
             <div className="flex justify-between items-start">
               <div>
                 <h3 className="font-semibold">{item.name}</h3>
-                <p className="text-sm text-gray-600">
-                  {item.description}
-                </p>
-                {'points' in item && (
-                  <span className="text-sm text-blue-600 font-semibold">
-                    {item.points} pts
-                  </span>
+                <p className="text-sm text-gray-600">{item.description}</p>
+                {"points" in item && (
+                  <span className="text-sm text-blue-600 font-semibold">{item.points} pts</span>
                 )}
               </div>
 

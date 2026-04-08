@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Challenge } from '@/types'
-import confetti from 'canvas-confetti'
-import Image from 'next/image'
-import { Button } from './ui/button'
+import { useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Challenge } from "@/types"
+import confetti from "canvas-confetti"
+import Image from "next/image"
+import { Button } from "./ui/button"
 
 interface Props {
   isOpen: boolean
@@ -19,7 +19,7 @@ export function CompletionModal({ isOpen, onClose, challenge }: Props) {
       confetti({
         particleCount: 100,
         spread: 70,
-        origin: { y: 0.6 }
+        origin: { y: 0.6 },
       })
     }
   }, [isOpen])
@@ -58,19 +58,14 @@ export function CompletionModal({ isOpen, onClose, challenge }: Props) {
                   />
                 </div>
 
-                <h4 className="text-lg font-semibold mb-2">
-                  {challenge.name}
-                </h4>
+                <h4 className="text-lg font-semibold mb-2">{challenge.name}</h4>
 
                 <div className="flex items-center justify-center text-2xl font-bold text-yellow-500">
                   🏆 {challenge.points} Points
                 </div>
               </div>
 
-              <Button
-                onClick={onClose}
-                variant="accent"
-              >
+              <Button onClick={onClose} variant="accent">
                 View Leaderboard
               </Button>
             </div>

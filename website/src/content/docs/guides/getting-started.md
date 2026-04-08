@@ -22,7 +22,7 @@ The fastest way to get started is using Docker Compose, which will set up both t
 
 ```bash
 git clone <your-repository-url>
-cd leaderboard-challenges
+cd tanglecat
 ```
 
 ### 2. Environment Setup
@@ -119,17 +119,42 @@ SANITY_STUDIO_PUBLIC_SANITY_DATASET=production
 SANITY_STUDIO_PUBLIC_SANITY_DATASET_DEV=development
 ```
 
+### Seeding the Development Dataset
+
+To work locally without affecting production data, create a `development` dataset and seed it with production data:
+
+```bash
+cd app/sanity
+
+# Login to Sanity (only needed once)
+npx sanity login
+
+# Create the development dataset
+npx sanity dataset create development
+
+# Export production data
+npx sanity dataset export production
+
+# Import into development
+npx sanity dataset import production.tar.gz --dataset development
+```
+
+After importing, you can safely delete the export file:
+
+```bash
+rm production.tar.gz
+```
+
 ## Project Structure
 
 ```
-leaderboard-challenges/
+tanglecat/
 ├── app/                    # Next.js frontend application
 │   ├── src/               # Source code
 │   ├── sanity/            # Sanity Studio configuration
 │   └── package.json       # Frontend dependencies
 ├── website/               # Documentation site (this site)
-├── docker-compose.yml     # Frontend container configuration
-├── docker-compose.sanity.yml  # Sanity Studio container configuration
+├── docker-compose.yml     # Frontend and Sanity Studio configuration
 └── .env                   # Environment variables
 ```
 
@@ -183,8 +208,8 @@ lsof -i :3333
 
 **Docker Issues**
 ```bash
-# Rebuild containers
-docker compose down
+# Rebuild containers (needed after dependency changes)
+docker compose down -v
 docker compose up --build
 
 # Clear Docker cache
