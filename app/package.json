@@ -20,6 +20,7 @@
     "@next/third-parties": "^16.2.1",
     "@sanity/client": "^7.20.0",
     "@sanity/code-input": "^7.0.12",
+    "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.18.0",
     "@tailwindcss/postcss": "^4.2.2",
     "canvas-confetti": "^1.9.4",
