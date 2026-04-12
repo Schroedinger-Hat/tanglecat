@@ -57,7 +57,7 @@ export interface Challenge {
       name: string
       description: string
       value?: string
-    }[]
+    }[] | null
   }
   event: {
     _type: "reference"
