@@ -18,7 +18,7 @@ export default function HomePage() {
     <>
       <div className="flex flex-col items-center justify-center background">
         <div className="w-full max-w-md px-4 py-8">
-          {eventCode && (
+          {eventCode && isLocal && (
             <div className="bg-green-50 text-green-700 p-4 rounded-lg mb-6 text-center">
               <p className="font-medium">🎯 Event Detected</p>
               <p>
