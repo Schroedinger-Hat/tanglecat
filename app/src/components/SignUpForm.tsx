@@ -89,7 +89,7 @@ export function SignUpForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Event Code Detection Info */}
-      {!isLocal && detectedEventCode && (
+      {isLocal && detectedEventCode && (
         <div className="bg-green-50 text-green-700 p-3 rounded text-sm">
           <p className="font-medium">✅ Event Code Detected</p>
           <p>
@@ -98,7 +98,7 @@ export function SignUpForm() {
         </div>
       )}
 
-      {!isLocal && !detectedEventCode && (
+      {!detectedEventCode && (
         <div className="bg-orange-50 text-orange-700 p-3 rounded text-sm">
           <p className="font-medium">⚠️ Event Code Not Detected</p>
           <p>
@@ -177,7 +177,7 @@ export function SignUpForm() {
       </div>
 
       {/* Show event code input only on localhost, otherwise auto-detect from subdomain */}
-      {isLocal ? (
+      {isLocal && (
         <div>
           <label htmlFor="eventCode" className="block text-sm font-medium mb-1">
             Event Code
@@ -197,14 +197,16 @@ export function SignUpForm() {
             Development mode: Please enter the event code manually
           </p>
         </div>
-      ) : detectedEventCode ? (
+      )} 
+
+      {!isLocal && !detectedEventCode && (
         <div>
           <label htmlFor="eventCode" className="block text-sm font-medium mb-1">
             Event Code
           </label>
           <Input
             id="eventCode"
-            type="text"
+            type="hidden"
             required
             className="w-full bg-gray-50"
             value={formData.eventCode}
@@ -213,31 +215,6 @@ export function SignUpForm() {
           />
           <p className="text-xs text-gray-500 mt-1">
             Automatically detected from subdomain: <strong>{formData.eventCode}</strong>
-          </p>
-        </div>
-      ) : (
-        <div>
-          <label htmlFor="eventCode" className="block text-sm font-medium mb-1">
-            Event Code
-          </label>
-          <Input
-            id="eventCode"
-            type="text"
-            required
-            className="w-full bg-red-50"
-            value={formData.eventCode}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFormData({ ...formData, eventCode: e.target.value })
-            }
-            placeholder="Unable to detect event code"
-          />
-          <p className="text-xs text-red-500 mt-1">
-            Unable to detect event code from subdomain. Please enter it manually or check your URL.
-          </p>
-          <p className="text-xs text-gray-500 mt-1">
-            Expected format:{" "}
-            <code className="bg-gray-100 px-1 rounded">eventcode.tanglecat.dev</code> (e.g.,{" "}
-            <code className="bg-gray-100 px-1 rounded">osday25.tanglecat.dev</code>)
           </p>
         </div>
       )}
