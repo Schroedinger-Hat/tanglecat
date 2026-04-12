@@ -24,6 +24,13 @@
     "@sanity/vision": "^5.18.0",
     "@tailwindcss/postcss": "^4.2.2",
     "canvas-confetti": "^1.9.4",
+    "postcss": "^8",
+    "tailwindcss": "^4.2.2",
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "^25",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^6",
     "date-fns": "^4.1.0",
     "dotenv": "^17.3.1",
     "framer-motion": "^12.38.0",
@@ -42,15 +49,8 @@
   },
   "devDependencies": {
     "@sanity/eslint-plugin": "^0.3.0",
-    "@types/canvas-confetti": "^1.9.0",
-    "@types/node": "^25",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
     "oxfmt": "^0.42.0",
     "oxlint": "^1.57.0",
-    "oxlint-tsgolint": "^0.18.1",
-    "postcss": "^8",
-    "tailwindcss": "^4.2.2",
-    "typescript": "^6"
+    "oxlint-tsgolint": "^0.18.1"
   }
 }

@@ -60,8 +60,14 @@ NEXT_PUBLIC_SANITY_PROJECT_ID=<your_project_ID>
 NEXT_PUBLIC_BASE_URL="http://localhost:3000"
 SANITY_API_TOKEN=<your_api_token>
 SANITY_API_VERSION="2024-03-21"
+NEXT_PUBLIC_TANGLECAT_EVENT_CODE=<your_event_code>
 ```
 (Dataset values may differ, but should match your Sanity testing and production db names)
+
+**Event Code Resolution:** The app resolves the event code in the following order:
+1. `NEXT_PUBLIC_TANGLECAT_EVENT_CODE` environment variable (e.g., `osday26`)
+2. URL subdomain (e.g., `osday26.tanglecat.dev` → `osday26`)
+3. If neither is set, generic text is displayed without an event name.
 
 3. Start the development environment (from main project directory)
 
