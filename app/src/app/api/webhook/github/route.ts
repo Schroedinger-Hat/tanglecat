@@ -9,11 +9,11 @@ import {
   GitHubPullRequest,
 } from "@/types/github"
 
-const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN
 
-// GitHub API version - matches the pagination documentation
-// https://docs.github.com/en/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28
-const GITHUB_API_VERSION = "2022-11-28"
+// GitHub API version
+// https://docs.github.com/en/rest/activity/starring?apiVersion=2026-03-10
+const GITHUB_API_VERSION = "2026-03-10"
 
 async function githubFetch(url: string, type: string) {
   const response = await fetch(`https://api.github.com${url}`, {
@@ -223,12 +223,9 @@ export async function POST(request: Request): Promise<NextResponse<GitHubWebhook
           }
 
           // Check if user follows the organization
-          const membership = await githubFetch(
-            `/orgs/${organization}/members/${githubUsername}`,
-            "memberships",
-          )
+          const isFollowingOrg = await checkUserFollowsUser(githubUsername, organization)
 
-          if (!membership) {
+          if (!isFollowingOrg) {
             return NextResponse.json(
               {
                 message: `User ${githubUsername} is not following ${organization}`,
@@ -267,18 +264,19 @@ export async function POST(request: Request): Promise<NextResponse<GitHubWebhook
             throw new Error("Valid repository (owner/repo) is required for repo_star type")
           }
 
-          // Check if user starred the repository
-          const stars = (await githubFetchAllPages(
-            `/users/${githubUsername.trim()}/starred`,
-            "starred",
-          )) as Array<{ full_name: string }>
-          const star = stars.find(
-            (star: { full_name: string }) =>
-              star.full_name.toLowerCase() ===
-              (organization.trim() + "/" + repository.trim()).toLowerCase(),
+          // Check if user starred the repository by listing the repo's stargazers
+          // The direct check endpoint (GET /user/starred/{owner}/{repo}) only works
+          // for the authenticated user, so we use the stargazers list instead
+          const stargazers = (await githubFetchAllPages(
+            `/repos/${organization.trim()}/${repository.trim()}/stargazers`,
+            "stargazers",
+          )) as Array<{ login: string }>
+          const hasStarred = stargazers.some(
+            (user: { login: string }) =>
+              user.login.toLowerCase() === githubUsername.trim().toLowerCase(),
           )
 
-          if (!star) {
+          if (!hasStarred) {
             return NextResponse.json(
               {
                 message: `User ${githubUsername} has not starred ${repository}`,
@@ -346,7 +344,7 @@ export async function POST(request: Request): Promise<NextResponse<GitHubWebhook
             },
           )
 
-          if (watchResponse.status !== 204) {
+          if (!watchResponse.ok) {
             return NextResponse.json(
               {
                 message: `User ${githubUsername} is not watching ${repository}`,

@@ -88,7 +88,7 @@ This document summarizes the enhancements made to the GitHub integration in the 
 ### 1. Setup
 ```bash
 # Set environment variable
-NEXT_PUBLIC_GITHUB_TOKEN=your_github_token
+GITHUB_TOKEN=your_github_token
 ```
 
 ### 2. Create Challenges

@@ -61,6 +61,7 @@ NEXT_PUBLIC_BASE_URL="http://localhost:3000"
 SANITY_API_TOKEN=<your_api_token>
 SANITY_API_VERSION="2024-03-21"
 NEXT_PUBLIC_TANGLECAT_EVENT_CODE=<your_event_code>
+GITHUB_TOKEN=<your_github_personal_access_token>
 ```
 (Dataset values may differ, but should match your Sanity testing and production db names)
 
