@@ -11,8 +11,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "OSDay25 Tech Event Challenge",
-  description: "Join the OSDay25 tech event challenge and compete with other attendees",
+  title: "OSDay26 Tech Event Challenge",
+  description:
+    "Join the OSDay26 tech event challenge and compete with other attendees",
 }
 
 export default function RootLayout({
@@ -23,16 +24,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>OSDay25 Tech Event Challenge</title>
+        <title>OSDay26 Tech Event Challenge</title>
         <meta
           name="description"
-          content="Join the OSDay25 tech event challenge and compete with other attendees. Earn points by completing challenges and redeem them for awards."
+          content="Join the OSDay26 tech event challenge and compete with other attendees. Earn points by completing challenges and redeem them for awards."
         />
         <meta property="og:image" content="/og-image.png" />
-        <meta property="og:title" content="OSDay25 Tech Event Challenge" />
+        <meta property="og:title" content="OSDay26 Tech Event Challenge" />
         <meta
           property="og:description"
-          content="Join the OSDay25 tech event challenge and compete with other attendees. Earn points by completing challenges and redeem them for awards."
+          content="Join the OSDay26 tech event challenge and compete with other attendees. Earn points by completing challenges and redeem them for awards."
         />
         <meta property="og:image:width" content="2128" />
         <meta property="og:image:height" content="1666" />
