@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import type { SignupPayload } from "@/types"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input.generic"
-import { getEventCodeFromSubdomain, isLocalhost } from "@/lib/utils/getEventCodeFromSubdomain"
+import { getEventCode, isLocalhost } from "@/lib/utils/getEventCode"
 
 export function SignUpForm() {
   const router = useRouter()
@@ -27,7 +27,7 @@ export function SignUpForm() {
     setIsLocal(local)
 
     // Auto-detect event code from subdomain
-    const eventCode = getEventCodeFromSubdomain()
+    const eventCode = getEventCode()
     setDetectedEventCode(eventCode)
 
     if (eventCode) {

@@ -2,14 +2,20 @@
 import { SignUpForm } from "@/components/SignUpForm"
 import Logo from "@/components/ui/logo"
 import { useEffect, useState } from "react"
-import { getEventCodeFromSubdomain, isLocalhost } from "@/lib/utils/getEventCodeFromSubdomain"
+import { getEventCode, getEventCodeFromEnvironment, isLocalhost } from "@/lib/utils/getEventCode"
+
+const envEventCode = getEventCodeFromEnvironment()
+
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+}
 
 export default function HomePage() {
   const [eventCode, setEventCode] = useState<string | null>(null)
   const [isLocal, setIsLocal] = useState(false)
 
   useEffect(() => {
-    const detectedEventCode = getEventCodeFromSubdomain()
+    const detectedEventCode = getEventCode()
     setEventCode(detectedEventCode)
     setIsLocal(isLocalhost())
   }, [])
@@ -22,7 +28,7 @@ export default function HomePage() {
             <div className="bg-green-50 text-green-700 p-4 rounded-lg mb-6 text-center">
               <p className="font-medium">🎯 Event Detected</p>
               <p>
-                You&apos;re accessing the <strong>{eventCode.toUpperCase()}</strong> challenge
+                You&apos;re accessing the <strong>{capitalize(eventCode)}</strong> challenge
               </p>
             </div>
           )}
@@ -35,7 +41,7 @@ export default function HomePage() {
           )}
 
           <h1 className="text-3xl font-bold text-center mb-4 filter">
-            Welcome to {eventCode ? eventCode.toUpperCase() : "OSDay25"}
+            Welcome to {eventCode ? capitalize(eventCode) : (envEventCode ? capitalize(envEventCode) : "the Challenge")}
           </h1>
           <div className="flex justify-center items-center mb-4">
             <Logo width={180} height={180} />
@@ -43,8 +49,8 @@ export default function HomePage() {
 
           <p className="text-center mb-8 filter text-lg font-bold">
             {eventCode
-              ? `Join the ${eventCode.toUpperCase()} challenge and collect points through exciting activities! Unlock exclusive rewards with your earned points!`
-              : "Join the OSDay25 challenge and collect points through exciting activities! Unlock exclusive rewards with your earned points!"}
+              ? `Join the ${capitalize(eventCode)} challenge and collect points through exciting activities! Unlock exclusive rewards with your earned points!`
+              : `Join the ${envEventCode ? capitalize(envEventCode) : ""} challenge and collect points through exciting activities! Unlock exclusive rewards with your earned points!`}
           </p>
 
           <div
