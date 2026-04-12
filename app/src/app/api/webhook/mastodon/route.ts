@@ -2,10 +2,6 @@ import { NextResponse } from "next/server"
 import { client } from "@/lib/sanity"
 import { findPlayerAndChallenge, findChallenge } from "@/lib/sanity.queries"
 
-// Optional app-level token for Mastodon API — reduces rate-limit risk.
-// Attach it to the instance configured below.
-const MASTODON_TOKEN = process.env.MASTODON_API_TOKEN
-
 // Maximum number of following-list pages to walk before giving up.
 // Each page returns up to 80 accounts, so 12 pages ≈ 960 checked entries.
 const MAX_FOLLOWING_PAGES = 12
@@ -14,19 +10,6 @@ interface MastodonAccount {
   id: string
   acct: string
   url: string
-}
-
-/**
- * Build request headers for the Mastodon API.
- * The token is optional; if absent the request is sent unauthenticated
- * (public endpoints still work, but rate limits are tighter).
- */
-function mastodonHeaders(): HeadersInit {
-  const headers: HeadersInit = { Accept: "application/json" }
-  if (MASTODON_TOKEN) {
-    headers["Authorization"] = `Bearer ${MASTODON_TOKEN}`
-  }
-  return headers
 }
 
 /**
@@ -41,7 +24,7 @@ function mastodonHeaders(): HeadersInit {
 async function resolveAccount(username: string, instance: string): Promise<MastodonAccount | null> {
   const lookupUrl = `https://${instance}/api/v1/accounts/lookup?acct=${encodeURIComponent(username)}`
 
-  const response = await fetch(lookupUrl, { headers: mastodonHeaders() })
+  const response = await fetch(lookupUrl, { headers: { Accept: "application/json" } })
 
   if (response.status === 404) return null
 
@@ -96,7 +79,7 @@ async function checkIsFollowing(
     const currentUrl: string = url
     url = null
 
-    const response: Response = await fetch(currentUrl, { headers: mastodonHeaders() })
+    const response: Response = await fetch(currentUrl, { headers: { Accept: "application/json" } })
 
     if (!response.ok) {
       throw new Error(
