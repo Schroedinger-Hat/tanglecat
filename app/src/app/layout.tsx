@@ -4,13 +4,14 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { Toaster } from "sonner"
 import "./globals.css"
+import { getEventCode } from "@/lib/utils/getEventCode"
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 })
 
-const eventName = process.env.NEXT_PUBLIC_TANGLECAT_EVENT_CODE?.toUpperCase() || ""
+const eventName = getEventCode()
 
 export const metadata: Metadata = {
   title: `${eventName ? `${eventName} ` : ""}Tech Event Challenge`,
@@ -31,7 +32,10 @@ export default function RootLayout({
           content={`Join the ${eventName ? `${eventName} ` : ""}tech event challenge and compete with other attendees. Earn points by completing challenges and redeem them for awards.`}
         />
         <meta property="og:image" content="/og-image.png" />
-        <meta property="og:title" content={`${eventName ? `${eventName} ` : ""}Tech Event Challenge`} />
+        <meta
+          property="og:title"
+          content={`${eventName ? `${eventName} ` : ""}Tech Event Challenge`}
+        />
         <meta
           property="og:description"
           content={`Join the ${eventName ? `${eventName} ` : ""}tech event challenge and compete with other attendees. Earn points by completing challenges and redeem them for awards.`}

@@ -197,7 +197,7 @@ export function SignUpForm() {
             Development mode: Please enter the event code manually
           </p>
         </div>
-      )} 
+      )}
 
       {!isLocal && !detectedEventCode && (
         <div>
