@@ -110,9 +110,15 @@ export function ChallengeDetail({ challenge }: Props) {
         })
 
         if (!response.ok) {
-          const errorData = await response.json()
+          let errorMessage = "Unknown error"
+          try {
+            const errorData = await response.json()
+            errorMessage = errorData.message ?? errorMessage
+          } catch {
+            errorMessage = await response.text().catch(() => errorMessage)
+          }
           throw new Error(
-            `Failed to verify the challenge: ${errorData.message}. If the problem persists, please contact the staff.`,
+            `Failed to verify the challenge: ${errorMessage}. If the problem persists, please contact the staff.`,
           )
         }
       } catch (error) {

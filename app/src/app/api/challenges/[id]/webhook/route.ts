@@ -54,6 +54,15 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
       }),
     })
 
+    const contentType = webhookResponse.headers.get("content-type") ?? ""
+    if (!contentType.includes("application/json")) {
+      const text = await webhookResponse.text()
+      console.error("Webhook returned non-JSON response:", text)
+      return NextResponse.json(
+        { message: "Webhook returned an unexpected response" },
+        { status: 502 },
+      )
+    }
     const data = await webhookResponse.json()
     return NextResponse.json(data, { status: webhookResponse.status })
   } catch (error) {
