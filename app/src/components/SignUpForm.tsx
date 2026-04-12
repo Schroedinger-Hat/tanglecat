@@ -199,7 +199,7 @@ export function SignUpForm() {
         </div>
       )}
 
-      {!isLocal && !detectedEventCode && (
+      {!isLocal && (
         <div>
           <label htmlFor="eventCode" className="block text-sm font-medium mb-1">
             Event Code
@@ -211,10 +211,10 @@ export function SignUpForm() {
             className="w-full bg-gray-50"
             value={formData.eventCode}
             readOnly={true}
-            title={`Automatically detected from subdomain: ${formData.eventCode}`}
+            title={`Event code detected: ${formData.eventCode}`}
           />
           <p className="text-xs text-gray-500 mt-1">
-            Automatically detected from subdomain: <strong>{formData.eventCode}</strong>
+            Event code detected: <strong>{formData.eventCode}</strong>
           </p>
         </div>
       )}
