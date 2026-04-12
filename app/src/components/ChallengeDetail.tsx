@@ -103,14 +103,10 @@ export function ChallengeDetail({ challenge }: Props) {
           throw new Error("No verification data provided")
         }
 
-        const response = await fetch(challenge.webhookUrl, {
+        const response = await fetch(`/api/challenges/${challenge._id}/webhook`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            challengeId: challenge._id,
-            verificationData,
-            playerEmail: userEmail,
-          }),
+          body: JSON.stringify({ verificationData }),
         })
 
         if (!response.ok) {

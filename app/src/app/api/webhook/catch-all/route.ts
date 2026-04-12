@@ -2,6 +2,14 @@ import { NextResponse } from "next/server"
 import { client } from "@/lib/sanity"
 import { findPlayerAndChallenge, findChallenge } from "@/lib/sanity.queries"
 
+const GITHUB_VERIFICATION_TYPES = [
+  "org_follow",
+  "user_follow",
+  "repo_star",
+  "repo_watch",
+  "repo_contribution",
+]
+
 export async function POST(request: Request) {
   try {
     const { challengeId, playerEmail, verificationData } = await request.json()
@@ -30,6 +38,21 @@ export async function POST(request: Request) {
         { message: "All validation fields must have non-empty values" },
         { status: 400 },
       )
+    }
+
+    // If this is a GitHub verification challenge, delegate to the dedicated GitHub webhook handler
+    if (
+      verificationData.type &&
+      GITHUB_VERIFICATION_TYPES.includes(verificationData.type as string)
+    ) {
+      const { origin } = new URL(request.url)
+      const githubResponse = await fetch(`${origin}/api/webhook/github`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ challengeId, playerEmail, verificationData }),
+      })
+      const githubData = await githubResponse.json()
+      return NextResponse.json(githubData, { status: githubResponse.status })
     }
 
     // Verify if the challenge exists
