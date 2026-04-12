@@ -263,7 +263,10 @@ export async function POST(request: Request) {
                         _type: "reference",
                         _ref: challengeId,
                     },
-                    verificationData: JSON.stringify({ mastodon_username: followerAccount.acct }),
+                    verificationData: JSON.stringify({
+                        ...verificationData,
+                        mastodon_username: followerAccount.acct,
+                    }),
                 },
             ])
             .commit()
