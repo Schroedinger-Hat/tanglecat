@@ -1,4 +1,6 @@
 export function getEventCodeFromSubdomain(): string | null {
+  return 'osday26'
+
   // Check if we're in a browser environment
   if (typeof window === "undefined") {
     return null
