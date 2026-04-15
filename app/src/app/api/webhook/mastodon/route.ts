@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server"
-import { client } from "@/lib/sanity"
-import { findPlayerAndChallenge, findChallenge } from "@/lib/sanity.queries"
+import { completeChallenge, findPlayerAndChallenge, findChallenge } from "@/lib/sanity.queries"
 
 // Maximum number of following-list pages to walk before giving up.
 // Each page returns up to 80 accounts, so 12 pages ≈ 960 checked entries.
@@ -229,32 +228,10 @@ export async function POST(request: Request) {
     }
 
     // Follow confirmed — mark the challenge as completed
-    await client
-      .patch(player._id)
-      .setIfMissing({ completedChallenges: [], verificationChallengesData: [] })
-      .append("completedChallenges", [
-        {
-          _key: crypto.randomUUID(),
-          _type: "reference",
-          _ref: challengeId,
-        },
-      ])
-      .append("verificationChallengesData", [
-        {
-          _key: crypto.randomUUID(),
-          _type: "object",
-          challenge: {
-            _key: crypto.randomUUID(),
-            _type: "reference",
-            _ref: challengeId,
-          },
-          verificationData: JSON.stringify({
-            ...verificationData,
-            mastodon_username: followerAccount.acct,
-          }),
-        },
-      ])
-      .commit()
+    await completeChallenge(player._id, challengeId, {
+      ...verificationData,
+      mastodon_username: followerAccount.acct,
+    })
 
     return NextResponse.json({
       message: `Follow verified! @${followerAccount.acct} is following @${targetAcct}.`,
