@@ -10,7 +10,17 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
     }
 
-    const { email } = JSON.parse(tokenCookie)
+    let email: string
+    try {
+      const parsedToken = JSON.parse(tokenCookie) as { email?: string }
+      if (typeof parsedToken.email !== "string") {
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+      }
+      email = parsedToken.email
+    } catch {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+    }
+
     const { id: challengeId } = await params
 
     const challenge = await getChallengeById(challengeId)
