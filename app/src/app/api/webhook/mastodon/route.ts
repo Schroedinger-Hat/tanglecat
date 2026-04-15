@@ -40,15 +40,15 @@ async function resolveAccount(username: string, instance: string): Promise<Masto
  * Parse the Mastodon instance and username from a profile URL.
  *
  * Supports:
- *  - https://mastodon.social/@nephila   → { instance: "mastodon.social", username: "nephila" }
- *  - https://fosstodon.org/@fosstodon   → { instance: "fosstodon.org", username: "fosstodon" }
+ *  - https://mastodon.social/@nephila       → { instance: "mastodon.social", username: "nephila" }
+ *  - https://fosstodon.org/users/fosstodon  → { instance: "fosstodon.org",  username: "fosstodon" }
  */
 function parseProfileUrl(url: string): { instance: string; username: string } | null {
   try {
     const parsed = new URL(url)
     const instance = parsed.hostname
-    // pathname is typically "/@username" or "/users/username"
-    const match = parsed.pathname.match(/^\/@?([^/]+)/)
+    // Handles both "/@username" and "/users/username" forms
+    const match = parsed.pathname.match(/^\/(?:@|users\/)([^/]+)/)
     if (!match) return null
     return { instance, username: match[1] }
   } catch {
