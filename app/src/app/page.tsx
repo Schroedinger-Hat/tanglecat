@@ -47,8 +47,8 @@ export default function HomePage() {
 
           <p className="text-center mb-8 filter text-lg font-bold">
             Join the {eventCode ? capitalize(eventCode) : ""}
-            challenge and collect points through exciting activities! Unlock
-            exclusive rewards with your earned points!
+            challenge and collect points through exciting activities! Unlock exclusive rewards with
+            your earned points!
           </p>
 
           <div
