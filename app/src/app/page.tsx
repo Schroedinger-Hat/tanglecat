@@ -39,8 +39,7 @@ export default function HomePage() {
           )}
 
           <h1 className="text-3xl font-bold text-center mb-4 filter">
-            Welcome to{" "}
-            {eventCode ? capitalize(eventCode) : "the Challenge"}
+            Welcome to {eventCode ? capitalize(eventCode) : "the Challenge"}
           </h1>
           <div className="flex justify-center items-center mb-4">
             <Logo width={180} height={180} />

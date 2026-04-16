@@ -197,7 +197,7 @@ This means users with hundreds or thousands of stars or contributions will have 
 ## Environment Variables
 
 Make sure to set the following environment variable:
-- `NEXT_PUBLIC_GITHUB_TOKEN`: A GitHub personal access token with appropriate permissions
+- `GITHUB_TOKEN`: A GitHub personal access token with appropriate permissions
 
 ## GitHub API Permissions
 

@@ -9,33 +9,17 @@ import {
   GitHubPullRequest,
 } from "@/types/github"
 
-const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN
 
-// GitHub API version - matches the pagination documentation
-// https://docs.github.com/en/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28
-const GITHUB_API_VERSION = "2022-11-28"
-
-async function githubFetch(url: string, type: string) {
-  const response = await fetch(`https://api.github.com${url}`, {
-    headers: {
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
-      Accept: "application/vnd.github+json",
-      "X-GitHub-Api-Version": GITHUB_API_VERSION,
-    },
-  })
-
-  if (!response.ok) {
-    throw new Error(`GitHub API error: ${response.statusText}`)
-  }
-
-  return type === "memberships" ? response.ok : response.json()
-}
+// GitHub API version
+// https://docs.github.com/en/rest/activity/starring?apiVersion=2026-03-10
+const GITHUB_API_VERSION = "2026-03-10"
 
 // Helper function to fetch all pages from GitHub API using link headers
 // This follows GitHub's best practices for pagination as documented at:
 // https://docs.github.com/en/rest/using-the-rest-api/using-pagination-in-the-rest-api
 // Instead of manually counting pages, we use the 'link' header to navigate between pages
-async function githubFetchAllPages(baseUrl: string, type: string): Promise<unknown[]> {
+async function githubFetchAllPages(baseUrl: string): Promise<unknown[]> {
   const allResults: unknown[] = []
   let currentUrl = baseUrl
   let hasMorePages = true
@@ -58,30 +42,24 @@ async function githubFetchAllPages(baseUrl: string, type: string): Promise<unkno
       throw new Error(`GitHub API error: ${response.statusText}`)
     }
 
-    const results = type === "memberships" ? response.ok : await response.json()
+    const results = await response.json()
+    allResults.push(...results)
 
-    if (Array.isArray(results)) {
-      allResults.push(...results)
-
-      // Check if there are more pages using the link header
-      const linkHeader = response.headers.get("link")
-      if (linkHeader && linkHeader.includes('rel="next"')) {
-        // Extract the next page URL from the link header
-        const nextMatch = linkHeader.match(/<([^>]+)>;\s*rel="next"/)
-        if (nextMatch) {
-          // Extract just the path from the full URL
-          const nextUrl = new URL(nextMatch[1])
-          currentUrl = nextUrl.pathname + nextUrl.search
-        } else {
-          hasMorePages = false
-        }
+    // Check if there are more pages using the link header
+    const linkHeader = response.headers.get("link")
+    if (linkHeader && linkHeader.includes('rel="next"')) {
+      // Extract the next page URL from the link header
+      const nextMatch = linkHeader.match(/<([^>]+)>;\s*rel="next"/)
+      if (nextMatch) {
+        // Extract just the path from the full URL
+        const nextUrl = new URL(nextMatch[1])
+        currentUrl = nextUrl.pathname + nextUrl.search
       } else {
-        // No next page link, we're done
         hasMorePages = false
       }
     } else {
-      // If it's not an array (e.g., for memberships), just return the result
-      return results
+      // No next page link, we're done
+      hasMorePages = false
     }
   }
 
@@ -122,7 +100,6 @@ async function checkRepositoryContributions(
       case "issues_created":
         const createdIssues = (await githubFetchAllPages(
           `/repos/${owner}/${repo}/issues?creator=${username}&state=all`,
-          "issues",
         )) as GitHubIssue[]
         hasContributions = createdIssues.length > 0
         break
@@ -130,7 +107,6 @@ async function checkRepositoryContributions(
       case "issues_closed":
         const closedIssues = (await githubFetchAllPages(
           `/repos/${owner}/${repo}/issues?creator=${username}&state=closed`,
-          "issues",
         )) as GitHubIssue[]
         hasContributions = closedIssues.length > 0
         break
@@ -138,7 +114,6 @@ async function checkRepositoryContributions(
       case "prs_opened":
         const openedPrs = (await githubFetchAllPages(
           `/repos/${owner}/${repo}/pulls?creator=${username}&state=all`,
-          "pulls",
         )) as GitHubPullRequest[]
         hasContributions = openedPrs.length > 0
         break
@@ -146,7 +121,6 @@ async function checkRepositoryContributions(
       case "prs_merged":
         const mergedPrs = (await githubFetchAllPages(
           `/repos/${owner}/${repo}/pulls?creator=${username}&state=closed`,
-          "pulls",
         )) as GitHubPullRequest[]
         hasContributions = mergedPrs.some((pr: GitHubPullRequest) => pr.merged_at !== null)
         break
@@ -157,15 +131,12 @@ async function checkRepositoryContributions(
         const [anyIssues, anyPrs, commits] = await Promise.all([
           githubFetchAllPages(
             `/repos/${owner}/${repo}/issues?creator=${username}&state=all&per_page=10`,
-            "issues",
           ) as Promise<GitHubIssue[]>,
           githubFetchAllPages(
             `/repos/${owner}/${repo}/pulls?creator=${username}&state=all&per_page=10`,
-            "pulls",
           ) as Promise<GitHubPullRequest[]>,
           githubFetchAllPages(
             `/repos/${owner}/${repo}/commits?author=${username}&per_page=10`,
-            "commits",
           ) as Promise<unknown[]>,
         ])
         hasContributions = anyIssues.length > 0 || anyPrs.length > 0 || commits.length > 0
@@ -223,12 +194,9 @@ export async function POST(request: Request): Promise<NextResponse<GitHubWebhook
           }
 
           // Check if user follows the organization
-          const membership = await githubFetch(
-            `/orgs/${organization}/members/${githubUsername}`,
-            "memberships",
-          )
+          const isFollowingOrg = await checkUserFollowsUser(githubUsername, organization)
 
-          if (!membership) {
+          if (!isFollowingOrg) {
             return NextResponse.json(
               {
                 message: `User ${githubUsername} is not following ${organization}`,
@@ -267,18 +235,18 @@ export async function POST(request: Request): Promise<NextResponse<GitHubWebhook
             throw new Error("Valid repository (owner/repo) is required for repo_star type")
           }
 
-          // Check if user starred the repository
-          const stars = (await githubFetchAllPages(
-            `/users/${githubUsername.trim()}/starred`,
-            "starred",
-          )) as Array<{ full_name: string }>
-          const star = stars.find(
-            (star: { full_name: string }) =>
-              star.full_name.toLowerCase() ===
-              (organization.trim() + "/" + repository.trim()).toLowerCase(),
+          // Check if user starred the repository by listing the repo's stargazers
+          // The direct check endpoint (GET /user/starred/{owner}/{repo}) only works
+          // for the authenticated user, so we use the stargazers list instead
+          const stargazers = (await githubFetchAllPages(
+            `/repos/${organization.trim()}/${repository.trim()}/stargazers`,
+          )) as Array<{ login: string }>
+          const hasStarred = stargazers.some(
+            (user: { login: string }) =>
+              user.login.toLowerCase() === githubUsername.trim().toLowerCase(),
           )
 
-          if (!star) {
+          if (!hasStarred) {
             return NextResponse.json(
               {
                 message: `User ${githubUsername} has not starred ${repository}`,
@@ -346,7 +314,7 @@ export async function POST(request: Request): Promise<NextResponse<GitHubWebhook
             },
           )
 
-          if (watchResponse.status !== 204) {
+          if (!watchResponse.ok) {
             return NextResponse.json(
               {
                 message: `User ${githubUsername} is not watching ${repository}`,
@@ -359,7 +327,7 @@ export async function POST(request: Request): Promise<NextResponse<GitHubWebhook
         }
 
         default:
-          throw new Error(`Unsupported verification type: ${type}`)
+          throw new Error("Unsupported verification type")
       }
     } catch (error) {
       console.error("GitHub API Error:", error)
