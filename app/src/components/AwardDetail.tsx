@@ -168,7 +168,9 @@ export function AwardDetail({ award }: Props) {
       <CardFooter>
         {award.isSoldOut ? (
           <CardSection>
-            <p className="text-sm text-neutral-600">This award is currently sold out and cannot be claimed.</p>
+            <p className="text-sm text-neutral-600">
+              This award is currently sold out and cannot be claimed.
+            </p>
           </CardSection>
         ) : award.isSupervised ? (
           <CardSection>
@@ -184,7 +186,12 @@ export function AwardDetail({ award }: Props) {
           </CardSection>
         )}
 
-        <Button onClick={handleRedeem} disabled={isRedeeming || award.isSoldOut} variant="accent" className="w-full">
+        <Button
+          onClick={handleRedeem}
+          disabled={isRedeeming || award.isSoldOut}
+          variant="accent"
+          className="w-full"
+        >
           {isRedeeming
             ? "Redeeming..."
             : award.isSupervised
