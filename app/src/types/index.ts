@@ -51,13 +51,15 @@ export interface Challenge {
   }
   verificationConfigJSON?: {
     type: string
-    fields: {
-      type: string
-      title: string
-      name: string
-      description: string
-      value?: string
-    }[]
+    fields:
+      | {
+          type: string
+          title: string
+          name: string
+          description: string
+          value?: string
+        }[]
+      | null
   }
   event: {
     _type: "reference"

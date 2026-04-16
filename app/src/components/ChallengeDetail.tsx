@@ -110,9 +110,15 @@ export function ChallengeDetail({ challenge }: Props) {
         })
 
         if (!response.ok) {
-          const errorData = await response.json()
+          let errorMessage = "Unknown error"
+          try {
+            const errorData = await response.json()
+            errorMessage = errorData.message ?? errorMessage
+          } catch {
+            errorMessage = await response.text().catch(() => errorMessage)
+          }
           throw new Error(
-            `Failed to verify the challenge: ${errorData.message}. If the problem persists, please contact the staff.`,
+            `Failed to verify the challenge: ${errorMessage}. If the problem persists, please contact the staff.`,
           )
         }
       } catch (error) {
@@ -243,20 +249,19 @@ export function ChallengeDetail({ challenge }: Props) {
             </div>
           )}
           <form>
-            {challenge.verificationConfigJSON &&
-              challenge.verificationConfigJSON.fields.map((field) => (
-                <div key={field.name}>
-                  {field.type === "hidden" ? null : (
-                    <h3 className="font-semibold mb-2">{field.title}:</h3>
-                  )}
-                  {field.type === "hidden" ? null : (
-                    <label htmlFor={field.name} className="text-sm text-neutral-600 mb-2">
-                      {field.description}
-                    </label>
-                  )}
-                  <Input type={field.type} name={field.name} defaultValue={field?.value || ""} />
-                </div>
-              ))}
+            {challenge.verificationConfigJSON?.fields?.map((field) => (
+              <div key={field.name}>
+                {field.type === "hidden" ? null : (
+                  <h3 className="font-semibold mb-2">{field.title}:</h3>
+                )}
+                {field.type === "hidden" ? null : (
+                  <label htmlFor={field.name} className="text-sm text-neutral-600 mb-2">
+                    {field.description}
+                  </label>
+                )}
+                <Input type={field.type} name={field.name} defaultValue={field?.value || ""} />
+              </div>
+            ))}
           </form>
 
           {!challenge.isOnline && (

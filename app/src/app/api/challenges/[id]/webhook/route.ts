@@ -41,6 +41,10 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     // Use the path from webhookUrl but resolve it against the local origin,
     // so we always hit our own API regardless of what host is stored in Sanity.
     const { pathname, search } = new URL(challenge.webhookUrl)
+    if (!pathname.startsWith("/api/webhook/")) {
+      return NextResponse.json({ message: "Invalid webhook path" }, { status: 400 })
+    }
+
     const { origin } = new URL(request.url)
     const localWebhookUrl = `${origin}${pathname}${search}`
 
@@ -54,6 +58,15 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
       }),
     })
 
+    const contentType = webhookResponse.headers.get("content-type") ?? ""
+    if (!contentType.includes("application/json")) {
+      const text = await webhookResponse.text()
+      console.error("Webhook returned non-JSON response:", text)
+      return NextResponse.json(
+        { message: "Webhook returned an unexpected response" },
+        { status: 502 },
+      )
+    }
     const data = await webhookResponse.json()
     return NextResponse.json(data, { status: webhookResponse.status })
   } catch (error) {
