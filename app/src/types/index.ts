@@ -51,22 +51,15 @@ export interface Challenge {
   }
   verificationConfigJSON?: {
     type: string
-<<<<<<< Updated upstream
-    fields: {
-=======
     fields:
-    | {
->>>>>>> Stashed changes
-      type: string
-      title: string
-      name: string
-      description: string
-      value?: string
-    }[]
-<<<<<<< Updated upstream
-=======
-    | null
->>>>>>> Stashed changes
+      | {
+          type: string
+          title: string
+          name: string
+          description: string
+          value?: string
+        }[]
+      | null
   }
   event: {
     _type: "reference"
