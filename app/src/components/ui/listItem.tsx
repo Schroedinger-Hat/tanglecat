@@ -36,6 +36,7 @@ interface AwardListItemProps extends BaseListItemProps {
   imageUrl: string
   isCompleted?: boolean
   isSupervised?: boolean
+  isSoldOut?: boolean
 }
 
 type ListItemProps = ChallengeListItemProps | LeaderboardListItemProps | AwardListItemProps
@@ -148,6 +149,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
     imageUrl,
     isCompleted,
     isSupervised,
+    isSoldOut,
     className = "",
   } = props as AwardListItemProps
 
@@ -158,12 +160,18 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
       className={`
           ${baseClasses}
           ${isCompleted ? "border-green-500 bg-slate-200" : ""}
+          ${isSoldOut ? "opacity-75" : ""}
           ${className}
         `}
     >
       <div className="flex gap-4">
         <div className="w-24 h-24 relative shrink-0">
           <Image src={imageUrl} alt={title} fill className="object-cover rounded-lg" />
+          {isSoldOut && (
+            <div className="absolute inset-0 bg-black/60 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm uppercase tracking-wide">Sold Out</span>
+            </div>
+          )}
         </div>
         <div className="flex-1 min-w-0">
           <div className="space-y-2">

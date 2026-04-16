@@ -24,6 +24,7 @@ export async function GET() {
         abstract,
         description,
         isSupervised,
+        isSoldOut,
         image,
         points
       }

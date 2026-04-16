@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,8 +23,12 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@next/third-parties/google": ["./node_modules/@next/third-parties/dist/google"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@next/third-parties/google": [
+        "./node_modules/@next/third-parties/dist/google"
+      ]
     }
   },
   "include": [
@@ -28,7 +36,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    ".next/dev/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
