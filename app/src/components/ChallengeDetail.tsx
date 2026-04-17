@@ -293,7 +293,9 @@ export function ChallengeDetail({ challenge }: Props) {
                 type="text"
                 placeholder="Enter secret code"
                 value={secretCodeInput}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSecretCodeInput(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSecretCodeInput(e.target.value)
+                }
               />
               <Button
                 onClick={() => handleVerifySecret(secretCodeInput)}
