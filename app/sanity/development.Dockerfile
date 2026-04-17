@@ -14,6 +14,6 @@ COPY . .
 RUN pnpm run build
 
 # Populate with demo data
-RUN pnpm run demo-data
+# RUN pnpm run demo-data
 
 CMD ["pnpm", "run", "dev"]

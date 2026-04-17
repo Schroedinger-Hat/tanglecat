@@ -18,8 +18,7 @@ export async function getChallengeById(id: string): Promise<Challenge | null> {
           type,
           title,
           name,
-          description,
-          value
+          description
         }
       },
       callToAction {

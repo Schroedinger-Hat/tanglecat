@@ -12,6 +12,7 @@ import { Card, CardHeader, CardContent, CardFooter, CardSection } from "./ui/Car
 import { Input } from "./ui/input.generic"
 import { toast } from "sonner"
 import { getBasePublicUrl } from "@/lib/utils/getBasePublicUrl"
+import { QRCodeScanner } from "@/components/QRCodeScanner"
 
 interface Props {
   challenge: Challenge
@@ -24,6 +25,9 @@ export function ChallengeDetail({ challenge }: Props) {
   const [isRedeeming, setIsRedeeming] = useState(false)
   const [showQR, setShowQR] = useState(false)
   const [userEmail, setUserEmail] = useState<string>("")
+  const [secretCodeInput, setSecretCodeInput] = useState("")
+  const [showScanner, setShowScanner] = useState(false)
+  const [isVerifyingSecret, setIsVerifyingSecret] = useState(false)
   const baseUrl = getBasePublicUrl()
 
   useEffect(() => {
@@ -85,6 +89,38 @@ export function ChallengeDetail({ challenge }: Props) {
   }, [showQR, checkChallengeStatus])
 
   const verificationUrl = `${baseUrl}/api/admin/verify-challenge?challengeId=${challenge._id}&email=${userEmail}`
+
+  const isSecretCodeChallenge = challenge.verificationConfigJSON?.type === "secret-code"
+
+  const handleVerifySecret = async (code: string) => {
+    const trimmedCode = code.trim()
+    if (!trimmedCode) {
+      toast.error("Please enter a secret code")
+      return
+    }
+
+    setIsVerifyingSecret(true)
+    try {
+      const response = await fetch("/api/challenges/verify-secret", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ challengeId: challenge._id, secretCode: trimmedCode }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to verify secret code")
+      }
+
+      router.replace(`/challenge/${challenge._id}?completed=true`)
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "An unknown error occurred")
+    } finally {
+      setIsVerifyingSecret(false)
+      setShowScanner(false)
+    }
+  }
 
   const handleRedeem = async () => {
     if (challenge.isSupervised) {
@@ -229,11 +265,13 @@ export function ChallengeDetail({ challenge }: Props) {
               {challenge.instructions ? challenge.instructions : ""}
             </p>
             <p className="text-sm text-neutral-600">
-              {challenge.isSupervised
-                ? "To complete this challenge, click the button below to generate a QR code and show it to a supervisor."
-                : challenge.isOnline
-                  ? "The challenge is online, so there will be an auto-verification after you've done the challenge requirements. You might need to refresh the page to see the challenge as completed."
-                  : "To complete this challenge, click the button below once you've finished. Note that an administrator will later verify the challenge completion."}
+              {isSecretCodeChallenge
+                ? "Find the sponsor and get the secret code. Enter it below or scan the QR code they show you."
+                : challenge.isSupervised
+                  ? "To complete this challenge, click the button below to generate a QR code and show it to a supervisor."
+                  : challenge.isOnline
+                    ? "The challenge is online, so there will be an auto-verification after you've done the challenge requirements. You might need to refresh the page to see the challenge as completed."
+                    : "To complete this challenge, click the button below once you've finished. Note that an administrator will later verify the challenge completion."}
             </p>
           </CardSection>
 
@@ -248,37 +286,92 @@ export function ChallengeDetail({ challenge }: Props) {
               </Button>
             </div>
           )}
-          <form>
-            {challenge.verificationConfigJSON?.fields?.map((field) => (
-              <div key={field.name}>
-                {field.type === "hidden" ? null : (
-                  <h3 className="font-semibold mb-2">{field.title}:</h3>
-                )}
-                {field.type === "hidden" ? null : (
-                  <label htmlFor={field.name} className="text-sm text-neutral-600 mb-2">
-                    {field.description}
-                  </label>
-                )}
-                <Input type={field.type} name={field.name} defaultValue={field?.value || ""} />
-              </div>
-            ))}
-          </form>
 
-          {!challenge.isOnline && (
-            <Button
-              onClick={handleRedeem}
-              disabled={isRedeeming}
-              variant="accent"
-              className="w-full"
-            >
-              {isRedeeming
-                ? "Redeeming..."
-                : challenge.isSupervised
-                  ? "Generate Verification QR"
-                  : "Redeem Challenge"}
-            </Button>
+          {isSecretCodeChallenge ? (
+            <div className="space-y-3">
+              <Input
+                type="text"
+                placeholder="Enter secret code"
+                value={secretCodeInput}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSecretCodeInput(e.target.value)}
+              />
+              <Button
+                onClick={() => handleVerifySecret(secretCodeInput)}
+                disabled={isVerifyingSecret || !secretCodeInput.trim()}
+                variant="accent"
+                className="w-full"
+              >
+                {isVerifyingSecret ? "Verifying..." : "Verify Code"}
+              </Button>
+              <Button
+                onClick={() => setShowScanner(true)}
+                disabled={isVerifyingSecret}
+                variant="info"
+                className="w-full"
+              >
+                Scan QR Code
+              </Button>
+            </div>
+          ) : (
+            <>
+              <form>
+                {challenge.verificationConfigJSON &&
+                  challenge.verificationConfigJSON.fields?.map((field) => (
+                    <div key={field.name}>
+                      {field.type === "hidden" ? null : (
+                        <h3 className="font-semibold mb-2">{field.title}:</h3>
+                      )}
+                      {field.type === "hidden" ? null : (
+                        <label htmlFor={field.name} className="text-sm text-neutral-600 mb-2">
+                          {field.description}
+                        </label>
+                      )}
+                      <Input type={field.type} name={field.name} defaultValue={field?.value || ""} />
+                    </div>
+                  ))}
+              </form>
+
+              {!challenge.isOnline && (
+                <Button
+                  onClick={handleRedeem}
+                  disabled={isRedeeming}
+                  variant="accent"
+                  className="w-full"
+                >
+                  {isRedeeming
+                    ? "Redeeming..."
+                    : challenge.isSupervised
+                      ? "Generate Verification QR"
+                      : "Redeem Challenge"}
+                </Button>
+              )}
+            </>
           )}
         </CardFooter>
+
+        {showScanner && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-lg p-4 max-w-md w-full relative">
+              <button
+                onClick={() => setShowScanner(false)}
+                className="absolute top-2 right-2 p-2 hover:bg-gray-100 rounded-full"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              <h3 className="text-lg font-semibold mb-4 pr-8">Scan the sponsor&apos;s QR code</h3>
+
+              <QRCodeScanner
+                onScan={(result) => handleVerifySecret(result)}
+                onClose={() => setShowScanner(false)}
+              />
+
+              <Button onClick={() => setShowScanner(false)} className="mt-4 w-full">
+                Cancel
+              </Button>
+            </div>
+          </div>
+        )}
 
         {showQR && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
