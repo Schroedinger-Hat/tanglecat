@@ -353,12 +353,13 @@ export function ChallengeDetail({ challenge }: Props) {
         {showScanner && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
             <div className="bg-white rounded-lg p-4 max-w-md w-full relative">
-              <button
+              <Button
                 onClick={() => setShowScanner(false)}
-                className="absolute top-2 right-2 p-2 hover:bg-gray-100 rounded-full"
+                size="sm"
+                className="absolute top-2 right-2 !h-auto !px-2 !py-2"
               >
                 <X className="w-6 h-6" />
-              </button>
+              </Button>
 
               <h3 className="text-lg font-semibold mb-4 pr-8">Scan the sponsor&apos;s QR code</h3>
 
@@ -377,12 +378,13 @@ export function ChallengeDetail({ challenge }: Props) {
         {showQR && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
             <Card className="max-w-md w-full relative">
-              <button
+              <Button
                 onClick={() => setShowQR(false)}
-                className="absolute top-2 right-2 p-2 hover:bg-gray-100 rounded-full"
+                size="sm"
+                className="absolute top-2 right-2 !h-auto !px-2 !py-2"
               >
                 <X className="w-6 h-6" />
-              </button>
+              </Button>
 
               <CardHeader>
                 <h3 className="text-lg font-semibold">Show this QR code to a supervisor</h3>
