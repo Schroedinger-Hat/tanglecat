@@ -21,6 +21,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ awar
         abstract,
         description,
         isSupervised,
+        isSoldOut,
         image,
         points,
         requirements[] {
@@ -83,6 +84,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ awa
       `
       *[_type == "award" && _id == $awardId][0] {
         isSupervised,
+        isSoldOut,
         points
       }
     `,
@@ -91,6 +93,10 @@ export async function POST(request: Request, { params }: { params: Promise<{ awa
 
     if (!award) {
       return NextResponse.json({ message: "Award not found" }, { status: 404 })
+    }
+
+    if (award.isSoldOut) {
+      return NextResponse.json({ message: "This award is sold out" }, { status: 400 })
     }
 
     // If award is supervised, return error

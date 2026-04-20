@@ -142,6 +142,11 @@ export function AwardDetail({ award }: Props) {
             fill
             className="object-cover rounded-lg"
           />
+          {award.isSoldOut && (
+            <div className="absolute inset-0 bg-black/60 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg uppercase tracking-wide">Sold Out</span>
+            </div>
+          )}
         </div>
         <div>
           <h1 className="text-2xl font-bold mb-2">{award.name}</h1>
@@ -161,7 +166,13 @@ export function AwardDetail({ award }: Props) {
       </CardContent>
 
       <CardFooter>
-        {award.isSupervised ? (
+        {award.isSoldOut ? (
+          <CardSection>
+            <p className="text-sm text-neutral-600">
+              This award is currently sold out and cannot be claimed.
+            </p>
+          </CardSection>
+        ) : award.isSupervised ? (
           <CardSection>
             <h3 className="font-semibold mb-2">Verification Required</h3>
             <p className="text-sm text-neutral-600">
@@ -175,7 +186,12 @@ export function AwardDetail({ award }: Props) {
           </CardSection>
         )}
 
-        <Button onClick={handleRedeem} disabled={isRedeeming} variant="accent" className="w-full">
+        <Button
+          onClick={handleRedeem}
+          disabled={isRedeeming || award.isSoldOut}
+          variant="accent"
+          className="w-full"
+        >
           {isRedeeming
             ? "Redeeming..."
             : award.isSupervised

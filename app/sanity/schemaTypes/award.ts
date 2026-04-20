@@ -47,6 +47,13 @@ export default defineType({
       description: "Instructions for completing the award",
     }),
     defineField({
+      name: "isSoldOut",
+      title: "Sold Out",
+      type: "boolean",
+      initialValue: false,
+      description: "If true, this award is no longer available for redemption",
+    }),
+    defineField({
       name: "webhook",
       title: "Webhook URL",
       type: "url",

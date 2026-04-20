@@ -74,6 +74,7 @@ export interface Award {
   abstract: string
   description: string
   isSupervised: boolean
+  isSoldOut?: boolean
   instructions?: string
   webhook?: string
   points: number

@@ -54,6 +54,7 @@ export function AwardsView() {
             imageUrl={urlForImage(award.image).url()}
             isCompleted={award.isCompleted}
             isSupervised={award.isSupervised}
+            isSoldOut={award.isSoldOut}
           />
         ))}
       </div>
