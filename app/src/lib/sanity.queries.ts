@@ -2,7 +2,7 @@ import { client } from "./sanity"
 import { Challenge } from "@/types"
 
 export async function getChallengeById(id: string): Promise<Challenge | null> {
-  return client.fetch(
+  const challenge = await client.fetch(
     `
     *[_type == "challenge" && _id == $id][0] {
       _id,
@@ -35,6 +35,24 @@ export async function getChallengeById(id: string): Promise<Challenge | null> {
   `,
     { id },
   )
+
+  // Strip hidden field values for secret-code challenges to avoid leaking secrets
+  if (
+    challenge?.verificationConfigJSON?.type === "secret-code" &&
+    challenge.verificationConfigJSON.fields
+  ) {
+    challenge.verificationConfigJSON.fields = challenge.verificationConfigJSON.fields.map(
+      (field: { type: string; value?: string; [key: string]: unknown }) => {
+        if (field.type === "hidden") {
+          const { value: _, ...rest } = field
+          return rest
+        }
+        return field
+      },
+    )
+  }
+
+  return challenge
 }
 
 export const queries = {

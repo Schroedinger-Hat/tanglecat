@@ -109,6 +109,7 @@ export default defineType({
             list: [
               { title: "Trust", value: "trust" },
               { title: "Verification", value: "verification" },
+              { title: "Secret Code", value: "secret-code" },
             ],
           },
         },

@@ -40,7 +40,8 @@ export async function GET() {
         endDate,
         playersLimit,
         pointsRequirement,
-        callToAction
+        callToAction,
+        "hasSecretCode": defined(verificationConfigJSON) && verificationConfigJSON.type == "secret-code"
       }
     `,
       { eventId },
