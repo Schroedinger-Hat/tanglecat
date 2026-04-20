@@ -160,7 +160,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
       className={`
           ${baseClasses}
           ${isCompleted ? "border-green-500 bg-slate-200" : ""}
-          ${isSoldOut ? "opacity-75" : ""}
+          ${isSoldOut ? "opacity-75 pointer-events-auto" : ""}
           ${className}
         `}
     >
