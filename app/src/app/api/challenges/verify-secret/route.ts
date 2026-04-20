@@ -11,7 +11,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
     }
 
-    const { email, eventId } = JSON.parse(tokenCookie)
+    let email: string, eventId: string
+    try {
+      const parsed = JSON.parse(tokenCookie) as { email?: string; eventId?: string }
+      if (typeof parsed.email !== "string" || typeof parsed.eventId !== "string") {
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+      }
+      email = parsed.email
+      eventId = parsed.eventId
+    } catch {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+    }
     const { challengeId, secretCode } = await request.json()
 
     if (!challengeId || !secretCode) {
