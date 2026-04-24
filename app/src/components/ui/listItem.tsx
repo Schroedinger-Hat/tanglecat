@@ -183,8 +183,8 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
             </h3>
             <p className="text-neutral-600 text-sm">{description}</p>
             <div className="flex items-center gap-4">
-              <span className="font-bold text-blue-600">{points} pts</span>
-              {isSupervised && !isCompleted && (
+              {points > 0 && <span className="font-bold text-blue-600">{points} pts</span>}
+              {isSupervised && !isCompleted && points > 0 && (
                 <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
                   Requires Verification
                 </span>

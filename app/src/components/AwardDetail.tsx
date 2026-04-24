@@ -150,7 +150,7 @@ export function AwardDetail({ award }: Props) {
         </div>
         <div>
           <h1 className="text-2xl font-bold mb-2">{award.name}</h1>
-          <span className="text-blue-600 font-bold">{award.points} pts</span>
+          {award.points > 0 && <span className="text-blue-600 font-bold">{award.points} pts</span>}
         </div>
       </CardHeader>
 
@@ -165,40 +165,50 @@ export function AwardDetail({ award }: Props) {
         )}
       </CardContent>
 
-      <CardFooter>
-        {award.isSoldOut ? (
-          <CardSection>
-            <p className="text-sm text-neutral-600">
-              This award is currently sold out and cannot be claimed.
-            </p>
-          </CardSection>
-        ) : award.isSupervised ? (
-          <CardSection>
-            <h3 className="font-semibold mb-2">Verification Required</h3>
-            <p className="text-sm text-neutral-600">
-              This award needs to be verified by a supervisor. Click the button below to generate a
-              QR code for verification.
-            </p>
-          </CardSection>
-        ) : (
-          <CardSection>
-            <p className="text-sm text-neutral-600">Click the button below to claim this award.</p>
-          </CardSection>
-        )}
+      {award.points === 0 && (
+        <p className="mt-4">
+          This award cannot be claimed! There are few challenges to win this, check the challenge
+          list and find out how you can win it!
+        </p>
+      )}
+      {award.points > 0 && (
+        <CardFooter>
+          {award.isSoldOut ? (
+            <CardSection>
+              <p className="text-sm text-neutral-600">
+                This award is currently sold out and cannot be claimed.
+              </p>
+            </CardSection>
+          ) : award.isSupervised ? (
+            <CardSection>
+              <h3 className="font-semibold mb-2">Verification Required</h3>
+              <p className="text-sm text-neutral-600">
+                This award needs to be verified by a supervisor. Click the button below to generate
+                a QR code for verification.
+              </p>
+            </CardSection>
+          ) : (
+            <CardSection>
+              <p className="text-sm text-neutral-600">
+                Click the button below to claim this award.
+              </p>
+            </CardSection>
+          )}
 
-        <Button
-          onClick={handleRedeem}
-          disabled={isRedeeming || award.isSoldOut}
-          variant="accent"
-          className="w-full"
-        >
-          {isRedeeming
-            ? "Redeeming..."
-            : award.isSupervised
-              ? "Generate Verification QR"
-              : "Claim Award"}
-        </Button>
-      </CardFooter>
+          <Button
+            onClick={handleRedeem}
+            disabled={isRedeeming || award.isSoldOut}
+            variant="accent"
+            className="w-full"
+          >
+            {isRedeeming
+              ? "Redeeming..."
+              : award.isSupervised
+                ? "Generate Verification QR"
+                : "Claim Award"}
+          </Button>
+        </CardFooter>
+      )}
 
       {showQR && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
