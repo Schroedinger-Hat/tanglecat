@@ -165,7 +165,7 @@ export function AwardDetail({ award }: Props) {
         )}
       </CardContent>
 
-      {award.points == 0 && (
+      {award.points === 0 && (
         <p className="mt-4">
           This award cannot be claimed! There are few challenges to win this, check the challenge
           list and find out how you can win it!
